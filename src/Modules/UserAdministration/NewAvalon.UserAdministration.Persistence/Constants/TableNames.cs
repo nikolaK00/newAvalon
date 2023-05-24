@@ -7,5 +7,7 @@
         internal const string Roles = nameof(Roles);
 
         internal const string Permissions = nameof(Permissions);
+
+        internal const string Dealers = nameof(Dealers);
     }
 }

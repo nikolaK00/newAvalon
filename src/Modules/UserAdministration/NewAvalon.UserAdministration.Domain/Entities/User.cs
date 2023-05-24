@@ -3,11 +3,15 @@ using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using NewAvalon.UserAdministration.Domain.Events;
 using NewAvalon.UserAdministration.Domain.ValueObjects;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace NewAvalon.UserAdministration.Domain.Entities
 {
     public sealed class User : AggregateRoot<UserId>, IAuditableEntity
     {
+        private readonly HashSet<Role> _roles = new();
+
         public User(UserId id, string firstName, string lastName, string userName, string email, string password, DateTime dateOfBirth, string address)
             : base(id)
         {
@@ -18,7 +22,6 @@ namespace NewAvalon.UserAdministration.Domain.Entities
             Password = password;
             DateOfBirth = dateOfBirth;
             Address = address;
-            Approved = false;
 
             RaiseDomainEvent(new UserCreatedDomainEvent(Id));
         }
@@ -55,6 +58,30 @@ namespace NewAvalon.UserAdministration.Domain.Entities
 
         public ProfileImage ProfileImage { get; private set; }
 
-        public bool Approved { get; private set; }
+        public IReadOnlyCollection<Role> Roles => _roles.ToList();
+
+        public bool AddRole(Role role) => _roles.Add(role);
+
+        public bool RemoveRole(Role role) => _roles.Remove(role);
+
+        public void Update(string firstName, string lastName, string phoneNumber, string pwwUsername)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+        }
+
+        public void ChangeProfileImage(ProfileImage profileImage)
+        {
+            if (ProfileImage == profileImage)
+            {
+                return;
+            }
+
+            ProfileImage ??= ProfileImage.Empty;
+
+            ProfileImage = profileImage;
+        }
+
+        public void RemoveProfileImage() => ProfileImage = ProfileImage.Empty;
     }
 }

@@ -14,7 +14,7 @@ namespace NewAvalon.UserAdministration.Domain.Entities
 
         public static readonly Role SuperAdmin = new(new RoleId(2), nameof(SuperAdmin), "Super admin");
 
-        public static readonly Role SalesRepresentative = new(new RoleId(3), nameof(SalesRepresentative), "Sales Representative");
+        public static readonly Role Client = new(new RoleId(3), nameof(Client), "Sales Representative");
 
         private Role(RoleId id, string name, string description)
             : base(id)

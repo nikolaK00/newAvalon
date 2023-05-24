@@ -34,6 +34,8 @@
 
         public static Error UserAlreadyExists => new(1001, "User already exists");
 
+        public static Error DealerAlreadyProcessed => new(1002, "Dealer already processed");
+
         #endregion
 
     }

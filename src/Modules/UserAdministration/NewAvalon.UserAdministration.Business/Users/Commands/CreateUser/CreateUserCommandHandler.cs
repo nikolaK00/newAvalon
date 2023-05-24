@@ -37,6 +37,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
                 new Domain.EntityIdentifiers.UserId(Guid.NewGuid()),
                 request.FirstName,
                 request.LastName,
+                string.Empty,
                 request.Email,
                 string.Empty,
                 DateTime.UtcNow,
