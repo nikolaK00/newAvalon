@@ -37,7 +37,10 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
                 new Domain.EntityIdentifiers.UserId(Guid.NewGuid()),
                 request.FirstName,
                 request.LastName,
-                request.Email);
+                request.Email,
+                string.Empty,
+                DateTime.UtcNow,
+                string.Empty);
 
             _userRepository.Insert(user);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

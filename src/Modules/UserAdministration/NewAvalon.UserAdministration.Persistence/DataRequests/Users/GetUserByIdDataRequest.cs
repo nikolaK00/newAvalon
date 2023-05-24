@@ -9,18 +9,16 @@ using System.Threading.Tasks;
 
 namespace NewAvalon.UserAdministration.Persistence.DataRequests.Users
 {
-    internal sealed class TestDataRequestIRequestClientDataRequest : ITestDataRequestIRequestClientDataRequest
+    internal sealed class GetUserByIdDataRequest : IGetUserByIdDataRequest
     {
         private readonly UserAdministrationDbContext _dbContext;
 
-        public TestDataRequestIRequestClientDataRequest(UserAdministrationDbContext dbContext) => _dbContext = dbContext;
+        public GetUserByIdDataRequest(UserAdministrationDbContext dbContext) => _dbContext = dbContext;
 
-        public async Task<UserDetailsResponse> GetAsync(UserId request, CancellationToken cancellationToken = default)
-        {
-            return await _dbContext.Set<User>()
+        public async Task<UserDetailsResponse> GetAsync(UserId request, CancellationToken cancellationToken = default) =>
+            await _dbContext.Set<User>()
                 .Where(user => user.Id == request)
                 .Select(user => new UserDetailsResponse(user.Id.Value, user.FirstName, user.LastName, user.Email))
                 .FirstOrDefaultAsync(cancellationToken);
-        }
     }
 }

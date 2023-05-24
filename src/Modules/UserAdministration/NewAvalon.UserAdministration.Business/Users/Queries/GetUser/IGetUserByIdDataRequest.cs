@@ -4,7 +4,7 @@ using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 
 namespace NewAvalon.UserAdministration.Business.Users.Queries.GetUser
 {
-    public interface ITestDataRequestIRequestClientDataRequest : IDataRequest<UserId, UserDetailsResponse>
+    public interface IGetUserByIdDataRequest : IDataRequest<UserId, UserDetailsResponse>
     {
     }
 }

@@ -3,9 +3,9 @@ using NewAvalon.Boundary.Extensions;
 
 namespace NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser
 {
-    public sealed class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
+    public sealed class ApproveUserByIdCommandValidator : AbstractValidator<CreateUserCommand>
     {
-        public CreateUserCommandValidator()
+        public ApproveUserByIdCommandValidator()
         {
             RuleFor(x => x.FirstName).FirstName();
 
