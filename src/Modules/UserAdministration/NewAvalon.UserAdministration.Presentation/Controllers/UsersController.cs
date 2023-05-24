@@ -37,7 +37,7 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
 
             EntityCreatedResponse response = await Sender.Send(command, cancellationToken);
 
-            return CreatedAtAction(nameof(GetUser), new { orderId = response.EntityId }, response.EntityId);
+            return CreatedAtAction(nameof(GetUser), new { userId = response.EntityId }, response.EntityId);
         }
 
         /// <summary>

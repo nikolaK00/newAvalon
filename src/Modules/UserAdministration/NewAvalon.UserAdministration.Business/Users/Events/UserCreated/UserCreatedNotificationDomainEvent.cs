@@ -1,6 +1,7 @@
 ﻿using NewAvalon.Abstractions.Messaging;
 using NewAvalon.Domain.Abstractions;
 using NewAvalon.Domain.Enums;
+using NewAvalon.UserAdministration.Business.Contracts.Notifications;
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.Events;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
