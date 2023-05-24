@@ -67,7 +67,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Notification.Boun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Notification.Domain", "src\Modules\Notification\NewAvalon.Notification.Domain\NewAvalon.Notification.Domain.csproj", "{6E8DEE3E-B43A-478C-9F5A-B3D80714677F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Notification.Infrastructure", "src\Modules\Notification\NewAvalon.Notification.Infrastructure\NewAvalon.Notification.Infrastructure.csproj", "{2549D649-DC6B-4800-BEE8-E3ADC1669690}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Notification.Infrastructure", "src\Modules\Notification\NewAvalon.Notification.Infrastructure\NewAvalon.Notification.Infrastructure.csproj", "{2549D649-DC6B-4800-BEE8-E3ADC1669690}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{173E27AF-F8FF-4020-B5B5-29DA7E764B54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Catalog.Presentation", "src\Modules\Catalog\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj", "{6F930A44-EDB2-4815-9853-E15DDB283616}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Catalog.Domain", "src\Modules\Catalog\NewAvalon.Catalog.Domain\NewAvalon.Catalog.Domain.csproj", "{E92AA4C3-14BD-439B-A093-74E704537D80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -202,6 +208,18 @@ Global
 		{2549D649-DC6B-4800-BEE8-E3ADC1669690}.NoVariablesDefault|Any CPU.Build.0 = Debug|Any CPU
 		{2549D649-DC6B-4800-BEE8-E3ADC1669690}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2549D649-DC6B-4800-BEE8-E3ADC1669690}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F930A44-EDB2-4815-9853-E15DDB283616}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F930A44-EDB2-4815-9853-E15DDB283616}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F930A44-EDB2-4815-9853-E15DDB283616}.NoVariablesDefault|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F930A44-EDB2-4815-9853-E15DDB283616}.NoVariablesDefault|Any CPU.Build.0 = Debug|Any CPU
+		{6F930A44-EDB2-4815-9853-E15DDB283616}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F930A44-EDB2-4815-9853-E15DDB283616}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E92AA4C3-14BD-439B-A093-74E704537D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E92AA4C3-14BD-439B-A093-74E704537D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E92AA4C3-14BD-439B-A093-74E704537D80}.NoVariablesDefault|Any CPU.ActiveCfg = Debug|Any CPU
+		{E92AA4C3-14BD-439B-A093-74E704537D80}.NoVariablesDefault|Any CPU.Build.0 = Debug|Any CPU
+		{E92AA4C3-14BD-439B-A093-74E704537D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E92AA4C3-14BD-439B-A093-74E704537D80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -237,6 +255,9 @@ Global
 		{33440EF5-7303-4060-AF27-1CC58ABFAD1E} = {081134B9-958B-4404-84B7-68A52720C8CF}
 		{6E8DEE3E-B43A-478C-9F5A-B3D80714677F} = {081134B9-958B-4404-84B7-68A52720C8CF}
 		{2549D649-DC6B-4800-BEE8-E3ADC1669690} = {E5CB528F-3DF3-4A42-8535-15522BF50579}
+		{173E27AF-F8FF-4020-B5B5-29DA7E764B54} = {7954A20F-3D96-4A08-9834-6D88F71F735F}
+		{6F930A44-EDB2-4815-9853-E15DDB283616} = {173E27AF-F8FF-4020-B5B5-29DA7E764B54}
+		{E92AA4C3-14BD-439B-A093-74E704537D80} = {6BABAF4A-C83B-48A1-A74C-CB37FB3FA193}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F59C7E1-C02A-4819-8620-2C8CFA6BE941}
