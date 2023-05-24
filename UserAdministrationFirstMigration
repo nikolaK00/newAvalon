@@ -1,0 +1,38 @@
+﻿CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+
+START TRANSACTION;
+
+CREATE TABLE "Messages" (
+    "Id" uuid NOT NULL,
+    "Content" jsonb NOT NULL,
+    "Processed" boolean NOT NULL,
+    "Retries" integer NOT NULL,
+    "Failed" boolean NOT NULL,
+    "Error" text NULL,
+    "CreatedOnUtc" timestamp without time zone NOT NULL,
+    "ModifiedOnUtc" timestamp without time zone NULL,
+    CONSTRAINT "PK_Messages" PRIMARY KEY ("Id")
+);
+
+CREATE TABLE "Users" (
+    "Id" uuid NOT NULL,
+    "IdentityProviderId" uuid NULL,
+    "FirstName" character varying(200) NOT NULL,
+    "LastName" character varying(200) NOT NULL,
+    "Email" character varying(256) NOT NULL,
+    "CreatedOnUtc" timestamp without time zone NOT NULL,
+    "ModifiedOnUtc" timestamp without time zone NULL,
+    CONSTRAINT "PK_Users" PRIMARY KEY ("Id")
+);
+
+CREATE UNIQUE INDEX "IX_Users_Email" ON "Users" ("Email");
+
+INSERT INTO "__EFMigrationsHistory" ("MigrationId", "ProductVersion")
+VALUES ('20221130235331_AddInitTables', '5.0.7');
+
+COMMIT;
+
