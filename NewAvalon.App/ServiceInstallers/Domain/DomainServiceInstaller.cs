@@ -12,7 +12,8 @@ namespace NewAvalon.App.ServiceInstallers.Domain
         public void InstallServices(IServiceCollection services) =>
             AddFactories(services, new[]
             {
-                typeof(UserAdministration.Domain.AssemblyReference).Assembly
+                typeof(UserAdministration.Domain.AssemblyReference).Assembly,
+                typeof(Catalog.Domain.AssemblyReference).Assembly
             });
 
         private static void AddFactories(IServiceCollection services, Assembly[] assemblies) =>

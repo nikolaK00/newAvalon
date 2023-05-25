@@ -11,6 +11,7 @@ namespace NewAvalon.App.ServiceInstallers.Mediator
         private readonly Assembly[] _businessAssemblies =
         {
             typeof(UserAdministration.Business.AssemblyReference).Assembly,
+            typeof(Catalog.Business.AssemblyReference).Assembly,
         };
 
         public void InstallServices(IServiceCollection services)

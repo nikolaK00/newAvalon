@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NewAvalon.Abstractions.Data;
 using NewAvalon.App.Abstractions;
+using NewAvalon.Catalog.Domain.Repositories;
+using NewAvalon.Catalog.Persistence;
+using NewAvalon.Catalog.Persistence.Options;
 using NewAvalon.Persistence.Extensions;
 using NewAvalon.Persistence.Factories;
 using NewAvalon.Persistence.Relational.Interceptors;
@@ -29,24 +32,29 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
         private static void InstallOptions(IServiceCollection services)
         {
             services.ConfigureOptions<UserAdministrationDatabaseOptionsSetup>();
+            services.ConfigureOptions<CatalogDatabaseOptionsSetup>();
         }
 
         private static void InstallCore(IServiceCollection services)
         {
             AddUserAdministrationDbContext(services);
 
+            AddCatalogDbContext(services);
+
             AddRepositories(
                 services,
                 new[]
                 {
-                    typeof(NewAvalon.UserAdministration.Persistence.AssemblyReference).Assembly,
+                    typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
+                    typeof(Catalog.Persistence.AssemblyReference).Assembly,
                 });
 
             AddDataRequests(
                 services,
                 new[]
                 {
-                    typeof(NewAvalon.UserAdministration.Persistence.AssemblyReference).Assembly,
+                    typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
+                    typeof(Catalog.Persistence.AssemblyReference).Assembly,
                 });
 
             AddInterceptors(services);
@@ -70,11 +78,27 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
                 builder.UseNpgsql("Host=localhost; Database=user_administration; Username=postgres; Password=postgres",
                     optionsBuilder => optionsBuilder.MigrationsAssembly(
-                        typeof(NewAvalon.UserAdministration.Persistence.AssemblyReference).Assembly.FullName))
+                        typeof(UserAdministration.Persistence.AssemblyReference).Assembly.FullName))
                     .AddInterceptors(provider);
             });
 
             services.AddScoped<IUserAdministrationUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<UserAdministrationDbContext>());
+        }
+
+        private static void AddCatalogDbContext(IServiceCollection services)
+        {
+            services.AddDbContextPool<CatalogDbContext>((provider, builder) =>
+            {
+                IOptions<CatalogDatabaseOptions> dbSettingsOptions =
+                    provider.GetRequiredService<IOptions<CatalogDatabaseOptions>>();
+
+                builder.UseNpgsql("Host=localhost; Database=catalog; Username=postgres; Password=postgres",
+                        optionsBuilder => optionsBuilder.MigrationsAssembly(
+                            typeof(Catalog.Persistence.AssemblyReference).Assembly.FullName))
+                    .AddInterceptors(provider);
+            });
+
+            services.AddScoped<ICatalogUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CatalogDbContext>());
         }
 
         private static void AddRepositories(IServiceCollection services, Assembly[] assemblies) =>

@@ -21,6 +21,7 @@ namespace NewAvalon.App.ServiceInstallers.Mvc
             services.AddRouting()
                 .AddControllers()
                 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
+                .AddApplicationPart(typeof(Catalog.Presentation.AssemblyReference).Assembly)
                 .AddApplicationPart(typeof(UserAdministration.Presentation.AssemblyReference).Assembly);
 
             services.AddHttpContextAccessor();

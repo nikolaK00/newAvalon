@@ -5,11 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Abstractions\NewAvalon.Abstractions.csproj" />
     <ProjectReference Include="..\..\..\Common\NewAvalon.Presentation\NewAvalon.Presentation.csproj" />
+    <ProjectReference Include="..\NewAvalon.Catalog.Boundary\NewAvalon.Catalog.Boundary.csproj" />
   </ItemGroup>
 
 </Project>
