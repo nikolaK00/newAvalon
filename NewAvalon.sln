@@ -71,13 +71,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Notification.Infr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{173E27AF-F8FF-4020-B5B5-29DA7E764B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Catalog.Presentation", "src\Modules\Catalog\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj", "{6F930A44-EDB2-4815-9853-E15DDB283616}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Catalog.Presentation", "src\Modules\Catalog\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj", "{6F930A44-EDB2-4815-9853-E15DDB283616}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Catalog.Domain", "src\Modules\Catalog\NewAvalon.Catalog.Domain\NewAvalon.Catalog.Domain.csproj", "{E92AA4C3-14BD-439B-A093-74E704537D80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Catalog.Domain", "src\Modules\Catalog\NewAvalon.Catalog.Domain\NewAvalon.Catalog.Domain.csproj", "{E92AA4C3-14BD-439B-A093-74E704537D80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Catalog.Persistence", "src\Modules\Catalog\NewAvalon.Catalog.Persistence\NewAvalon.Catalog.Persistence.csproj", "{7F05857E-753C-41BC-8135-564EBC5DED8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Catalog.Persistence", "src\Modules\Catalog\NewAvalon.Catalog.Persistence\NewAvalon.Catalog.Persistence.csproj", "{7F05857E-753C-41BC-8135-564EBC5DED8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Catalog.Boundary", "src\Modules\Catalog\NewAvalon.Catalog.Boundary\NewAvalon.Catalog.Boundary.csproj", "{6A2C5FA7-0B55-4E41-8627-DED0F09FF170}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Catalog.Boundary", "src\Modules\Catalog\NewAvalon.Catalog.Boundary\NewAvalon.Catalog.Boundary.csproj", "{6A2C5FA7-0B55-4E41-8627-DED0F09FF170}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Authorization", "src\Common\NewAvalon.Authorization\NewAvalon.Authorization.csproj", "{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -236,6 +238,12 @@ Global
 		{6A2C5FA7-0B55-4E41-8627-DED0F09FF170}.NoVariablesDefault|Any CPU.Build.0 = Debug|Any CPU
 		{6A2C5FA7-0B55-4E41-8627-DED0F09FF170}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A2C5FA7-0B55-4E41-8627-DED0F09FF170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB}.NoVariablesDefault|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB}.NoVariablesDefault|Any CPU.Build.0 = Debug|Any CPU
+		{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -276,6 +284,7 @@ Global
 		{E92AA4C3-14BD-439B-A093-74E704537D80} = {6BABAF4A-C83B-48A1-A74C-CB37FB3FA193}
 		{7F05857E-753C-41BC-8135-564EBC5DED8B} = {173E27AF-F8FF-4020-B5B5-29DA7E764B54}
 		{6A2C5FA7-0B55-4E41-8627-DED0F09FF170} = {6BABAF4A-C83B-48A1-A74C-CB37FB3FA193}
+		{5CE55AB2-DBD5-4FB4-9E3B-B19060BC33BB} = {91443F10-900C-4ABB-9A9F-018CA0D4C659}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F59C7E1-C02A-4819-8620-2C8CFA6BE941}

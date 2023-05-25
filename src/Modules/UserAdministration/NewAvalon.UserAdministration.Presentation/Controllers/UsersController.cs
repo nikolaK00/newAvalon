@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewAvalon.Abstractions.Contracts;
+using NewAvalon.Authorization;
+using NewAvalon.Authorization.Attributes;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser;
+using NewAvalon.UserAdministration.Boundary.Users.Commands.LoginUser;
 using NewAvalon.UserAdministration.Boundary.Users.Queries.GetUser;
 using NewAvalon.UserAdministration.Presentation.Abstractions;
 using System;
@@ -41,11 +44,31 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         }
 
         /// <summary>
+        /// Login user based on the specified request.
+        /// </summary>
+        /// <param name="request">The login user request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The token of the newly logged user.</returns>
+        [HttpPut("login")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserRequest request, CancellationToken cancellationToken)
+        {
+            LoginUserCommand command = request.Adapt<LoginUserCommand>();
+
+            string response = await Sender.Send(command, cancellationToken);
+
+            return Ok(response);
+        }
+
+        /// <summary>
         /// Gets the user with the specified identifier.
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
+        [HasPermission(Permissions.UserRead)]
         [HttpGet("{userId:guid}", Name = nameof(GetUser))]
         [ProducesResponseType(typeof(UserDetailsResponse), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

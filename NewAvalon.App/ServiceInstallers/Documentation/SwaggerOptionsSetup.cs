@@ -10,13 +10,13 @@ namespace NewAvalon.App.ServiceInstallers.Documentation
 {
     internal class SwaggerOptionsSetup : IConfigureOptions<SwaggerGenOptions>
     {
+        private const string ConfigurationSectionName = "Documentation:Generator:Security";
+
         private readonly Assembly[] _presentationAssemblies =
         {
             typeof(UserAdministration.Presentation.AssemblyReference).Assembly,
             typeof(Catalog.Presentation.AssemblyReference).Assembly,
         };
-
-        public SwaggerOptionsSetup() { }
 
         public void Configure(SwaggerGenOptions options)
         {

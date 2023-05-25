@@ -5,6 +5,8 @@ using NewAvalon.App.Abstractions;
 using NewAvalon.Catalog.Business;
 using NewAvalon.Infrastructure.Messaging.Options;
 using NewAvalon.Messaging.Contracts;
+using NewAvalon.Messaging.Contracts.Permissions;
+using NewAvalon.UserAdministration.Business.Permissions.Consumers;
 
 namespace NewAvalon.App.ServiceInstallers.Messaging
 {
@@ -52,11 +54,16 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
         private static void AddConsumers(IRegistrationConfigurator busConfigurator)
         {
             busConfigurator.AddConsumer<ExampleConsumer>().Endpoint(e => e.Name = "example-consumer");
+
+            busConfigurator.AddConsumer<GetPermissionsRequestConsumer>().Endpoint(e => e.Name = "user-administration-get-permissions-request");
+
         }
 
         private static void AddRequestClients(IRegistrationConfigurator busConfigurator)
         {
             busConfigurator.AddRequestClient<IExampleRequest>();
+
+            busConfigurator.AddRequestClient<IGetPermissionsRequest>();
         }
     }
 }

@@ -9,6 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Authorization\NewAvalon.Authorization.csproj" />
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Infrastructure\NewAvalon.Infrastructure.csproj" />
     <ProjectReference Include="..\..\..\Common\NewAvalon.Persistence\NewAvalon.Persistence.csproj" />
     <ProjectReference Include="..\NewAvalon.UserAdministration.Business\NewAvalon.UserAdministration.Business.csproj" />
     <ProjectReference Include="..\NewAvalon.UserAdministration.Domain\NewAvalon.UserAdministration.Domain.csproj" />

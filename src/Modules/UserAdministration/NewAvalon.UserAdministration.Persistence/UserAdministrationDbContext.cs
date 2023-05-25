@@ -1,6 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NewAvalon.Authorization;
+using NewAvalon.Infrastructure.Extensions;
 using NewAvalon.Persistence.Relational;
+using NewAvalon.UserAdministration.Domain.Entities;
+using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using NewAvalon.UserAdministration.Domain.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,6 +41,23 @@ namespace NewAvalon.UserAdministration.Persistence
 
         private void SeedUserAdministrationData(ModelBuilder modelBuilder)
         {
+            SeedData<Role, RoleId>(modelBuilder, new List<Role>()
+            {
+                Role.DealerUser,
+                Role.SuperAdmin,
+                Role.Client
+            });
+
+            var permissions = Enum.GetValues(typeof(Permissions))
+                .Cast<Permissions>()
+                .Select(p => new Permission(new PermissionId((int)p), p.ToString(), p.Description()))
+                .ToList();
+
+            SeedData<Permission, PermissionId>(modelBuilder, permissions);
+
+            SeedJoinData(
+                modelBuilder,
+                (permissions.First(p => p.Id.Value == (int)Permissions.UserRead), Role.SuperAdmin));
         }
     }
 }

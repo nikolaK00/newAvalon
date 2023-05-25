@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Authorization\NewAvalon.Authorization.csproj" />
     <ProjectReference Include="..\..\..\Common\NewAvalon.Presentation\NewAvalon.Presentation.csproj" />
     <ProjectReference Include="..\NewAvalon.UserAdministration.Boundary\NewAvalon.UserAdministration.Boundary.csproj" />
   </ItemGroup>
