@@ -54,7 +54,7 @@ namespace NewAvalon.Authorization.AuthorizationHandlers
 
             var request = new GetPermissionsRequest
             {
-                UserIdentityProviderId = userIdentityId
+                UserId = userIdentityId
             };
 
             Response<IGetPermissionsResponse> permissionNames = await requestClient.GetResponse<IGetPermissionsResponse>(request);
@@ -64,7 +64,7 @@ namespace NewAvalon.Authorization.AuthorizationHandlers
 
         private sealed class GetPermissionsRequest : IGetPermissionsRequest
         {
-            public Guid UserIdentityProviderId { get; set; }
+            public Guid UserId { get; set; }
         }
     }
 }

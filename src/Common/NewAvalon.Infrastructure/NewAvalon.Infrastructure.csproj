@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NewAvalon.Abstractions\NewAvalon.Abstractions.csproj" />
+    <ProjectReference Include="..\NewAvalon.Authorization\NewAvalon.Authorization.csproj" />
   </ItemGroup>
 
 </Project>

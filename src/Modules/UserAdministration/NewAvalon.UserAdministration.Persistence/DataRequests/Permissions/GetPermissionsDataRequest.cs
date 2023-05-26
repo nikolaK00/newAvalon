@@ -18,7 +18,7 @@ namespace NewAvalon.UserAdministration.Persistence.DataRequests.Permissions
             var permissionNames = await (
                     from user in _dbContext.Set<User>()
                     let permissions = user.Roles.SelectMany(role => role.Permissions).ToList()
-                    where user.IdentityProviderId == request.UserIdentityProviderId
+                    where user.Id == request.UserId
                     select new
                     {
                         PermissionNames = permissions.Select(x => x.Name)

@@ -1,6 +1,6 @@
-﻿using System;
+﻿using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 
 namespace NewAvalon.UserAdministration.Business.Permissions.Consumers
 {
-    public sealed record GetPermissionsRequest(Guid UserIdentityProviderId);
+    public sealed record GetPermissionsRequest(UserId UserId);
 }

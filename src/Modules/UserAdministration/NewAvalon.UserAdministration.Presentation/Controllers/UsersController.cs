@@ -1,4 +1,5 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewAvalon.Abstractions.Contracts;
@@ -68,8 +69,9 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <param name="userId">The user identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
-        [HasPermission(Permissions.UserRead)]
         [HttpGet("{userId:guid}", Name = nameof(GetUser))]
+        [Authorize]
+        [HasPermission(Permissions.UserRead)]
         [ProducesResponseType(typeof(UserDetailsResponse), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

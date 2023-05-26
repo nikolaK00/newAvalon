@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using NewAvalon.Messaging.Contracts.Permissions;
 using NewAvalon.UserAdministration.Business.Contracts.Permissions;
+using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using System.Threading.Tasks;
 
 namespace NewAvalon.UserAdministration.Business.Permissions.Consumers
@@ -13,7 +14,7 @@ namespace NewAvalon.UserAdministration.Business.Permissions.Consumers
 
         public async Task Consume(ConsumeContext<IGetPermissionsRequest> context)
         {
-            var request = new GetPermissionsRequest(context.Message.UserIdentityProviderId);
+            var request = new GetPermissionsRequest(new UserId(context.Message.UserId));
 
             string[] permissionNames = await _getPermissionsDataRequest.GetAsync(request, context.CancellationToken);
 

@@ -4,6 +4,6 @@ namespace NewAvalon.Messaging.Contracts.Permissions
 {
     public interface IGetPermissionsRequest
     {
-        Guid UserIdentityProviderId { get; set; }
+        Guid UserId { get; set; }
     }
 }
