@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewAvalon.Authorization;
+using NewAvalon.Authorization.Attributes;
 using NewAvalon.Boundary.Pagination;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.ApproveUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.DisapproveUser;
@@ -79,6 +82,27 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
             await Sender.Send(command, cancellationToken);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Gets all the dealer users.
+        /// </summary>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user with the specified identifier.</returns>
+        [HttpGet]
+        [Authorize]
+        [HasPermission(Permissions.UserRead)]
+        [ProducesResponseType(typeof(PagedList<DealerUserDetailsResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> GetAllDealerUsers(CancellationToken cancellationToken)
+        {
+            var query = new GetAllDealerUsersQuery();
+
+            PagedList<DealerUserDetailsResponse> response = await Sender.Send(query, cancellationToken);
+
+            return Ok(response);
         }
     }
 }

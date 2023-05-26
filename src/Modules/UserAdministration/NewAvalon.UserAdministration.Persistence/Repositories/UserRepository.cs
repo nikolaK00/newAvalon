@@ -22,6 +22,8 @@ namespace NewAvalon.UserAdministration.Persistence.Repositories
 
         public async Task<User> GetByIdAsync(UserId userId, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<User>()
+                .Include(user => user.Roles)
+                .ThenInclude(role => role.Permissions)
                 .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
 
         public async Task<bool> IsEmailTakenAsync(string email, CancellationToken cancellationToken = default) =>
