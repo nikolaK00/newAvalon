@@ -1,7 +1,14 @@
-﻿namespace NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser
+﻿using System;
+
+namespace NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser
 {
     public sealed record CreateUserRequest(
+        string Username,
+        string Email,
+        string Password,
         string FirstName,
         string LastName,
-        string Email);
+        DateTime DateOfBirth,
+        string Address,
+        int Type);
 }

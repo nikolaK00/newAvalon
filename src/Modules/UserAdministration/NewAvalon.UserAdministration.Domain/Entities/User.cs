@@ -12,14 +12,13 @@ namespace NewAvalon.UserAdministration.Domain.Entities
     {
         private readonly HashSet<Role> _roles = new();
 
-        public User(UserId id, string firstName, string lastName, string userName, string email, string password, DateTime dateOfBirth, string address)
+        public User(UserId id, string firstName, string lastName, string userName, string email, DateTime dateOfBirth, string address)
             : base(id)
         {
             FirstName = firstName;
             LastName = lastName;
             UserName = userName;
             Email = email;
-            Password = password;
             DateOfBirth = dateOfBirth;
             Address = address;
 
@@ -83,5 +82,7 @@ namespace NewAvalon.UserAdministration.Domain.Entities
         }
 
         public void RemoveProfileImage() => ProfileImage = ProfileImage.Empty;
+
+        public void UpdatePassword(string password) => Password = password;
     }
 }

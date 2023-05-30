@@ -28,6 +28,10 @@ namespace NewAvalon.UserAdministration.Persistence.Repositories
 
         public async Task<bool> IsEmailTakenAsync(string email, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<User>().AnyAsync(user => user.Email == email, cancellationToken);
+
+        public async Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken = default) =>
+            await _dbContext.Set<User>().AnyAsync(user => user.UserName == userName, cancellationToken);
+
         public void Delete(User user) => _dbContext.Set<User>().Remove(user);
 
         public void Insert(User user) => _dbContext.Set<User>().Add(user);

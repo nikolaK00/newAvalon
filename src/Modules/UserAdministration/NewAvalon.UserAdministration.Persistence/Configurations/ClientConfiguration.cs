@@ -2,42 +2,39 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
-using NewAvalon.UserAdministration.Domain.Enums;
 using NewAvalon.UserAdministration.Persistence.Constants;
 
 namespace NewAvalon.UserAdministration.Persistence.Configurations
 {
-    internal sealed class DealerConfiguration : IEntityTypeConfiguration<Dealer>
+    internal sealed class ClientConfiguration : IEntityTypeConfiguration<Client>
     {
-        public void Configure(EntityTypeBuilder<Dealer> builder)
+        public void Configure(EntityTypeBuilder<Client> builder)
         {
             ConfigureDataStructure(builder);
 
             ConfigureRelationships(builder);
         }
 
-        private static void ConfigureDataStructure(EntityTypeBuilder<Dealer> builder)
+        private static void ConfigureDataStructure(EntityTypeBuilder<Client> builder)
         {
-            builder.ToTable(TableNames.Dealers);
+            builder.ToTable(TableNames.Clients);
 
-            builder.HasKey(dealer => dealer.Id);
+            builder.HasKey(client => client.Id);
 
-            builder.Property(dealer => dealer.Id)
+            builder.Property(client => client.Id)
                 .ValueGeneratedNever()
-                .HasConversion(dealerId => dealerId.Value, value => new UserId(value));
+                .HasConversion(clientId => clientId.Value, value => new UserId(value));
 
             builder.Property(dealer => dealer.CreatedOnUtc).IsRequired();
 
             builder.Property(dealer => dealer.ModifiedOnUtc);
-
-            builder.Property(topic => topic.Status).IsRequired().HasDefaultValue(DealerStatus.Pending);
         }
 
-        private static void ConfigureRelationships(EntityTypeBuilder<Dealer> builder)
+        private static void ConfigureRelationships(EntityTypeBuilder<Client> builder)
         {
             builder.HasOne<User>()
                 .WithOne()
-                .HasForeignKey<Dealer>(dealer => dealer.Id)
+                .HasForeignKey<Client>(client => client.Id)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }

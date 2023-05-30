@@ -6,6 +6,7 @@ using NewAvalon.Authorization.Attributes;
 using NewAvalon.Boundary.Pagination;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.ApproveUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.DisapproveUser;
+using NewAvalon.UserAdministration.Boundary.Users.Queries.GetAllDealerUsers;
 using NewAvalon.UserAdministration.Boundary.Users.Queries.GetPendingUsers;
 using NewAvalon.UserAdministration.Boundary.Users.Queries.GetUser;
 using NewAvalon.UserAdministration.Presentation.Abstractions;
@@ -87,6 +88,8 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <summary>
         /// Gets all the dealer users.
         /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
         [HttpGet]
@@ -96,9 +99,9 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> GetAllDealerUsers(CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAllDealerUsers(int page, int itemsPerPage, CancellationToken cancellationToken)
         {
-            var query = new GetAllDealerUsersQuery();
+            var query = new GetAllDealerUsersQuery(page, itemsPerPage);
 
             PagedList<DealerUserDetailsResponse> response = await Sender.Send(query, cancellationToken);
 

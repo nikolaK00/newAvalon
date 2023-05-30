@@ -10,7 +10,7 @@ namespace NewAvalon.UserAdministration.Domain.Entities
     {
         public Dealer(UserId id) : base(id)
         {
-
+            Status = DealerStatus.Pending;
         }
 
         /// <summary>

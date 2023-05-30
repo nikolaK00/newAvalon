@@ -1,10 +1,12 @@
-﻿using NewAvalon.Abstractions.Contracts;
+﻿using Epoche;
+using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.Messaging;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser;
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
 using NewAvalon.UserAdministration.Domain.Repositories;
 using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,39 +16,77 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
     internal sealed class CreateUserCommandHandler : ICommandHandler<CreateUserCommand, EntityCreatedResponse>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IDealerRepository _dealerRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IUserAdministrationUnitOfWork _unitOfWork;
 
         public CreateUserCommandHandler(
             IUserRepository userRepository,
+            IDealerRepository dealerRepository,
+            IClientRepository clientRepository,
             IUserAdministrationUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
+            _dealerRepository = dealerRepository;
+            _clientRepository = clientRepository;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<EntityCreatedResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
         {
-            bool isEmailTaken = await _userRepository.IsEmailTakenAsync(request.Email, cancellationToken);
+            await VerifyRequest(request.Email, request.Username, cancellationToken);
+
+            var user = new User(
+                new Domain.EntityIdentifiers.UserId(Guid.NewGuid()),
+                request.FirstName,
+                request.LastName,
+                request.Username,
+                request.Email,
+                request.DateOfBirth,
+                request.Address);
+
+            var keccak = Keccak256.ComputeHash(Encoding.UTF8.GetBytes(user.Id + request.Password));
+
+            user.UpdatePassword(Encoding.UTF8.GetString(keccak));
+
+            _userRepository.Insert(user);
+
+            if (request.Type == Role.Client.Id.Value)
+            {
+                var client = new Client(user.Id);
+
+                _clientRepository.Insert(client);
+            }
+            else if (request.Type == Role.DealerUser.Id.Value)
+            {
+                var dealer = new Dealer(user.Id);
+
+                _dealerRepository.Insert(dealer);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return new EntityCreatedResponse(user.Id.Value);
+        }
+
+        private async Task VerifyRequest(string email, string userName, CancellationToken cancellationToken)
+        {
+            bool isEmailTaken = await _userRepository.IsEmailTakenAsync(email, cancellationToken);
 
             if (isEmailTaken)
             {
                 throw new UserWithEmailAlreadyExistsException();
             }
 
-            var user = new User(
-                new Domain.EntityIdentifiers.UserId(Guid.NewGuid()),
-                request.FirstName,
-                request.LastName,
-                string.Empty,
-                request.Email,
-                string.Empty,
-                DateTime.UtcNow,
-                string.Empty);
+            bool isUserNameTaken = await _userRepository.IsUserNameTakenAsync(userName, cancellationToken);
 
-            _userRepository.Insert(user);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return new EntityCreatedResponse(user.Id.Value);
+            if (isUserNameTaken)
+            {
+                throw new UserWithUserNameAlreadyExists();
+            }
         }
     }
 }

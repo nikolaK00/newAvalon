@@ -9,5 +9,7 @@
         internal const string Permissions = nameof(Permissions);
 
         internal const string Dealers = nameof(Dealers);
+
+        internal const string Clients = nameof(Clients);
     }
 }

@@ -1,10 +1,16 @@
 ﻿using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.Messaging;
+using System;
 
 namespace NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser
 {
     public sealed record CreateUserCommand(
+        string Username,
+        string Email,
+        string Password,
         string FirstName,
         string LastName,
-        string Email) : ICommand<EntityCreatedResponse>;
+        DateTime DateOfBirth,
+        string Address,
+        int Type) : ICommand<EntityCreatedResponse>;
 }

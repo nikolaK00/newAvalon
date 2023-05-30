@@ -15,6 +15,8 @@ namespace NewAvalon.UserAdministration.Domain.Repositories
 
         Task<bool> IsEmailTakenAsync(string email, CancellationToken cancellationToken = default);
 
+        Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken = default);
+
         void Insert(User user);
 
         void Delete(User user);
