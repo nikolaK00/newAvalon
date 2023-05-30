@@ -1,9 +1,13 @@
-﻿using MediatR;
+﻿using Epoche;
+using MediatR;
 using NewAvalon.Abstractions.Messaging;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUser;
 using NewAvalon.UserAdministration.Domain.Entities;
+using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
 using NewAvalon.UserAdministration.Domain.Repositories;
+using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,18 +26,27 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.UpdateUser
 
         public async Task<Unit> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            User user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
+            User user = await _userRepository.GetByIdAsync(new UserId(request.Id), cancellationToken);
 
             if (user is null)
             {
-                throw new UserNotFoundByEmailException(request.Email);
+                throw new UserNotFoundException(request.Id);
             }
 
-            user.Update(request.FirstName, request.LastName, string.Empty, string.Empty);
+            var password = GeneratePassword(user.Id.Value, request.Password);
+
+            user.Update(request.FirstName, request.LastName, request.Username, password, request.DateOfBirth, request.Address);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
+        }
+
+        private string GeneratePassword(Guid userId, string password)
+        {
+            var keccak = Keccak256.ComputeHash(Encoding.UTF8.GetBytes(userId + password));
+
+            return Encoding.UTF8.GetString(keccak);
         }
     }
 }

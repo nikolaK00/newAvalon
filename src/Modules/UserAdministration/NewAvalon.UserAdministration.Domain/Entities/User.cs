@@ -63,10 +63,16 @@ namespace NewAvalon.UserAdministration.Domain.Entities
 
         public bool RemoveRole(Role role) => _roles.Remove(role);
 
-        public void Update(string firstName, string lastName, string phoneNumber, string pwwUsername)
+        public void Update(string firstName, string lastName, string userName, string password, DateTime dateOfBirth, string address)
         {
             FirstName = firstName;
             LastName = lastName;
+            UserName = userName;
+            Password = password;
+            DateOfBirth = dateOfBirth;
+            Address = address;
+
+            RaiseDomainEvent(new UserCreatedDomainEvent(Id));
         }
 
         public void ChangeProfileImage(ProfileImage profileImage)

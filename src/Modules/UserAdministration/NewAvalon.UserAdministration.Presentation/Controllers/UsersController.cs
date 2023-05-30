@@ -102,7 +102,10 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
         {
-            UpdateUserCommand command = request.Adapt<UpdateUserCommand>();
+            UpdateUserCommand command = request.Adapt<UpdateUserCommand>() with
+            {
+                Id = Guid.Parse(HttpContext.User.GetUserIdentityId())
+            };
 
             await Sender.Send(command, cancellationToken);
 

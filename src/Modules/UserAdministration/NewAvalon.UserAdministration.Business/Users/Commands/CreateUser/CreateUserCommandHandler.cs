@@ -45,9 +45,9 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
                 request.DateOfBirth,
                 request.Address);
 
-            var keccak = Keccak256.ComputeHash(Encoding.UTF8.GetBytes(user.Id + request.Password));
+            var password = GeneratePassword(user.Id.Value, request.Password);
 
-            user.UpdatePassword(Encoding.UTF8.GetString(keccak));
+            user.UpdatePassword(password);
 
             _userRepository.Insert(user);
 
@@ -70,6 +70,13 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return new EntityCreatedResponse(user.Id.Value);
+        }
+
+        private string GeneratePassword(Guid userId, string password)
+        {
+            var keccak = Keccak256.ComputeHash(Encoding.UTF8.GetBytes(userId + password));
+
+            return Encoding.UTF8.GetString(keccak);
         }
 
         private async Task VerifyRequest(string email, string userName, CancellationToken cancellationToken)

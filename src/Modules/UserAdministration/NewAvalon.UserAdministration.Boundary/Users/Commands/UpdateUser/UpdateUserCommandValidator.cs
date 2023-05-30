@@ -10,8 +10,6 @@ namespace NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUser
             RuleFor(x => x.FirstName).FirstName();
 
             RuleFor(x => x.LastName).LastName();
-
-            RuleFor(x => x.Email).EmailAddress();
         }
     }
 }
