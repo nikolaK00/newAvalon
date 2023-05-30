@@ -1,9 +1,10 @@
-﻿using System;
+﻿using NewAvalon.Messaging.Contracts.Users;
+using System;
 using System.Collections.Generic;
 
-namespace NewAvalon.Messaging.Contracts.Users
+namespace NewAvalon.UserAdministration.Business.Contracts.Users
 {
-    public interface IUserDetailsResponse
+    internal sealed class UserDetailsResponse : IUserDetailsResponse
     {
         public Guid Id { get; set; }
 

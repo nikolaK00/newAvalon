@@ -2,11 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NewAvalon.App.Abstractions;
-using NewAvalon.Catalog.Business;
 using NewAvalon.Infrastructure.Messaging.Options;
-using NewAvalon.Messaging.Contracts;
 using NewAvalon.Messaging.Contracts.Permissions;
+using NewAvalon.Messaging.Contracts.Users;
 using NewAvalon.UserAdministration.Business.Permissions.Consumers;
+using NewAvalon.UserAdministration.Business.Users.Consumers;
 
 namespace NewAvalon.App.ServiceInstallers.Messaging
 {
@@ -53,7 +53,7 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
 
         private static void AddConsumers(IRegistrationConfigurator busConfigurator)
         {
-            busConfigurator.AddConsumer<ExampleConsumer>().Endpoint(e => e.Name = "example-consumer");
+            busConfigurator.AddConsumer<UserDetailsRequestConsumer>().Endpoint(e => e.Name = "user-details-request-consumer");
 
             busConfigurator.AddConsumer<GetPermissionsRequestConsumer>().Endpoint(e => e.Name = "user-administration-get-permissions-request");
 
@@ -61,7 +61,7 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
 
         private static void AddRequestClients(IRegistrationConfigurator busConfigurator)
         {
-            busConfigurator.AddRequestClient<IExampleRequest>();
+            busConfigurator.AddRequestClient<IUserDetailsRequest>();
 
             busConfigurator.AddRequestClient<IGetPermissionsRequest>();
         }

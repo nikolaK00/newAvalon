@@ -4,6 +4,7 @@ using NewAvalon.Abstractions.Clock;
 using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.ServiceLifetimes;
 using NewAvalon.Abstractions.Services;
+using NewAvalon.Authorization.Services;
 using NewAvalon.Infrastructure.Options;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,11 +16,13 @@ namespace NewAvalon.Infrastructure.Authentication
     {
         private readonly ISystemTime _systemTime;
         private readonly JwtOptions _jwtOptions;
+        private readonly IPermissionService _permissionService;
 
-        public JwtProvider(ISystemTime systemTime, IOptions<JwtOptions> jwtOptions)
+        public JwtProvider(ISystemTime systemTime, IOptions<JwtOptions> jwtOptions, IPermissionService permissionService)
         {
             _systemTime = systemTime;
             _jwtOptions = jwtOptions.Value;
+            _permissionService = permissionService;
         }
 
         public string Generate(GenerateTokenRequest user)

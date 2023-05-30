@@ -1,12 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="DataRequests\Orders\" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Npgsql" Version="5.0.7" />
@@ -14,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\NewAvalon.Persistence\NewAvalon.Persistence.csproj" />
+    <ProjectReference Include="..\NewAvalon.Order.Business\NewAvalon.Order.Business.csproj" />
     <ProjectReference Include="..\NewAvalon.Order.Domain\NewAvalon.Order.Domain.csproj" />
   </ItemGroup>
 

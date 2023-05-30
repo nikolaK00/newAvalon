@@ -1,7 +1,9 @@
-﻿namespace NewAvalon.Messaging.Contracts.Users
+﻿using System;
+
+namespace NewAvalon.Messaging.Contracts.Users
 {
     public interface IUserDetailsRequest
     {
-        bool IsWorking { get; set; }
+        Guid Id { get; set; }
     }
 }

@@ -17,8 +17,14 @@ namespace NewAvalon.UserAdministration.Persistence.DataRequests.Users
 
         public async Task<UserDetailsResponse> GetAsync(UserId request, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<User>()
+                .Include(user => user.Roles)
                 .Where(user => user.Id == request)
-                .Select(user => new UserDetailsResponse(user.Id.Value, user.FirstName, user.LastName, user.Email))
+                .Select(user => new UserDetailsResponse(
+                    user.Id.Value,
+                    user.FirstName,
+                    user.LastName,
+                    user.Email,
+                    user.Roles.Select(x => x.Description).ToList()))
                 .FirstOrDefaultAsync(cancellationToken);
     }
 }

@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -9,7 +9,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Authorization\NewAvalon.Authorization.csproj" />
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Boundary\NewAvalon.Boundary.csproj" />
     <ProjectReference Include="..\..\..\Common\NewAvalon.Presentation\NewAvalon.Presentation.csproj" />
+    <ProjectReference Include="..\NewAvalon.Order.Boundary\NewAvalon.Order.Boundary.csproj" />
   </ItemGroup>
 
 </Project>

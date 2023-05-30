@@ -38,7 +38,8 @@ namespace NewAvalon.UserAdministration.Persistence.DataRequests.Users
                     user.Id.Value,
                     user.FirstName,
                     user.LastName,
-                    user.Email));
+                    user.Email,
+                    user.Roles.Select(x => x.Description).ToList()));
 
             return new PagedList<UserDetailsResponse>(userDetailsResponses, count, request.Page, request.ItemsPerPage);
         }
