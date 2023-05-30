@@ -3,5 +3,6 @@
     public sealed record CreateProductRequest(
         string Name,
         decimal Price,
-        decimal Capacity);
+        decimal Capacity,
+        string Description);
 }

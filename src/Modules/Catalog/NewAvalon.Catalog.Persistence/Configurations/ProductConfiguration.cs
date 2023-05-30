@@ -26,6 +26,10 @@ namespace NewAvalon.Catalog.Persistence.Configurations
             builder.Property(product => product.ModifiedOnUtc);
 
             builder.Property(product => product.CreatedOnUtc).IsRequired();
+
+            builder.Property(product => product.Description).IsRequired().HasDefaultValue(string.Empty);
+
+            builder.Property(product => product.CreatorId).IsRequired();
         }
     }
 }

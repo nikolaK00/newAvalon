@@ -31,7 +31,10 @@ namespace NewAvalon.Catalog.Persistence.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("");
 
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("timestamp without time zone");

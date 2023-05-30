@@ -7,13 +7,14 @@ namespace NewAvalon.Catalog.Domain.Entities
 {
     public sealed class Product : AggregateRoot<ProductId>, IAuditableEntity
     {
-        public Product(ProductId id, string name, decimal price, decimal capacity, string description)
+        public Product(ProductId id, string name, decimal price, decimal capacity, string description, Guid creatorId)
             : base(id)
         {
             Name = name;
             Price = price;
             Capacity = capacity;
             Description = description;
+            CreatorId = creatorId;
         }
 
         /// <summary>
@@ -36,6 +37,8 @@ namespace NewAvalon.Catalog.Domain.Entities
 
         public ProductImage ProductImage { get; private set; }
 
+        public Guid CreatorId { get; private set; }
+
         public DateTime CreatedOnUtc { get; private set; }
 
         public DateTime? ModifiedOnUtc { get; private set; }
@@ -53,5 +56,13 @@ namespace NewAvalon.Catalog.Domain.Entities
         }
 
         public void RemoveProductImage() => ProductImage = ProductImage.Empty;
+
+        public void Update(string name, decimal price, decimal capacity, string description)
+        {
+            Name = name;
+            Price = price;
+            Capacity = capacity;
+            Description = description;
+        }
     }
 }

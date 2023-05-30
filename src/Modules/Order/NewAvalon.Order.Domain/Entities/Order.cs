@@ -1,5 +1,6 @@
 ﻿using NewAvalon.Domain.Abstractions;
 using NewAvalon.Order.Domain.EntityIdentifiers;
+using NewAvalon.Order.Domain.Enums;
 using System;
 
 namespace NewAvalon.Order.Domain.Entities
@@ -16,8 +17,12 @@ namespace NewAvalon.Order.Domain.Entities
         {
         }
 
-        public DateTime CreatedOnUtc { get; }
+        public DateTime CreatedOnUtc { get; private set; }
 
-        public DateTime? ModifiedOnUtc { get; }
+        public DateTime? ModifiedOnUtc { get; private set; }
+
+        public OrderStatus Status { get; private set; }
+
+        public Guid OwnerId { get; private set; }
     }
 }

@@ -11,6 +11,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\NewAvalon.Abstractions\NewAvalon.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Authorization\NewAvalon.Authorization.csproj" />
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Boundary\NewAvalon.Boundary.csproj" />
     <ProjectReference Include="..\..\..\Common\NewAvalon.Presentation\NewAvalon.Presentation.csproj" />
     <ProjectReference Include="..\NewAvalon.Catalog.Boundary\NewAvalon.Catalog.Boundary.csproj" />
   </ItemGroup>

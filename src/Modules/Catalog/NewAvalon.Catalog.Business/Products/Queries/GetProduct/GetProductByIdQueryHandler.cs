@@ -16,6 +16,6 @@ namespace NewAvalon.Catalog.Business.Products.Queries.GetProduct
         }
 
         public async Task<ProductDetailsResponse> Handle(GetProductByIdQuery request, CancellationToken cancellationToken) =>
-            await _getProductByIdDataRequest.GetAsync(new ProductId(request.UserId), cancellationToken);
+            await _getProductByIdDataRequest.GetAsync(new ProductId(request.ProductId), cancellationToken);
     }
 }

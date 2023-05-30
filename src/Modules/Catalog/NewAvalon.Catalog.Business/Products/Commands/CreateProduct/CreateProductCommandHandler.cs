@@ -29,7 +29,8 @@ namespace NewAvalon.Catalog.Business.Products.Commands.CreateProduct
                 request.Name,
                 request.Price,
                 request.Capacity,
-                string.Empty);
+                request.Description,
+                request.CreatorId);
 
             _productRepository.Insert(product);
 

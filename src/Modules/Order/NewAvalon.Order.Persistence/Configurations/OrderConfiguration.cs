@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NewAvalon.Order.Domain.EntityIdentifiers;
+using NewAvalon.Order.Domain.Enums;
 using NewAvalon.Order.Persistence.Constants;
 
 namespace NewAvalon.Order.Persistence.Configurations
@@ -24,9 +25,13 @@ namespace NewAvalon.Order.Persistence.Configurations
                 .ValueGeneratedNever()
                 .HasConversion(orderId => orderId.Value, value => new OrderId(value));
 
-            builder.Property(dealer => dealer.CreatedOnUtc).IsRequired();
+            builder.Property(order => order.CreatedOnUtc).IsRequired();
 
-            builder.Property(dealer => dealer.ModifiedOnUtc);
+            builder.Property(order => order.ModifiedOnUtc);
+
+            builder.Property(order => order.Status).IsRequired().HasDefaultValue(OrderStatus.Shipping);
+
+            builder.Property(order => order.OwnerId).IsRequired();
         }
 
         private static void ConfigureRelationships(EntityTypeBuilder<Domain.Entities.Order> builder)

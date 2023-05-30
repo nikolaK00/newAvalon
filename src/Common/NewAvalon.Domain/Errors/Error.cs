@@ -37,6 +37,10 @@
         public static Error DealerAlreadyProcessed => new(1002, "Dealer already processed");
 
         #endregion
+        #region Products
 
+        public static Error ProductNotFound => new(2000, "Product not found");
+
+        #endregion
     }
 }

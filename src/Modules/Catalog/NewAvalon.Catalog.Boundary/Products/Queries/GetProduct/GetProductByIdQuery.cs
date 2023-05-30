@@ -3,5 +3,5 @@ using System;
 
 namespace NewAvalon.Catalog.Boundary.Products.Queries.GetProduct
 {
-    public sealed record GetProductByIdQuery(Guid UserId) : IQuery<ProductDetailsResponse>;
+    public sealed record GetProductByIdQuery(Guid ProductId) : IQuery<ProductDetailsResponse>;
 }

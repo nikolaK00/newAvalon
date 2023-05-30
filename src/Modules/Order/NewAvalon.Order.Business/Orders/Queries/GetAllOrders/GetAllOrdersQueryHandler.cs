@@ -15,13 +15,19 @@ namespace NewAvalon.Order.Business.Orders.Queries.GetAllOrders
     {
         private readonly IRequestClient<IUserDetailsRequest> _userDetailsRequestClient;
         private readonly IGetAllSuperAdminOrdersDataRequest _getAllSuperAdminOrdersDataRequest;
+        private readonly IGetAllDealerUserOrdersDataRequest _getAllDealerUserOrdersDataRequest;
+        private readonly IGetAllClientOrdersDataRequest _getAllClientOrdersDataRequest;
 
         public GetAllOrdersQueryHandler(
             IRequestClient<IUserDetailsRequest> userDetailsRequestClient,
-            IGetAllSuperAdminOrdersDataRequest getAllSuperAdminOrdersDataRequest)
+            IGetAllSuperAdminOrdersDataRequest getAllSuperAdminOrdersDataRequest,
+            IGetAllDealerUserOrdersDataRequest getAllDealerUserOrdersDataRequest,
+            IGetAllClientOrdersDataRequest getAllClientOrdersDataRequest)
         {
             _userDetailsRequestClient = userDetailsRequestClient;
             _getAllSuperAdminOrdersDataRequest = getAllSuperAdminOrdersDataRequest;
+            _getAllDealerUserOrdersDataRequest = getAllDealerUserOrdersDataRequest;
+            _getAllClientOrdersDataRequest = getAllClientOrdersDataRequest;
         }
 
         public async Task<PagedList<OrderDetailsResponse>> Handle(
@@ -44,12 +50,12 @@ namespace NewAvalon.Order.Business.Orders.Queries.GetAllOrders
 
             if (userDetailsResponse.Roles.Contains(RoleNames.DealerUser))
             {
-
+                return await _getAllDealerUserOrdersDataRequest.GetAsync((request.Page, request.ItemsPerPage), cancellationToken);
             }
 
             if (userDetailsResponse.Roles.Contains(RoleNames.Client))
             {
-
+                return await _getAllClientOrdersDataRequest.GetAsync((request.UserId, request.Page, request.ItemsPerPage), cancellationToken);
             }
 
             return new PagedList<OrderDetailsResponse>(new List<OrderDetailsResponse>(), 0, request.Page, request.ItemsPerPage);
