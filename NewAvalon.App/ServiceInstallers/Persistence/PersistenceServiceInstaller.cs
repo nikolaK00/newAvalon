@@ -6,6 +6,8 @@ using NewAvalon.App.Abstractions;
 using NewAvalon.Catalog.Domain.Repositories;
 using NewAvalon.Catalog.Persistence;
 using NewAvalon.Catalog.Persistence.Options;
+using NewAvalon.Order.Persistence;
+using NewAvalon.Order.Persistence.Options;
 using NewAvalon.Persistence.Extensions;
 using NewAvalon.Persistence.Factories;
 using NewAvalon.Persistence.Relational.Interceptors;
@@ -33,6 +35,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
         {
             services.ConfigureOptions<UserAdministrationDatabaseOptionsSetup>();
             services.ConfigureOptions<CatalogDatabaseOptionsSetup>();
+            services.ConfigureOptions<OrderDatabaseOptionsSetup>();
         }
 
         private static void InstallCore(IServiceCollection services)
@@ -41,12 +44,15 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
             AddCatalogDbContext(services);
 
+            AddOrderDbContext(services);
+
             AddRepositories(
                 services,
                 new[]
                 {
                     typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
+                    typeof(Order.Persistence.AssemblyReference).Assembly,
                 });
 
             AddDataRequests(
@@ -55,6 +61,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 {
                     typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
+                    typeof(Order.Persistence.AssemblyReference).Assembly,
                 });
 
             AddInterceptors(services);
@@ -95,6 +102,22 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 builder.UseNpgsql("Host=localhost; Database=catalog; Username=postgres; Password=postgres",
                         optionsBuilder => optionsBuilder.MigrationsAssembly(
                             typeof(Catalog.Persistence.AssemblyReference).Assembly.FullName))
+                    .AddInterceptors(provider);
+            });
+
+            services.AddScoped<ICatalogUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CatalogDbContext>());
+        }
+
+        private static void AddOrderDbContext(IServiceCollection services)
+        {
+            services.AddDbContextPool<OrderDbContext>((provider, builder) =>
+            {
+                IOptions<OrderDatabaseOptions> dbSettingsOptions =
+                    provider.GetRequiredService<IOptions<OrderDatabaseOptions>>();
+
+                builder.UseNpgsql("Host=localhost; Database=order; Username=postgres; Password=postgres",
+                        optionsBuilder => optionsBuilder.MigrationsAssembly(
+                            typeof(Order.Persistence.AssemblyReference).Assembly.FullName))
                     .AddInterceptors(provider);
             });
 
