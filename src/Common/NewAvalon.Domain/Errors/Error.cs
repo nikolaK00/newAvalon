@@ -36,6 +36,8 @@
 
         public static Error DealerAlreadyProcessed => new(1002, "Dealer already processed");
 
+        public static Error IncorrectPassword => new(1003, "Incorrect password");
+
         #endregion
         #region Products
 

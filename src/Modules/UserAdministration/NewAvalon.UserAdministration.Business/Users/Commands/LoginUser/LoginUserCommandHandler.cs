@@ -1,10 +1,13 @@
-﻿using NewAvalon.Abstractions.Contracts;
+﻿using Epoche;
+using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.Messaging;
 using NewAvalon.Abstractions.Services;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.LoginUser;
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
 using NewAvalon.UserAdministration.Domain.Repositories;
+using System;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +33,21 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.LoginUser
                 throw new UserNotFoundByEmailException(request.Email);
             }
 
+            if (request.Password != GeneratePassword(user.Id.Value, request.Password))
+            {
+                throw new IncorrectPasswordException();
+            }
+
             string token = _jwtProvider.Generate(new GenerateTokenRequest(user.Email, user.Id.Value));
 
             return token;
+        }
+
+        private string GeneratePassword(Guid userId, string password)
+        {
+            var keccak = Keccak256.ComputeHash(Encoding.UTF8.GetBytes(userId + password));
+
+            return Encoding.UTF8.GetString(keccak);
         }
     }
 }

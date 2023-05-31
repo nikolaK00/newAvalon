@@ -42,10 +42,7 @@ namespace NewAvalon.Catalog.Presentation.Controllers
 
             EntityCreatedResponse response = await Sender.Send(command, cancellationToken);
 
-            return CreatedAtAction(nameof(GetProduct), new
-            {
-                productId = response.EntityId
-            }, response.EntityId);
+            return CreatedAtAction(nameof(GetProduct), new { productId = response.EntityId }, response.EntityId);
         }
 
         /// <summary>

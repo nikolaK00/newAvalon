@@ -96,7 +96,7 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <returns>The token of the newly logged user.</returns>
         [HttpPut]
         [Authorize]
-        [ProducesResponseType(typeof(string), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

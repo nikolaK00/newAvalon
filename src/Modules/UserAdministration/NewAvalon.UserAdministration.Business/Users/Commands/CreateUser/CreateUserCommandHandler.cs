@@ -53,14 +53,14 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
 
             if (request.Type == Role.Client.Id.Value)
             {
+                user.AddRole(Role.Client);
                 var client = new Client(user.Id);
-
                 _clientRepository.Insert(client);
             }
             else if (request.Type == Role.DealerUser.Id.Value)
             {
+                user.AddRole(Role.DealerUser);
                 var dealer = new Dealer(user.Id);
-
                 _dealerRepository.Insert(dealer);
             }
             else
