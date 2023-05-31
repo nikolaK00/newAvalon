@@ -38,9 +38,8 @@ namespace NewAvalon.UserAdministration.Persistence.Configurations
             builder.Property(user => user.ModifiedOnUtc);
         }
 
-        private static void ConfigureRelationships(EntityTypeBuilder<User> builder)
-        {
-        }
+        private static void ConfigureRelationships(EntityTypeBuilder<User> builder) =>
+            builder.HasMany(user => user.Roles).WithMany(role => role.Users);
 
         private static void ConfigureIndexes(EntityTypeBuilder<User> builder)
         {

@@ -18,17 +18,20 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
         private readonly IUserRepository _userRepository;
         private readonly IDealerRepository _dealerRepository;
         private readonly IClientRepository _clientRepository;
+        private readonly IRoleRepository _roleRepository;
         private readonly IUserAdministrationUnitOfWork _unitOfWork;
 
         public CreateUserCommandHandler(
             IUserRepository userRepository,
             IDealerRepository dealerRepository,
             IClientRepository clientRepository,
+            IRoleRepository roleRepository,
             IUserAdministrationUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
             _dealerRepository = dealerRepository;
             _clientRepository = clientRepository;
+            _roleRepository = roleRepository;
             _unitOfWork = unitOfWork;
         }
 
@@ -53,13 +56,15 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
 
             if (request.Type == Role.Client.Id.Value)
             {
+                user.AddRole(_roleRepository.GetByRole(Role.Client));
+
                 user.AddRole(Role.Client);
                 var client = new Client(user.Id);
                 _clientRepository.Insert(client);
             }
             else if (request.Type == Role.DealerUser.Id.Value)
             {
-                user.AddRole(Role.DealerUser);
+                user.AddRole(_roleRepository.GetByRole(Role.DealerUser));
                 var dealer = new Dealer(user.Id);
                 _dealerRepository.Insert(dealer);
             }
