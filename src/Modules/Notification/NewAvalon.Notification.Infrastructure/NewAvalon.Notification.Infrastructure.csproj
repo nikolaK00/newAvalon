@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NewAvalon.Notification.Business\NewAvalon.Notification.Business.csproj" />
+    <ProjectReference Include="..\NewAvalon.Notification.Persistence\NewAvalon.Notification.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

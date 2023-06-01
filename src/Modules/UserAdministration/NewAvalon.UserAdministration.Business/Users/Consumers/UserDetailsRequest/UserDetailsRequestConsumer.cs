@@ -6,7 +6,7 @@ using NewAvalon.UserAdministration.Business.Users.Queries.GetUser;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using System.Threading.Tasks;
 
-namespace NewAvalon.UserAdministration.Business.Users.Consumers
+namespace NewAvalon.UserAdministration.Business.Users.Consumers.UserDetailsRequest
 {
     public sealed class UserDetailsRequestConsumer : IConsumer<IUserDetailsRequest>
     {
@@ -22,7 +22,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Consumers
 
             var response = userDetails.Adapt<UserDetailsResponse>();
 
-            await context.RespondAsync<IUserDetailsResponse>(response.Adapt<IUserDetailsResponse>());
+            await context.RespondAsync(response.Adapt<IUserDetailsResponse>());
         }
     }
 }

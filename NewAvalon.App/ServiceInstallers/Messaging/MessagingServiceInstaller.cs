@@ -5,8 +5,10 @@ using NewAvalon.App.Abstractions;
 using NewAvalon.Infrastructure.Messaging.Options;
 using NewAvalon.Messaging.Contracts.Permissions;
 using NewAvalon.Messaging.Contracts.Users;
+using NewAvalon.Notification.Business.Notifications.Consumers;
 using NewAvalon.UserAdministration.Business.Permissions.Consumers;
-using NewAvalon.UserAdministration.Business.Users.Consumers;
+using NewAvalon.UserAdministration.Business.Users.Consumers.UserDetailsListRequest;
+using NewAvalon.UserAdministration.Business.Users.Consumers.UserDetailsRequest;
 
 namespace NewAvalon.App.ServiceInstallers.Messaging
 {
@@ -57,6 +59,9 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
 
             busConfigurator.AddConsumer<GetPermissionsRequestConsumer>().Endpoint(e => e.Name = "user-administration-get-permissions-request");
 
+            busConfigurator.AddConsumer<NotificationCreatedEventConsumer>().Endpoint(e => e.Name = "notification-created-event-consumer");
+
+            busConfigurator.AddConsumer<UserDetailsListRequestConsumer>().Endpoint(e => e.Name = "user-details-list-request-consumer");
         }
 
         private static void AddRequestClients(IRegistrationConfigurator busConfigurator)
@@ -64,6 +69,8 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
             busConfigurator.AddRequestClient<IUserDetailsRequest>();
 
             busConfigurator.AddRequestClient<IGetPermissionsRequest>();
+
+            busConfigurator.AddRequestClient<IUserDetailsListRequest>();
         }
     }
 }
