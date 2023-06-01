@@ -10,5 +10,5 @@ namespace NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser
         string LastName,
         DateTime DateOfBirth,
         string Address,
-        int Type);
+        int[] Roles);
 }
