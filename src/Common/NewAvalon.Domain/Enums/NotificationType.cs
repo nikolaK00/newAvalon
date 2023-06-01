@@ -3,8 +3,8 @@
     public enum NotificationType
     {
         /// <summary>
-        /// User created.
+        /// Dealer user approved.
         /// </summary>
-        UserCreated = 1,
+        DealerUserApproved = 1,
     }
 }

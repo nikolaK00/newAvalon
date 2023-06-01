@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using NewAvalon.Abstractions.Messaging;
-using NewAvalon.UserAdministration.Boundary.Users.Commands.ApproveUser;
+using NewAvalon.UserAdministration.Boundary.Users.Commands.DisapproveUser;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
 using NewAvalon.UserAdministration.Domain.Repositories;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace NewAvalon.UserAdministration.Business.Users.Commands.DisapproveUser
 {
-    internal sealed class DisapproveUserByIdCommandHandler : ICommandHandler<ApproveUserByIdCommand, Unit>
+    internal sealed class DisapproveUserByIdCommandHandler : ICommandHandler<DisapproveUserByIdCommand, Unit>
     {
         private readonly IDealerRepository _dealerRepository;
         private readonly IUserAdministrationUnitOfWork _unitOfWork;
@@ -22,7 +22,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.DisapproveUser
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Unit> Handle(ApproveUserByIdCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DisapproveUserByIdCommand request, CancellationToken cancellationToken)
         {
             var user = await _dealerRepository.GetByIdAsync(new UserId(request.UserId), cancellationToken);
 

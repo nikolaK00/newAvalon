@@ -33,7 +33,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.LoginUser
                 throw new UserNotFoundByEmailException(request.Email);
             }
 
-            if (request.Password != GeneratePassword(user.Id.Value, request.Password))
+            if (user.Password != GeneratePassword(user.Id.Value, request.Password))
             {
                 throw new IncorrectPasswordException();
             }

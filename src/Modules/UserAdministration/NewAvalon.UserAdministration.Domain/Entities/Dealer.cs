@@ -1,12 +1,13 @@
 ﻿using NewAvalon.Domain.Abstractions;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using NewAvalon.UserAdministration.Domain.Enums;
+using NewAvalon.UserAdministration.Domain.Events;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
 using System;
 
 namespace NewAvalon.UserAdministration.Domain.Entities
 {
-    public sealed class Dealer : Entity<UserId>, IAuditableEntity
+    public sealed class Dealer : AggregateRoot<UserId>, IAuditableEntity
     {
         public Dealer(UserId id) : base(id)
         {
@@ -47,6 +48,8 @@ namespace NewAvalon.UserAdministration.Domain.Entities
             }
 
             Status = DealerStatus.Approved;
+
+            RaiseDomainEvent(new DealerUserApprovedDomainEvent(Id.Value));
         }
     }
 }

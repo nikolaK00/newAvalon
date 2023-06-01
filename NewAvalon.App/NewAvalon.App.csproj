@@ -20,8 +20,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.15.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.2" />
     <PackageReference Include="Scrutor" Version="3.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
@@ -35,6 +37,12 @@
     <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Domain\NewAvalon.Catalog.Domain.csproj" />
     <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Persistence\NewAvalon.Catalog.Persistence.csproj" />
     <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj" />
+    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Boundary\NewAvalon.Notification.Boundary.csproj" />
+    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Business\NewAvalon.Notification.Business.csproj" />
+    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Domain\NewAvalon.Notification.Domain.csproj" />
+    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Infrastructure\NewAvalon.Notification.Infrastructure.csproj" />
+    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Persistence\NewAvalon.Notification.Persistence.csproj" />
+    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Presentation\NewAvalon.Notification.Presentation.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Boundary\NewAvalon.Order.Boundary.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Business\NewAvalon.Order.Business.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Domain\NewAvalon.Order.Domain.csproj" />

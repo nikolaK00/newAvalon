@@ -6,6 +6,9 @@ using NewAvalon.App.Abstractions;
 using NewAvalon.Catalog.Domain.Repositories;
 using NewAvalon.Catalog.Persistence;
 using NewAvalon.Catalog.Persistence.Options;
+using NewAvalon.Notification.Domain.Repositories;
+using NewAvalon.Notification.Persistence;
+using NewAvalon.Notification.Persistence.Options;
 using NewAvalon.Order.Persistence;
 using NewAvalon.Order.Persistence.Options;
 using NewAvalon.Persistence.Extensions;
@@ -36,6 +39,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
             services.ConfigureOptions<UserAdministrationDatabaseOptionsSetup>();
             services.ConfigureOptions<CatalogDatabaseOptionsSetup>();
             services.ConfigureOptions<OrderDatabaseOptionsSetup>();
+            services.ConfigureOptions<NotificationDatabaseOptionsSetup>();
         }
 
         private static void InstallCore(IServiceCollection services)
@@ -46,6 +50,8 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
             AddOrderDbContext(services);
 
+            AddNotificationDbContext(services);
+
             AddRepositories(
                 services,
                 new[]
@@ -53,6 +59,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                     typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
+                    typeof(Notification.Persistence.AssemblyReference).Assembly,
                 });
 
             AddDataRequests(
@@ -62,6 +69,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                     typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
+                    typeof(Notification.Persistence.AssemblyReference).Assembly,
                 });
 
             AddInterceptors(services);
@@ -122,6 +130,22 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
             });
 
             services.AddScoped<ICatalogUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CatalogDbContext>());
+        }
+
+        private static void AddNotificationDbContext(IServiceCollection services)
+        {
+            services.AddDbContextPool<NotificationDbContext>((provider, builder) =>
+            {
+                IOptions<NotificationDatabaseOptions> dbSettingsOptions =
+                    provider.GetRequiredService<IOptions<NotificationDatabaseOptions>>();
+
+                builder.UseNpgsql("Host=localhost; Database=notification; Username=postgres; Password=postgres",
+                        optionsBuilder => optionsBuilder.MigrationsAssembly(
+                            typeof(Notification.Persistence.AssemblyReference).Assembly.FullName))
+                    .AddInterceptors(provider);
+            });
+
+            services.AddScoped<INotificationUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<NotificationDbContext>());
         }
 
         private static void AddRepositories(IServiceCollection services, Assembly[] assemblies) =>

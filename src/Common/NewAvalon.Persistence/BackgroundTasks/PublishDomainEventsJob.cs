@@ -120,7 +120,7 @@ namespace NewAvalon.Persistence.BackgroundTasks
             await _dbContext.Set<Message>()
                 .OrderBy(message => message.CreatedOnUtc)
                 .Where(message => !message.Processed && !message.Failed)
-                .Take(_options.BatchSize)
+                .Take(20)
                 .ToListAsync(context.CancellationToken);
     }
 }

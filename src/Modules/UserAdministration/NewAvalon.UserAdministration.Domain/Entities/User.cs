@@ -1,6 +1,5 @@
 ﻿using NewAvalon.Domain.Abstractions;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
-using NewAvalon.UserAdministration.Domain.Events;
 using NewAvalon.UserAdministration.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -21,8 +20,6 @@ namespace NewAvalon.UserAdministration.Domain.Entities
             Email = email;
             DateOfBirth = dateOfBirth;
             Address = address;
-
-            RaiseDomainEvent(new UserCreatedDomainEvent(Id));
         }
 
         /// <summary>
@@ -71,8 +68,6 @@ namespace NewAvalon.UserAdministration.Domain.Entities
             Password = password;
             DateOfBirth = dateOfBirth;
             Address = address;
-
-            RaiseDomainEvent(new UserCreatedDomainEvent(Id));
         }
 
         public void ChangeProfileImage(ProfileImage profileImage)

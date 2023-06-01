@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NewAvalon.App.Middlewares;
 using NewAvalon.Catalog.Persistence;
+using NewAvalon.Notification.Persistence;
 using NewAvalon.Order.Persistence;
 using NewAvalon.UserAdministration.Persistence;
 
@@ -20,6 +21,7 @@ namespace NewAvalon.App.Extensions
             ApplyUserAdministrationMigrations(scope);
             ApplyCatalogMigrations(scope);
             ApplyOrderMigrations(scope);
+            ApplyNotificationMigrations(scope);
         }
 
         private static void ApplyUserAdministrationMigrations(IServiceScope scope)
@@ -44,6 +46,14 @@ namespace NewAvalon.App.Extensions
                 scope.ServiceProvider.GetRequiredService<OrderDbContext>();
 
             orderDbContext.Database.Migrate();
+        }
+
+        private static void ApplyNotificationMigrations(IServiceScope scope)
+        {
+            using NotificationDbContext notificationDbContext =
+                scope.ServiceProvider.GetRequiredService<NotificationDbContext>();
+
+            notificationDbContext.Database.Migrate();
         }
     }
 }
