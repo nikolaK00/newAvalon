@@ -29,6 +29,8 @@ namespace NewAvalon.App
             builder.AddJsonFile($"messaging.settings.{environment.EnvironmentName.ToLowerInvariant()}.json", true, true);
             builder.AddJsonFile("documentation.settings.json", false, true);
             builder.AddJsonFile($"documentation.settings.{environment.EnvironmentName.ToLowerInvariant()}.json", true, true);
+            builder.AddJsonFile("configuration.settings.json", false, true);
+            builder.AddJsonFile($"configuration.settings.{environment.EnvironmentName.ToLowerInvariant()}.json", true, true);
 
             if (!environment.IsProduction())
             {

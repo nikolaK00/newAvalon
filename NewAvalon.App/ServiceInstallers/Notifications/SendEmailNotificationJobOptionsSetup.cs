@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
-using NewAvalon.Notification.Infrastructure.Options;
+using NewAvalon.Notification.Business.Options;
 
 namespace NewAvalon.App.ServiceInstallers.Notifications
 {

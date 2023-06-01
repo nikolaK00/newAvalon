@@ -1,8 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NewAvalon.App.Abstractions;
 using NewAvalon.App.ServiceInstallers.BackgroundTasks.Catalog;
+using NewAvalon.App.ServiceInstallers.BackgroundTasks.Notifications;
 using NewAvalon.App.ServiceInstallers.BackgroundTasks.Order;
 using NewAvalon.App.ServiceInstallers.BackgroundTasks.UserAdministration;
+using NewAvalon.App.ServiceInstallers.Notifications;
 using Quartz;
 
 namespace NewAvalon.App.ServiceInstallers.BackgroundTasks
@@ -31,6 +33,10 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks
             services.ConfigureOptions<CatalogPublishDomainEventsJobOptionsSetup>();
 
             services.ConfigureOptions<CatalogPublishDomainEventsJobSetup>();
+
+            services.ConfigureOptions<SendEmailNotificationJobOptionsSetup>();
+
+            services.ConfigureOptions<SendEmailNotificationJobSetup>();
         }
 
         public void InstallCore(IServiceCollection services)

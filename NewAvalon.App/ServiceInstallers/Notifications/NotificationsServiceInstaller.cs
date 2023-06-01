@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NewAvalon.App.Abstractions;
-using NewAvalon.Notification.Infrastructure.Options;
+using NewAvalon.Notification.Business.Options;
+using SendGrid;
 
 namespace NewAvalon.App.ServiceInstallers.Notifications
 {
@@ -19,13 +20,12 @@ namespace NewAvalon.App.ServiceInstallers.Notifications
 
         private static void InstallCore(IServiceCollection services)
         {
-            A
-            services.AddMandrill((serviceProvider, options) =>
+            services.AddSingleton(serviceProvider =>
             {
                 IOptions<EmailNotificationsJobOptions> configuration =
                     serviceProvider.GetRequiredService<IOptions<EmailNotificationsJobOptions>>();
 
-                options.ApiKey = configuration.Value.ApiKey;
+                return new SendGridClient(configuration.Value.ApiKey);
             });
         }
     }

@@ -13,6 +13,7 @@ namespace NewAvalon.App.ServiceInstallers.Mediator
             typeof(UserAdministration.Business.AssemblyReference).Assembly,
             typeof(Catalog.Business.AssemblyReference).Assembly,
             typeof(Order.Business.AssemblyReference).Assembly,
+            typeof(Notification.Business.AssemblyReference).Assembly,
         };
 
         public void InstallServices(IServiceCollection services)

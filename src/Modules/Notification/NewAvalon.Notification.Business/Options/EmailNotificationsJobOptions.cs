@@ -1,4 +1,4 @@
-﻿namespace NewAvalon.Notification.Infrastructure.Options
+﻿namespace NewAvalon.Notification.Business.Options
 {
     public class EmailNotificationsJobOptions
     {

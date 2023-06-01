@@ -4,9 +4,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NewAvalon.Domain.Enums;
 using NewAvalon.Messaging.Contracts.Users;
-using NewAvalon.Notification.Infrastructure.Options;
+using NewAvalon.Notification.Business.Options;
 using NewAvalon.Notification.Persistence;
 using Quartz;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,19 +24,22 @@ namespace NewAvalon.Notification.Infrastructure.BackgroundTasks
         private readonly ILogger<SendEmailNotificationsJob> _logger;
         private readonly EmailNotificationsJobOptions _options;
         private readonly EmailTemplatesOptions _emailTemplatesOptions;
+        private readonly SendGridClient _sendGridClient;
 
         public SendEmailNotificationsJob(
             NotificationDbContext dbContext,
             IRequestClient<IUserDetailsListRequest> userDetailsListRequestClient,
             ILogger<SendEmailNotificationsJob> logger,
             IOptions<EmailNotificationsJobOptions> options,
-            IOptions<EmailTemplatesOptions> emailTemplatesOptions)
+            IOptions<EmailTemplatesOptions> emailTemplatesOptions,
+            SendGridClient sendGridClient)
         {
             _dbContext = dbContext;
             _userDetailsListRequestClient = userDetailsListRequestClient;
             _logger = logger;
             _options = options.Value;
             _emailTemplatesOptions = emailTemplatesOptions.Value;
+            _sendGridClient = sendGridClient;
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -74,7 +79,7 @@ namespace NewAvalon.Notification.Infrastructure.BackgroundTasks
             {
                 try
                 {
-                    string email;
+                    await _sendGridClient.SendEmailAsync(CreateSendGridMessage(userDetailsListResponse.Users.First(), notification.Type));
 
                     notification.Publish(DateTime.UtcNow);
                 }
@@ -87,6 +92,18 @@ namespace NewAvalon.Notification.Infrastructure.BackgroundTasks
 
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        private SendGridMessage CreateSendGridMessage(IUserDetailsResponse userDetails, NotificationType type)
+        {
+            var sendGridMessage = new SendGridMessage
+            {
+                From = new EmailAddress("knez.nikola00@outlook.com", "New Avalon"),
+                TemplateId = GetTemplateName(type),
+                ReplyTo = new EmailAddress("knez.nikola00@gmail.com"),
+            };
+
+            return sendGridMessage;
         }
 
         private string GetTemplateName(NotificationType type) =>

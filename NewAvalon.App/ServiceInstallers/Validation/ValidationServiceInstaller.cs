@@ -11,7 +11,8 @@ namespace NewAvalon.App.ServiceInstallers.Validation
         {
             typeof(UserAdministration.Boundary.AssemblyReference).Assembly,
             typeof(Catalog.Boundary.AssemblyReference).Assembly,
-            typeof(Order.Boundary.AssemblyReference).Assembly
+            typeof(Order.Boundary.AssemblyReference).Assembly,
+            typeof(Notification.Boundary.AssemblyReference).Assembly
         };
 
         public void InstallServices(IServiceCollection services) => services.AddValidatorsFromAssemblies(_boundaryAssemblies);
