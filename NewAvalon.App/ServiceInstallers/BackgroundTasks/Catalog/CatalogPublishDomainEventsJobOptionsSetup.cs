@@ -13,11 +13,6 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks.Catalog
         public CatalogPublishDomainEventsJobOptionsSetup(IConfiguration configuration) => _configuration = configuration;
 
         public void Configure(CatalogPublishDomainEventsJobOptions options) =>
-            _configuration.GetSection(ConfigurationSectionName).Bind(new CatalogPublishDomainEventsJobOptions()
-            {
-                BatchSize = 2,
-                IntervalInSeconds = 20,
-                RetryCountThreshold = 3
-            });
+            _configuration.GetSection(ConfigurationSectionName).Bind(options);
     }
 }

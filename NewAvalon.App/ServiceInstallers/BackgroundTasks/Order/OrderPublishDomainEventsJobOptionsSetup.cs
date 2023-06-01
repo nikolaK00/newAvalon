@@ -13,11 +13,6 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks.Order
         public OrderPublishDomainEventsJobOptionsSetup(IConfiguration configuration) => _configuration = configuration;
 
         public void Configure(OrderPublishDomainEventsJobOptions options) =>
-            _configuration.GetSection(ConfigurationSectionName).Bind(new OrderPublishDomainEventsJobOptions()
-            {
-                BatchSize = 2,
-                IntervalInSeconds = 20,
-                RetryCountThreshold = 3
-            });
+            _configuration.GetSection(ConfigurationSectionName).Bind(options);
     }
 }

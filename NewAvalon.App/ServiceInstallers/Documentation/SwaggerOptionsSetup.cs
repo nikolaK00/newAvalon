@@ -16,6 +16,8 @@ namespace NewAvalon.App.ServiceInstallers.Documentation
         {
             typeof(UserAdministration.Presentation.AssemblyReference).Assembly,
             typeof(Catalog.Presentation.AssemblyReference).Assembly,
+            typeof(Notification.Presentation.AssemblyReference).Assembly,
+            typeof(Order.Presentation.AssemblyReference).Assembly,
         };
 
         public void Configure(SwaggerGenOptions options)

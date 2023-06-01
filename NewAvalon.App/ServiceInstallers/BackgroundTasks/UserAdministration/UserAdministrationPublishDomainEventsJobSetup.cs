@@ -20,7 +20,7 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks.UserAdministration
 
             options.AddTrigger(builder =>
                 builder.ForJob(jobKey).WithSimpleSchedule(schedule =>
-                        schedule.WithIntervalInSeconds(20).RepeatForever()));
+                    schedule.WithIntervalInSeconds(_options.IntervalInSeconds).RepeatForever()));
         }
     }
 }

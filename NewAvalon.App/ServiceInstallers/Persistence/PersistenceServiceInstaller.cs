@@ -91,10 +91,10 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 IOptions<UserAdministrationDatabaseOptions> dbSettingsOptions =
                     provider.GetRequiredService<IOptions<UserAdministrationDatabaseOptions>>();
 
-                builder.UseNpgsql("Host=localhost; Database=user_administration; Username=postgres; Password=postgres",
-                    optionsBuilder => optionsBuilder.MigrationsAssembly(
-                        typeof(UserAdministration.Persistence.AssemblyReference).Assembly.FullName))
-                    .AddInterceptors(provider);
+                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
+                        optionsBuilder => optionsBuilder.MigrationsAssembly(
+                            typeof(UserAdministration.Persistence.AssemblyReference).Assembly.FullName))
+                        .AddInterceptors(provider);
             });
 
             services.AddScoped<IUserAdministrationUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<UserAdministrationDbContext>());
@@ -107,7 +107,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 IOptions<CatalogDatabaseOptions> dbSettingsOptions =
                     provider.GetRequiredService<IOptions<CatalogDatabaseOptions>>();
 
-                builder.UseNpgsql("Host=localhost; Database=catalog; Username=postgres; Password=postgres",
+                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
                         optionsBuilder => optionsBuilder.MigrationsAssembly(
                             typeof(Catalog.Persistence.AssemblyReference).Assembly.FullName))
                     .AddInterceptors(provider);
@@ -123,7 +123,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 IOptions<OrderDatabaseOptions> dbSettingsOptions =
                     provider.GetRequiredService<IOptions<OrderDatabaseOptions>>();
 
-                builder.UseNpgsql("Host=localhost; Database=order; Username=postgres; Password=postgres",
+                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
                         optionsBuilder => optionsBuilder.MigrationsAssembly(
                             typeof(Order.Persistence.AssemblyReference).Assembly.FullName))
                     .AddInterceptors(provider);
@@ -139,7 +139,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 IOptions<NotificationDatabaseOptions> dbSettingsOptions =
                     provider.GetRequiredService<IOptions<NotificationDatabaseOptions>>();
 
-                builder.UseNpgsql("Host=localhost; Database=notification; Username=postgres; Password=postgres",
+                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
                         optionsBuilder => optionsBuilder.MigrationsAssembly(
                             typeof(Notification.Persistence.AssemblyReference).Assembly.FullName))
                     .AddInterceptors(provider);

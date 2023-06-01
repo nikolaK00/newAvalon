@@ -11,20 +11,30 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks
     {
         public void InstallServices(IServiceCollection services)
         {
-            services.ConfigureOptions<QuartzHostedServiceOptionsSetup>();
+            InstallOptions(services);
 
-            services.ConfigureOptions<UserAdministrationPublishDomainEventsJobSetup>();
+            InstallCore(services);
+        }
+
+        private static void InstallOptions(IServiceCollection services)
+        {
+            services.ConfigureOptions<QuartzHostedServiceOptionsSetup>();
 
             services.ConfigureOptions<UserAdministrationPublishDomainEventsJobOptionsSetup>();
 
-            services.ConfigureOptions<OrderPublishDomainEventsJobSetup>();
+            services.ConfigureOptions<UserAdministrationPublishDomainEventsJobSetup>();
 
             services.ConfigureOptions<OrderPublishDomainEventsJobOptionsSetup>();
 
-            services.ConfigureOptions<CatalogPublishDomainEventsJobSetup>();
+            services.ConfigureOptions<OrderPublishDomainEventsJobSetup>();
 
             services.ConfigureOptions<CatalogPublishDomainEventsJobOptionsSetup>();
 
+            services.ConfigureOptions<CatalogPublishDomainEventsJobSetup>();
+        }
+
+        public void InstallCore(IServiceCollection services)
+        {
             services.AddQuartz(configurator => configurator.UseMicrosoftDependencyInjectionJobFactory());
 
             services.AddQuartzHostedService();

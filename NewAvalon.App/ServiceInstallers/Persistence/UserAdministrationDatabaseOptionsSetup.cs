@@ -11,10 +11,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
         public UserAdministrationDatabaseOptionsSetup(IConfiguration configuration) => _configuration = configuration;
 
-        public void Configure(UserAdministrationDatabaseOptions options)
-        {
-            var configurationSectionName = _configuration.GetSection(ConfigurationSectionName);
+        public void Configure(UserAdministrationDatabaseOptions options) =>
             _configuration.GetSection(ConfigurationSectionName).Bind(options);
-        }
     }
 }
