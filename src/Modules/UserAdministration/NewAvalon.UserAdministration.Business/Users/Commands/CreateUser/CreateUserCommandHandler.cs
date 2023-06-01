@@ -6,7 +6,6 @@ using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
 using NewAvalon.UserAdministration.Domain.Repositories;
 using System;
-using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,9 +54,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
 
             _userRepository.Insert(user);
 
-            var role = request.Roles.FirstOrDefault();
-
-            if (role == Role.Client.Id.Value)
+            if (request.Roles == Role.Client.Id.Value)
             {
                 user.AddRole(_roleRepository.GetByRole(Role.Client));
 
@@ -65,7 +62,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.CreateUser
                 var client = new Client(user.Id);
                 _clientRepository.Insert(client);
             }
-            else if (role == Role.DealerUser.Id.Value)
+            else if (request.Roles == Role.DealerUser.Id.Value)
             {
                 user.AddRole(_roleRepository.GetByRole(Role.DealerUser));
                 var dealer = new Dealer(user.Id);
