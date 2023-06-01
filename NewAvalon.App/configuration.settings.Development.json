@@ -1,0 +1,5 @@
+{
+  "EmailTemplates": {
+    "UserVerifiedTemplate": "user-verified-template"
+  }
+}
