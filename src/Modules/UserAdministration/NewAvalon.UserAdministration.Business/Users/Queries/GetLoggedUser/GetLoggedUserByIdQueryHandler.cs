@@ -31,7 +31,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Queries.GetLoggedUser
                 user.FirstName,
                 user.LastName,
                 user.Email,
-                user.Roles.Select(role => new RoleResponse(role.Description))
+                user.Roles.Select(role => new RoleResponse(role.Id.Value, role.Description))
                     .ToList(),
                 user.Roles.SelectMany(role =>
                     role.Permissions.Select(permission => new PermissionResponse(permission.Name, permission.Description))).ToList());

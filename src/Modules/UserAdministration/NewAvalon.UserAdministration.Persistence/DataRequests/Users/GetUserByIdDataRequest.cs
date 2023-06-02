@@ -4,8 +4,10 @@ using NewAvalon.UserAdministration.Business.Users.Queries.GetUser;
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using NewAvalon.UserAdministration.Boundary.Contracts.Users;
 
 namespace NewAvalon.UserAdministration.Persistence.DataRequests.Users
 {
@@ -24,7 +26,7 @@ namespace NewAvalon.UserAdministration.Persistence.DataRequests.Users
                     user.FirstName,
                     user.LastName,
                     user.Email,
-                    user.Roles.Select(x => x.Description).ToList()))
+                    user.Roles.Select(x => new RoleResponse(x.Id.Value, x.Description)).ToList()))
                 .FirstOrDefaultAsync(cancellationToken);
     }
 }

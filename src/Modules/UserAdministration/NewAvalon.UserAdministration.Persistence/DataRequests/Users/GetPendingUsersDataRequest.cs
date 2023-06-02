@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NewAvalon.UserAdministration.Boundary.Contracts.Users;
 
 namespace NewAvalon.UserAdministration.Persistence.DataRequests.Users
 {
@@ -39,7 +40,7 @@ namespace NewAvalon.UserAdministration.Persistence.DataRequests.Users
                     user.FirstName,
                     user.LastName,
                     user.Email,
-                    user.Roles.Select(x => x.Description).ToList()));
+                    user.Roles.Select(x => new RoleResponse(x.Id.Value, x.Description)).ToList()));
 
             return new PagedList<UserDetailsResponse>(userDetailsResponses, count, request.Page, request.ItemsPerPage);
         }

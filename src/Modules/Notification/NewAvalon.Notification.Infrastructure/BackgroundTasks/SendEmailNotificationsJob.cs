@@ -24,7 +24,7 @@ namespace NewAvalon.Notification.Infrastructure.BackgroundTasks
         private readonly ILogger<SendEmailNotificationsJob> _logger;
         private readonly EmailNotificationsJobOptions _options;
         private readonly EmailTemplatesOptions _emailTemplatesOptions;
-        private readonly SendGridClient _sendGridClient;
+        private readonly ISendGridClient _sendGridClient;
 
         public SendEmailNotificationsJob(
             NotificationDbContext dbContext,
@@ -32,7 +32,7 @@ namespace NewAvalon.Notification.Infrastructure.BackgroundTasks
             ILogger<SendEmailNotificationsJob> logger,
             IOptions<EmailNotificationsJobOptions> options,
             IOptions<EmailTemplatesOptions> emailTemplatesOptions,
-            SendGridClient sendGridClient)
+            ISendGridClient sendGridClient)
         {
             _dbContext = dbContext;
             _userDetailsListRequestClient = userDetailsListRequestClient;
@@ -98,10 +98,11 @@ namespace NewAvalon.Notification.Infrastructure.BackgroundTasks
         {
             var sendGridMessage = new SendGridMessage
             {
-                From = new EmailAddress("knez.nikola00@outlook.com", "New Avalon"),
+                From = new EmailAddress("knez.nikola00@outlook.com", "NewAvalon"),
                 TemplateId = GetTemplateName(type),
-                ReplyTo = new EmailAddress("knez.nikola00@gmail.com"),
             };
+
+            sendGridMessage.AddTo(new EmailAddress("knez.nikola00@gmail.com", "NikolaKnezevic"));
 
             return sendGridMessage;
         }
