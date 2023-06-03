@@ -1,5 +1,6 @@
 ﻿using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,6 +17,8 @@ namespace NewAvalon.UserAdministration.Domain.Repositories
         Task<bool> IsEmailTakenAsync(string email, CancellationToken cancellationToken = default);
 
         Task<bool> IsUserNameTakenAsync(string userName, CancellationToken cancellationToken = default);
+
+        Task<User> GetByImageIdAsync(Guid imageId, CancellationToken cancellationToken = default);
 
         void Insert(User user);
 

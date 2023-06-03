@@ -2,6 +2,7 @@
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using NewAvalon.UserAdministration.Domain.Repositories;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +26,9 @@ namespace NewAvalon.UserAdministration.Persistence.Repositories
                 .Include(user => user.Roles)
                 .ThenInclude(role => role.Permissions)
                 .FirstOrDefaultAsync(user => user.Id == userId, cancellationToken);
+
+        public async Task<User> GetByImageIdAsync(Guid imageId, CancellationToken cancellationToken = default) =>
+            await _dbContext.Set<User>().FirstOrDefaultAsync(user => user.ProfileImage.Id == imageId, cancellationToken);
 
         public async Task<bool> IsEmailTakenAsync(string email, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<User>().AnyAsync(user => user.Email == email, cancellationToken);

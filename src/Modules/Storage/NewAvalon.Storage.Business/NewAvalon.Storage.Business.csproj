@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MassTransit" Version="7.2.1" />
     <PackageReference Include="MimeTypes" Version="2.2.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -13,6 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\NewAvalon.Abstractions\NewAvalon.Abstractions.csproj" />
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Messaging.Contracts\NewAvalon.Messaging.Contracts.csproj" />
     <ProjectReference Include="..\NewAvalon.Storage.Boundary\NewAvalon.Storage.Boundary.csproj" />
     <ProjectReference Include="..\NewAvalon.Storage.Domain\NewAvalon.Storage.Domain.csproj" />
   </ItemGroup>

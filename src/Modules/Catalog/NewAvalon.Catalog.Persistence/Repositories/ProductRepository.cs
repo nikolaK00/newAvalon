@@ -2,6 +2,7 @@
 using NewAvalon.Catalog.Domain.Entities;
 using NewAvalon.Catalog.Domain.EntityIdentifiers;
 using NewAvalon.Catalog.Domain.Repositories;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,6 +20,9 @@ namespace NewAvalon.Catalog.Persistence.Repositories
 
         public async Task<bool> ExistsAsync(ProductId productId, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<Product>().AnyAsync(product => product.Id == productId, cancellationToken);
+
+        public async Task<Product> GetByImageIdAsync(Guid imageId, CancellationToken cancellationToken = default) =>
+            await _dbContext.Set<Product>().FirstOrDefaultAsync(user => user.ProductImage.Id == imageId, cancellationToken);
 
         public void Insert(Product product) => _dbContext.Set<Product>().Add(product);
 

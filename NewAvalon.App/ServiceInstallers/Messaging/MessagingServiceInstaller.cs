@@ -2,11 +2,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NewAvalon.App.Abstractions;
+using NewAvalon.Catalog.Business.Products.Consumers.ImageDeletedEvent;
 using NewAvalon.Infrastructure.Messaging.Options;
+using NewAvalon.Messaging.Contracts.Files;
+using NewAvalon.Messaging.Contracts.Images;
 using NewAvalon.Messaging.Contracts.Permissions;
 using NewAvalon.Messaging.Contracts.Users;
 using NewAvalon.Notification.Business.Notifications.Consumers;
+using NewAvalon.Storage.Business.Files.Consumers;
+using NewAvalon.Storage.Business.Images.Consumers;
 using NewAvalon.UserAdministration.Business.Permissions.Consumers;
+using NewAvalon.UserAdministration.Business.Users.Consumers.ImageDeletedEvent;
 using NewAvalon.UserAdministration.Business.Users.Consumers.UserDetailsListRequest;
 using NewAvalon.UserAdministration.Business.Users.Consumers.UserDetailsRequest;
 
@@ -62,8 +68,31 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
             busConfigurator.AddConsumer<NotificationCreatedEventConsumer>().Endpoint(e => e.Name = "notification-created-event-consumer");
 
             busConfigurator.AddConsumer<UserDetailsListRequestConsumer>().Endpoint(e => e.Name = "user-details-list-request-consumer");
-        }
 
+            busConfigurator.AddConsumer<FileDeletedEventConsumer>().Endpoint(e => e.Name = "file-deleted-consumer");
+
+            busConfigurator.AddConsumer<FIleListDeletedEventConsumer>().Endpoint(e => e.Name = "file-list-deleted-consumer");
+
+            busConfigurator.AddConsumer<ImageRequestConsumer>().Endpoint(e => e.Name = "image-request-consumer");
+
+            busConfigurator.AddConsumer<FileListRequestConsumer>().Endpoint(e => e.Name = "file-list-request-consumer");
+
+            busConfigurator.AddConsumer<StoreUploadedFileRequestConsumer>().Endpoint(e => e.Name = "store-uploaded-file-request-consumer");
+
+            busConfigurator.AddConsumer<UploadFileRequestConsumer>().Endpoint(e => e.Name = "upload-file-request-consumer");
+
+            busConfigurator.AddConsumer<UserProfileImageChangedEventConsumer>().Endpoint(e => e.Name = "storage-user-profile-image-changed");
+
+            busConfigurator.AddConsumer<ProductImageChangedEventConsumer>().Endpoint(e => e.Name = "storage-product-image-changed");
+
+            busConfigurator.AddConsumer<ProductImageChangedEventConsumer>().Endpoint(e => e.Name = "storage-product-image-changed");
+
+            busConfigurator.AddConsumer<ProfileImageDeletedEventConsumer>().Endpoint(e => e.Name = "profile-image-deleted-event-consumer");
+
+            busConfigurator.AddConsumer<ProductImageDeletedEventConsumer>().Endpoint(e => e.Name = "product-image-deleted-event-consumer");
+
+
+        }
         private static void AddRequestClients(IRegistrationConfigurator busConfigurator)
         {
             busConfigurator.AddRequestClient<IUserDetailsRequest>();
@@ -71,6 +100,14 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
             busConfigurator.AddRequestClient<IGetPermissionsRequest>();
 
             busConfigurator.AddRequestClient<IUserDetailsListRequest>();
+
+            busConfigurator.AddRequestClient<IImageRequest>();
+
+            busConfigurator.AddRequestClient<IFileListRequest>();
+
+            busConfigurator.AddRequestClient<IUploadFileRequest>();
+
+            busConfigurator.AddRequestClient<IStoreUploadedFileRequest>();
         }
     }
 }

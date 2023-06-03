@@ -59,6 +59,7 @@
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Boundary\NewAvalon.UserAdministration.Boundary.csproj" />
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Business\NewAvalon.UserAdministration.Business.csproj" />
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Domain\NewAvalon.UserAdministration.Domain.csproj" />
+    <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Infrastructure\NewAvalon.UserAdministration.Infrastructure.csproj" />
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Persistence\NewAvalon.UserAdministration.Persistence.csproj" />
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Presentation\NewAvalon.UserAdministration.Presentation.csproj" />
   </ItemGroup>

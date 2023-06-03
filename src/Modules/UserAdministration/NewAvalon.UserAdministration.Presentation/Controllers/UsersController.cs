@@ -9,6 +9,7 @@ using NewAvalon.Authorization.Extensions;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.LoginUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUser;
+using NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUserImage;
 using NewAvalon.UserAdministration.Boundary.Users.Queries.GetLoggedUser;
 using NewAvalon.UserAdministration.Boundary.Users.Queries.GetUser;
 using NewAvalon.UserAdministration.Presentation.Abstractions;
@@ -132,6 +133,31 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
             UserWithPermissionsResponse response = await Sender.Send(query, cancellationToken);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Updates the currently logged in user's profile image.
+        /// </summary>
+        /// <param name="request">The update user image request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>200 - OK.</returns>
+        [HttpPut("profile-image")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateUserImage(
+            [FromBody] UpdateUserImageRequest request,
+            CancellationToken cancellationToken)
+        {
+            UpdateUserImageCommand command = request.Adapt<UpdateUserImageCommand>() with
+            {
+                Id = Guid.Parse(HttpContext.User.GetUserIdentityId())
+            };
+
+            await Sender.Send(command, cancellationToken);
+
+            return Ok();
         }
     }
 }

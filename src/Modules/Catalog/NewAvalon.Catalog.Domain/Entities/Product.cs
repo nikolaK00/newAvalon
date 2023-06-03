@@ -1,4 +1,5 @@
 ﻿using NewAvalon.Catalog.Domain.EntityIdentifiers;
+using NewAvalon.Catalog.Domain.Events;
 using NewAvalon.Catalog.Domain.ValueObjects;
 using NewAvalon.Domain.Abstractions;
 using System;
@@ -52,6 +53,11 @@ namespace NewAvalon.Catalog.Domain.Entities
 
             ProductImage ??= ProductImage.Empty;
 
+            if (ProductImage != ProductImage.Empty)
+            {
+                RaiseDomainEvent(new ProductImageChangedDomainEvent(ProductImage.Id));
+            }
+
             ProductImage = productImage;
         }
 
@@ -66,3 +72,4 @@ namespace NewAvalon.Catalog.Domain.Entities
         }
     }
 }
+

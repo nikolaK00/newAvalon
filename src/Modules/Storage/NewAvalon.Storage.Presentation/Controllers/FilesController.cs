@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NewAvalon.Storage.Boundary.Files.Commands.DeleteFile;
 using NewAvalon.Storage.Boundary.Files.Commands.UploadFile;
 using NewAvalon.Storage.Boundary.Files.Queries.DownloadFile;
 using NewAvalon.Storage.Presentation.Abstractions;
@@ -50,6 +51,26 @@ namespace NewAvalon.Storage.Presentation.Controllers
             DownloadFileResponse response = await Sender.Send(command, cancellationToken);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Deletes the file with the specified identifier from storage.
+        /// </summary>
+        /// <param name="fileId">The file identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>204 - No Content.</returns>
+        [HttpDelete("{fileId:guid}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteFile(Guid fileId, CancellationToken cancellationToken)
+        {
+            var command = new DeleteFileCommand(fileId);
+
+            await Sender.Send(command, cancellationToken);
+
+            return NoContent();
         }
     }
 }

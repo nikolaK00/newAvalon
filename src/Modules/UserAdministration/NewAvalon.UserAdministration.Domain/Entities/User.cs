@@ -1,5 +1,6 @@
 ﻿using NewAvalon.Domain.Abstractions;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
+using NewAvalon.UserAdministration.Domain.Events;
 using NewAvalon.UserAdministration.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -78,6 +79,11 @@ namespace NewAvalon.UserAdministration.Domain.Entities
             }
 
             ProfileImage ??= ProfileImage.Empty;
+
+            if (ProfileImage != ProfileImage.Empty)
+            {
+                RaiseDomainEvent(new UserProfileImageChangedDomainEvent(ProfileImage.Id));
+            }
 
             ProfileImage = profileImage;
         }

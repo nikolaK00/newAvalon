@@ -7,6 +7,7 @@ using NewAvalon.Boundary.Pagination;
 using NewAvalon.Catalog.Boundary.Products.Commands.CreateProduct;
 using NewAvalon.Catalog.Boundary.Products.Commands.DeleteProduct;
 using NewAvalon.Catalog.Boundary.Products.Commands.UpdateProduct;
+using NewAvalon.Catalog.Boundary.Products.Commands.UpdateProductImage;
 using NewAvalon.Catalog.Boundary.Products.Queries.GetProduct;
 using NewAvalon.Catalog.Boundary.Products.Queries.GetProducts;
 using NewAvalon.Catalog.Boundary.Products.Queries.GetProductsByCreator;
@@ -144,6 +145,31 @@ namespace NewAvalon.Catalog.Presentation.Controllers
             await Sender.Send(command, cancellationToken);
 
             return NoContent();
+        }
+
+        /// <summary>
+        /// Updates the currently product image.
+        /// </summary>
+        /// <param name="request">The update product image request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>200 - OK.</returns>
+        [HttpPut("product-image")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateUserImage(
+            [FromBody] UpdateProductImageRequest request,
+            CancellationToken cancellationToken)
+        {
+            UpdateProductImageCommand command = request.Adapt<UpdateProductImageCommand>() with
+            {
+                UserId = Guid.Parse(HttpContext.User.GetUserIdentityId())
+            };
+
+            await Sender.Send(command, cancellationToken);
+
+            return Ok();
         }
     }
 }
