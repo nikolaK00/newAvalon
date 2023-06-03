@@ -18,8 +18,10 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetAllOrders
 
         public async Task<PagedList<OrderDetailsResponse>> GetAsync((Guid OwnerId, int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
         {
-            var orders = await _dbContext.Set<Domain.Entities.Order>()
-                .Where(order => order.Status == OrderStatus.Finished && order.OwnerId == request.OwnerId)
+            var query = _dbContext.Set<Domain.Entities.Order>()
+                .Where(order => order.Status == OrderStatus.Finished && order.OwnerId == request.OwnerId);
+
+            var orders = await query
                 .OrderBy(order => order.CreatedOnUtc)
                 .Skip((request.Page - 1) * request.ItemsPerPage)
                 .Take(request.ItemsPerPage)
@@ -27,7 +29,7 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetAllOrders
 
             var response = orders.Select(order => new OrderDetailsResponse(order.Id.Value));
 
-            var count = await _dbContext.Set<Domain.Entities.Order>().CountAsync(cancellationToken: cancellationToken);
+            var count = await query.CountAsync(cancellationToken);
 
             return new PagedList<OrderDetailsResponse>(response, count, request.Page, request.ItemsPerPage);
         }

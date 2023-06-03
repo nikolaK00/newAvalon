@@ -1,25 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NewAvalon.Boundary.Pagination;
 using NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders;
-using NewAvalon.Order.Business.Orders.Queries.GetAllOrders;
+using NewAvalon.Order.Business.Orders.Queries.GetShippingOrders;
 using NewAvalon.Order.Domain.Enums;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetAllOrders
+namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetShippingOrders
 {
-    internal sealed class GetAllDealerUserOrdersDataRequest : IGetAllDealerUserOrdersDataRequest
+    internal sealed class GetShippingClientOrdersDataRequest : IGetShippingClientOrdersDataRequest
     {
         private readonly OrderDbContext _dbContext;
 
-        public GetAllDealerUserOrdersDataRequest(OrderDbContext dbContext) => _dbContext = dbContext;
+        public GetShippingClientOrdersDataRequest(OrderDbContext dbContext) => _dbContext = dbContext;
 
-        public async Task<PagedList<OrderDetailsResponse>> GetAsync((Guid DealerId, int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
+        public async Task<PagedList<OrderDetailsResponse>> GetAsync((Guid OwnerId, int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
         {
             var query = _dbContext.Set<Domain.Entities.Order>()
-                .Where(order => order.Status != OrderStatus.Shipping && order.DealerId == request.DealerId);
+                .Where(order => order.Status == OrderStatus.Shipping && order.OwnerId == request.OwnerId);
 
             var orders = await query
                 .OrderBy(order => order.CreatedOnUtc)

@@ -60,7 +60,8 @@ namespace NewAvalon.UserAdministration.Persistence
                 (permissions.First(p => p.Id.Value == (int)Permissions.UserRead), Role.SuperAdmin),
                 (permissions.First(p => p.Id.Value == (int)Permissions.OrderRead), Role.SuperAdmin),
                 (permissions.First(p => p.Id.Value == (int)Permissions.OrderRead), Role.DealerUser),
-                (permissions.First(p => p.Id.Value == (int)Permissions.OrderRead), Role.Client));
+                (permissions.First(p => p.Id.Value == (int)Permissions.OrderRead), Role.Client),
+                (permissions.First(p => p.Id.Value == (int)Permissions.OrderCreate), Role.Client));
         }
     }
 }

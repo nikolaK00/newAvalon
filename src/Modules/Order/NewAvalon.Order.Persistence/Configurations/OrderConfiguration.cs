@@ -11,8 +11,6 @@ namespace NewAvalon.Order.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Domain.Entities.Order> builder)
         {
             ConfigureDataStructure(builder);
-
-            ConfigureRelationships(builder);
         }
 
         private static void ConfigureDataStructure(EntityTypeBuilder<Domain.Entities.Order> builder)
@@ -32,10 +30,8 @@ namespace NewAvalon.Order.Persistence.Configurations
             builder.Property(order => order.Status).IsRequired().HasDefaultValue(OrderStatus.Shipping);
 
             builder.Property(order => order.OwnerId).IsRequired();
-        }
 
-        private static void ConfigureRelationships(EntityTypeBuilder<Domain.Entities.Order> builder)
-        {
+            builder.Property(order => order.DealerId).IsRequired();
         }
     }
 }

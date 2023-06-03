@@ -50,7 +50,7 @@ namespace NewAvalon.Order.Business.Orders.Queries.GetAllOrders
 
             if (userDetailsResponse.Roles.Contains(RoleNames.DealerUser))
             {
-                return await _getAllDealerUserOrdersDataRequest.GetAsync((request.Page, request.ItemsPerPage), cancellationToken);
+                return await _getAllDealerUserOrdersDataRequest.GetAsync((request.UserId, request.Page, request.ItemsPerPage), cancellationToken);
             }
 
             if (userDetailsResponse.Roles.Contains(RoleNames.Client))

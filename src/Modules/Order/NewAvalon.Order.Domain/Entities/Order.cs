@@ -24,5 +24,7 @@ namespace NewAvalon.Order.Domain.Entities
         public OrderStatus Status { get; private set; }
 
         public Guid OwnerId { get; private set; }
+
+        public Guid DealerId { get; private set; }
     }
 }
