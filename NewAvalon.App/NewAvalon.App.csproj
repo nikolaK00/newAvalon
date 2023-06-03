@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.S3" Version="3.7.104.27" />
     <PackageReference Include="FluentValidation" Version="11.3.0" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.2.1" />
@@ -50,6 +51,11 @@
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Domain\NewAvalon.Order.Domain.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Persistence\NewAvalon.Order.Persistence.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Presentation\NewAvalon.Order.Presentation.csproj" />
+    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Business\NewAvalon.Storage.Business.csproj" />
+    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Domain\NewAvalon.Storage.Domain.csproj" />
+    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Infrastructure\NewAvalon.Storage.Infrastructure.csproj" />
+    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Persistence\NewAvalon.Storage.Persistence.csproj" />
+    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Presentation\NewAvalon.Storage.Presentation.csproj" />
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Boundary\NewAvalon.UserAdministration.Boundary.csproj" />
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Business\NewAvalon.UserAdministration.Business.csproj" />
     <ProjectReference Include="..\src\Modules\UserAdministration\NewAvalon.UserAdministration.Domain\NewAvalon.UserAdministration.Domain.csproj" />

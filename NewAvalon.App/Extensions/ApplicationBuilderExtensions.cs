@@ -5,6 +5,7 @@ using NewAvalon.App.Middlewares;
 using NewAvalon.Catalog.Persistence;
 using NewAvalon.Notification.Persistence;
 using NewAvalon.Order.Persistence;
+using NewAvalon.Storage.Persistence;
 using NewAvalon.UserAdministration.Persistence;
 
 namespace NewAvalon.App.Extensions
@@ -22,6 +23,7 @@ namespace NewAvalon.App.Extensions
             ApplyCatalogMigrations(scope);
             ApplyOrderMigrations(scope);
             ApplyNotificationMigrations(scope);
+            ApplyStorageMigrations(scope);
         }
 
         private static void ApplyUserAdministrationMigrations(IServiceScope scope)
@@ -52,6 +54,14 @@ namespace NewAvalon.App.Extensions
         {
             using NotificationDbContext notificationDbContext =
                 scope.ServiceProvider.GetRequiredService<NotificationDbContext>();
+
+            notificationDbContext.Database.Migrate();
+        }
+
+        private static void ApplyStorageMigrations(IServiceScope scope)
+        {
+            using StorageDbContext notificationDbContext =
+                scope.ServiceProvider.GetRequiredService<StorageDbContext>();
 
             notificationDbContext.Database.Migrate();
         }

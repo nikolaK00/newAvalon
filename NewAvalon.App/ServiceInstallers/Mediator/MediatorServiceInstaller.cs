@@ -14,6 +14,7 @@ namespace NewAvalon.App.ServiceInstallers.Mediator
             typeof(Catalog.Business.AssemblyReference).Assembly,
             typeof(Order.Business.AssemblyReference).Assembly,
             typeof(Notification.Business.AssemblyReference).Assembly,
+            typeof(NewAvalon.Storage.Business.AssemblyReference).Assembly,
         };
 
         public void InstallServices(IServiceCollection services)

@@ -44,5 +44,14 @@
         public static Error ProductNotFound => new(2000, "Product not found");
 
         #endregion
+        #region Storage
+
+        public static Error ImageNotFound => new(3000, "Image not found");
+
+        public static Error FileNotFound => new(3001, "File not found");
+
+        public static Error FileAlreadyAttached => new(3002, "File already attached");
+
+        #endregion
     }
 }
