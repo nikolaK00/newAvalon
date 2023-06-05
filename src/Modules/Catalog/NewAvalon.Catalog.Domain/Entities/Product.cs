@@ -79,6 +79,8 @@ namespace NewAvalon.Catalog.Domain.Entities
         }
 
         public void Deactivate() => IsActive = false;
+
+        public void IncreaseCapacity(decimal quantity) => Capacity += quantity;
     }
 }
 

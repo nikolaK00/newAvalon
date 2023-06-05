@@ -23,6 +23,12 @@ namespace NewAvalon.Authorization
         OrderCreate = 101,
 
         /// <summary>
+        /// Read order.
+        /// </summary>
+        [Display(GroupName = "Order", Name = "Delete", Description = "Can delete orders")]
+        OrderDelete = 102,
+
+        /// <summary>
         /// Create product.
         /// </summary>
         [Display(GroupName = "Product", Name = "Create", Description = "Can create products")]

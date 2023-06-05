@@ -14,7 +14,8 @@ namespace NewAvalon.Order.Domain.Entities
 
         private readonly List<Product> _products = new();
 
-        public Order(OrderId id, Guid ownerId, Guid dealerId, string comment, string deliveryAddress, DateTime deliveryOnUtc) : base(id)
+        public Order(OrderId id, Guid ownerId, Guid dealerId, string comment, string deliveryAddress,
+            DateTime deliveryOnUtc) : base(id)
         {
             OwnerId = ownerId;
             DealerId = dealerId;
@@ -74,6 +75,15 @@ namespace NewAvalon.Order.Domain.Entities
             _products.ForEach(product => fullPrice += product.GetFullPrice());
 
             return fullPrice;
+        }
+
+        public void Deliver() => Status = OrderStatus.Finished;
+
+        public void Cancel()
+        {
+            Status = OrderStatus.Cancelled;
+
+            RaiseDomainEvent(new OrderCancelledDomainEvent(Id.Value));
         }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using NewAvalon.App.Abstractions;
 using NewAvalon.Catalog.Business.Products.Consumers.GetCatalogProductListRequest;
 using NewAvalon.Catalog.Business.Products.Consumers.ImageDeletedEvent;
+using NewAvalon.Catalog.Business.Products.Consumers.OrderDeletedEvent;
 using NewAvalon.Catalog.Business.Products.Consumers.ProductAddedEvent;
 using NewAvalon.Infrastructure.Messaging.Options;
 using NewAvalon.Messaging.Contracts.Files;
@@ -100,6 +101,8 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
             busConfigurator.AddConsumer<GetCatalogProductListRequestConsumer>().Endpoint(e => e.Name = "get-catalog-product-list-request-consumer");
 
             busConfigurator.AddConsumer<IsProductUsedRequestConsumer>().Endpoint(e => e.Name = "is-product-used-request-consumer");
+
+            busConfigurator.AddConsumer<OrderDeletedEventConsumer>().Endpoint(e => e.Name = "order-deleted-event-consumer");
         }
 
         private static void AddRequestClients(IRegistrationConfigurator busConfigurator)

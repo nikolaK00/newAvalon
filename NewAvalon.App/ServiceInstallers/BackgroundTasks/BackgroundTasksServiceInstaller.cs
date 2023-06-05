@@ -37,6 +37,8 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks
             services.ConfigureOptions<SendEmailNotificationJobOptionsSetup>();
 
             services.ConfigureOptions<SendEmailNotificationJobSetup>();
+
+            services.ConfigureOptions<OrderDeliveryJobSetup>();
         }
 
         public void InstallCore(IServiceCollection services)

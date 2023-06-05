@@ -115,9 +115,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Storage.Business"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Storage.Boundary", "src\Modules\Storage\NewAvalon.Storage.Boundary\NewAvalon.Storage.Boundary.csproj", "{8FE3964B-0756-4F58-82C9-7E7ECD438483}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Storage.Infrastructure", "src\Modules\Storage\NewAvalon.Storage.Infrastructure\NewAvalon.Storage.Infrastructure.csproj", "{97049999-ABEA-49F9-8741-CE42D6C964E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Storage.Infrastructure", "src\Modules\Storage\NewAvalon.Storage.Infrastructure\NewAvalon.Storage.Infrastructure.csproj", "{97049999-ABEA-49F9-8741-CE42D6C964E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.UserAdministration.Infrastructure", "src\Modules\UserAdministration\NewAvalon.UserAdministration.Infrastructure\NewAvalon.UserAdministration.Infrastructure.csproj", "{088205E4-3CF2-40E8-9F32-30E12CB9F2F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.UserAdministration.Infrastructure", "src\Modules\UserAdministration\NewAvalon.UserAdministration.Infrastructure\NewAvalon.UserAdministration.Infrastructure.csproj", "{088205E4-3CF2-40E8-9F32-30E12CB9F2F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -8,6 +8,7 @@ using NewAvalon.Authorization.Attributes;
 using NewAvalon.Authorization.Extensions;
 using NewAvalon.Boundary.Pagination;
 using NewAvalon.Order.Boundary.Orders.Commands.CreateOrders;
+using NewAvalon.Order.Boundary.Orders.Commands.DeleteOrder;
 using NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders;
 using NewAvalon.Order.Boundary.Orders.Queries.GetShippingOrders;
 using NewAvalon.Order.Presentation.Abstractions;
@@ -109,6 +110,29 @@ namespace NewAvalon.Order.Presentation.Controllers
             PagedList<OrderDetailsResponse> response = await Sender.Send(query, cancellationToken);
 
             return Ok(response);
+        }
+
+        /// <summary>
+        /// Gets shipping orders.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user with the specified identifier.</returns>
+        [HttpDelete("{orderId:guid}")]
+        [Authorize]
+        [HasPermission(Permissions.OrderDelete)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteOrder(Guid orderId, CancellationToken cancellationToken)
+        {
+            var userId = Guid.Parse(HttpContext.User.GetUserIdentityId());
+
+            var command = new DeleteOrderCommand(userId, orderId);
+
+            await Sender.Send(command, cancellationToken);
+
+            return NoContent();
         }
     }
 }
