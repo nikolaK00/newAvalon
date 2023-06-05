@@ -45,6 +45,8 @@
 
         public static Error ProductInvalidQuantity => new(2001, "Product invalid quantity");
 
+        public static Error ProductCannotBeDeleted => new(2002, "Product cannot be deleted");
+
         #endregion
         #region Storage
 

@@ -12,11 +12,13 @@ namespace NewAvalon.Order.Domain.Entities
     {
         private readonly List<Product> _products = new();
 
-        public Order(OrderId id, Guid ownerId, Guid dealerId) : base(id)
+        public Order(OrderId id, Guid ownerId, Guid dealerId, string comment, string deliveryAddress) : base(id)
         {
             OwnerId = ownerId;
             DealerId = dealerId;
             Status = OrderStatus.Shipping;
+            Comment = comment;
+            DeliveryAddress = deliveryAddress;
         }
 
         /// <summary>
@@ -38,6 +40,10 @@ namespace NewAvalon.Order.Domain.Entities
         public Guid OwnerId { get; private set; }
 
         public Guid DealerId { get; private set; }
+
+        public string Comment { get; private set; }
+
+        public string DeliveryAddress { get; private set; }
 
         public IReadOnlyCollection<Product> Products => _products.ToList();
 

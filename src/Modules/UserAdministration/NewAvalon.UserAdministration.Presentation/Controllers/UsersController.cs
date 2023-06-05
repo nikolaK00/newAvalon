@@ -142,6 +142,7 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>200 - OK.</returns>
         [HttpPut("profile-image")]
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

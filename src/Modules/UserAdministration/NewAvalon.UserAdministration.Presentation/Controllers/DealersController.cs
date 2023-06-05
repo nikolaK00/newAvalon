@@ -30,6 +30,8 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
         [HttpGet("pending")]
+        [Authorize]
+        [HasPermission(Permissions.DealerRead)]
         [ProducesResponseType(typeof(PagedList<UserDetailsResponse>), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -52,6 +54,8 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
         [HttpPut("approve/{userId:guid}")]
+        [Authorize]
+        [HasPermission(Permissions.DealerUpdate)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,6 +76,8 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
         [HttpPut("disapprove/{userId:guid}")]
+        [Authorize]
+        [HasPermission(Permissions.DealerUpdate)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -94,7 +100,7 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         /// <returns>The user with the specified identifier.</returns>
         [HttpGet]
         [Authorize]
-        [HasPermission(Permissions.UserRead)]
+        [HasPermission(Permissions.DealerRead)]
         [ProducesResponseType(typeof(PagedList<DealerUserDetailsResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

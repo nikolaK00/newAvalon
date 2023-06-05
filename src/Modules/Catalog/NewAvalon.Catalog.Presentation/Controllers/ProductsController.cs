@@ -1,7 +1,10 @@
 ﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewAvalon.Abstractions.Contracts;
+using NewAvalon.Authorization;
+using NewAvalon.Authorization.Attributes;
 using NewAvalon.Authorization.Extensions;
 using NewAvalon.Boundary.Pagination;
 using NewAvalon.Catalog.Boundary.Products.Commands.CreateProduct;
@@ -31,6 +34,8 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The identifier of the newly created product.</returns>
         [HttpPost]
+        [Authorize]
+        [HasPermission(Permissions.ProductCreate)]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -53,6 +58,7 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
         [HttpGet("{productId:guid}", Name = nameof(GetProduct))]
+        [Authorize]
         [ProducesResponseType(typeof(ProductDetailsResponse), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -74,6 +80,7 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list of products.</returns>
         [HttpGet("creator")]
+        [Authorize]
         [ProducesResponseType(typeof(PagedList<ProductDetailsResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -94,12 +101,13 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list of products.</returns>
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(typeof(PagedList<ProductDetailsResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetProducts(int page, int itemsPerPage, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetProducts(bool onlyActive, int page, int itemsPerPage, CancellationToken cancellationToken)
         {
-            var query = new GetProductsQuery(page, itemsPerPage);
+            var query = new GetProductsQuery(onlyActive, page, itemsPerPage);
 
             PagedList<ProductDetailsResponse> response = await Sender.Send(query, cancellationToken);
 
@@ -113,8 +121,9 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="request">Update product request</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list of products.</returns>
-        [HttpPut]
         [HttpPut("{productId:guid}")]
+        [Authorize]
+        [HasPermission(Permissions.ProductUpdate)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -138,10 +147,12 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
         [HttpDelete("{productId:guid}")]
+        [Authorize]
+        [HasPermission(Permissions.ProductDelete)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteProduct([FromBody] Guid productId, CancellationToken cancellationToken)
+        public async Task<IActionResult> DeleteProduct(Guid productId, CancellationToken cancellationToken)
         {
             var command = new DeleteProductCommand(productId, Guid.Parse(HttpContext.User.GetUserIdentityId()));
 
@@ -157,6 +168,8 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>200 - OK.</returns>
         [HttpPut("product-image")]
+        [Authorize]
+        [HasPermission(Permissions.ProductUpdate)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]

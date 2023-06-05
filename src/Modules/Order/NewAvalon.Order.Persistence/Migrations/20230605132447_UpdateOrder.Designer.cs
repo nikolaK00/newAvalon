@@ -2,16 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using NewAvalon.Catalog.Persistence;
+using NewAvalon.Order.Persistence;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace NewAvalon.Catalog.Persistence.Migrations
+namespace NewAvalon.Order.Persistence.Migrations
 {
-    [DbContext(typeof(CatalogDbContext))]
-    partial class CatalogDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(OrderDbContext))]
+    [Migration("20230605132447_UpdateOrder")]
+    partial class UpdateOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,62 +21,64 @@ namespace NewAvalon.Catalog.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("NewAvalon.Catalog.Domain.Entities.Product", b =>
+            modelBuilder.Entity("NewAvalon.Order.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("Capacity")
-                        .HasColumnType("numeric");
+                    b.Property<string>("Comment")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("CreatorId")
+                    b.Property<Guid>("DealerId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("text")
-                        .HasDefaultValue("");
-
-                    b.Property<bool>("IsActive")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(true);
+                    b.Property<string>("DeliveryAddress")
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("ModifiedOnUtc")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric");
-
-                    b.Property<Guid?>("ProductImageId")
+                    b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProductImageId");
-
-                    b.ToTable("Products");
+                    b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("NewAvalon.Catalog.Domain.ValueObjects.ProductImage", b =>
+            modelBuilder.Entity("NewAvalon.Order.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Url")
-                        .HasColumnType("text");
+                    b.Property<Guid>("CatalogProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("ModifiedOnUtc")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProductImage");
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("NewAvalon.Persistence.Relational.Outbox.Message", b =>
@@ -110,13 +114,16 @@ namespace NewAvalon.Catalog.Persistence.Migrations
                     b.ToTable("Messages");
                 });
 
-            modelBuilder.Entity("NewAvalon.Catalog.Domain.Entities.Product", b =>
+            modelBuilder.Entity("NewAvalon.Order.Domain.Entities.Product", b =>
                 {
-                    b.HasOne("NewAvalon.Catalog.Domain.ValueObjects.ProductImage", "ProductImage")
-                        .WithMany()
-                        .HasForeignKey("ProductImageId");
+                    b.HasOne("NewAvalon.Order.Domain.Entities.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
+                });
 
-                    b.Navigation("ProductImage");
+            modelBuilder.Entity("NewAvalon.Order.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

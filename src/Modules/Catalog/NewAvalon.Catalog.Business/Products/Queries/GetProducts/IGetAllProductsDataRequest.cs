@@ -4,7 +4,7 @@ using NewAvalon.Catalog.Boundary.Products.Queries.GetProduct;
 
 namespace NewAvalon.Catalog.Business.Products.Queries.GetProducts
 {
-    public interface IGetAllProductsDataRequest : IDataRequest<(int Page, int ItemsPerPage), PagedList<ProductDetailsResponse>>
+    public interface IGetAllProductsDataRequest : IDataRequest<(bool OnlyActive, int Page, int ItemsPerPage), PagedList<ProductDetailsResponse>>
     {
     }
 }

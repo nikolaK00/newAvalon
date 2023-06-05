@@ -13,10 +13,8 @@ namespace NewAvalon.Catalog.Business.Products.Consumers.GetCatalogProductListReq
     {
         private readonly IProductRepository _productRepository;
 
-        public GetCatalogProductListRequestConsumer(IProductRepository userRepository, ICatalogUnitOfWork unitOfWork)
-        {
-            _productRepository = userRepository;
-        }
+        public GetCatalogProductListRequestConsumer(IProductRepository productRepository) =>
+            _productRepository = productRepository;
 
         public async Task Consume(ConsumeContext<IGetCatalogProductListRequest> context)
         {

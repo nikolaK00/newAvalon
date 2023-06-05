@@ -17,6 +17,6 @@ namespace NewAvalon.Catalog.Business.Products.Queries.GetProducts
         }
 
         public async Task<PagedList<ProductDetailsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken) =>
-            await _getAllProductsDataRequest.GetAsync((request.Page, request.ItemsPerPage), cancellationToken);
+            await _getAllProductsDataRequest.GetAsync((request.OnlyActive, request.Page, request.ItemsPerPage), cancellationToken);
     }
 }

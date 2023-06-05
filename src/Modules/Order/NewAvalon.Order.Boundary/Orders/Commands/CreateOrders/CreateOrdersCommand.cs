@@ -5,5 +5,5 @@ using System.Collections.Generic;
 
 namespace NewAvalon.Order.Boundary.Orders.Commands.CreateOrders
 {
-    public record CreateOrdersCommand(Guid OwnerId, List<AddProductRequest> Products) : ICommand<List<EntityCreatedResponse>>;
+    public record CreateOrdersCommand(Guid OwnerId, List<AddProductRequest> Products, string Comment, string DeliveryAddress) : ICommand<List<EntityCreatedResponse>>;
 }

@@ -30,6 +30,8 @@ namespace NewAvalon.Catalog.Persistence.Configurations
             builder.Property(product => product.Description).IsRequired().HasDefaultValue(string.Empty);
 
             builder.Property(product => product.CreatorId).IsRequired();
+
+            builder.Property(product => product.IsActive).IsRequired().HasDefaultValue(true);
         }
     }
 }

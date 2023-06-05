@@ -40,6 +40,8 @@ namespace NewAvalon.Catalog.Domain.Entities
 
         public Guid CreatorId { get; private set; }
 
+        public bool IsActive { get; private set; }
+
         public DateTime CreatedOnUtc { get; private set; }
 
         public DateTime? ModifiedOnUtc { get; private set; }
@@ -75,6 +77,8 @@ namespace NewAvalon.Catalog.Domain.Entities
         {
             Capacity -= quantity;
         }
+
+        public void Deactivate() => IsActive = false;
     }
 }
 

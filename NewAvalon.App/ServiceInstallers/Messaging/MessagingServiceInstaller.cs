@@ -12,6 +12,7 @@ using NewAvalon.Messaging.Contracts.Permissions;
 using NewAvalon.Messaging.Contracts.Products;
 using NewAvalon.Messaging.Contracts.Users;
 using NewAvalon.Notification.Business.Notifications.Consumers;
+using NewAvalon.Order.Business.Orders.Consumers;
 using NewAvalon.Storage.Business.Files.Consumers;
 using NewAvalon.Storage.Business.Images.Consumers;
 using NewAvalon.UserAdministration.Business.Permissions.Consumers;
@@ -97,6 +98,8 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
             busConfigurator.AddConsumer<ProductAddedEventConsumer>().Endpoint(e => e.Name = "product-added-event-consumer");
 
             busConfigurator.AddConsumer<GetCatalogProductListRequestConsumer>().Endpoint(e => e.Name = "get-catalog-product-list-request-consumer");
+
+            busConfigurator.AddConsumer<IsProductUsedRequestConsumer>().Endpoint(e => e.Name = "is-product-used-request-consumer");
         }
 
         private static void AddRequestClients(IRegistrationConfigurator busConfigurator)
@@ -116,6 +119,8 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
             busConfigurator.AddRequestClient<IStoreUploadedFileRequest>();
 
             busConfigurator.AddRequestClient<IGetCatalogProductListRequest>();
+
+            busConfigurator.AddRequestClient<IIsProductUsedRequest>();
         }
     }
 }

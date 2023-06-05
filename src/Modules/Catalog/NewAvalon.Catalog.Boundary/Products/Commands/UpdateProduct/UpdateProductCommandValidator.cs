@@ -10,7 +10,7 @@ namespace NewAvalon.Catalog.Boundary.Products.Commands.UpdateProduct
 
             RuleFor(x => x.Price).Must(x => x > 0);
 
-            RuleFor(x => x.Capacity).Must(x => x > 0);
+            RuleFor(x => x.Capacity).Must(x => x >= 0);
         }
     }
 }

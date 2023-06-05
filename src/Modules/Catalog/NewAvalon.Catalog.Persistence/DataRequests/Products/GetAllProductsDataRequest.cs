@@ -15,11 +15,10 @@ namespace NewAvalon.Catalog.Persistence.DataRequests.Products
 
         public GetAllProductsDataRequest(CatalogDbContext dbContext) => _dbContext = dbContext;
 
-        public async Task<PagedList<ProductDetailsResponse>> GetAsync(
-            (int Page, int ItemsPerPage) request,
-            CancellationToken cancellationToken = default)
+        public async Task<PagedList<ProductDetailsResponse>> GetAsync((bool OnlyActive, int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
         {
             var products = await _dbContext.Set<Product>()
+                .Where(product => !request.OnlyActive || product.IsActive)
                 .OrderBy(product => product.CreatedOnUtc)
                 .Skip((request.Page - 1) * request.ItemsPerPage)
                 .Take(request.ItemsPerPage)

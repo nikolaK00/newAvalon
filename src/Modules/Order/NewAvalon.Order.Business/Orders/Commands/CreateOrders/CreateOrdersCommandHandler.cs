@@ -69,7 +69,9 @@ namespace NewAvalon.Order.Business.Orders.Commands.CreateOrders
                 var order = new Domain.Entities.Order(new OrderId(
                     Guid.NewGuid()),
                     request.OwnerId,
-                    productDealerPair.Key);
+                    productDealerPair.Key,
+                    request.Comment,
+                    request.DeliveryAddress);
 
                 response.Add(new EntityCreatedResponse(order.Id.Value));
 
