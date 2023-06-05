@@ -1,8 +1,7 @@
 ﻿using NewAvalon.Domain.Errors;
-using NewAvalon.Domain.Exceptions;
 using System;
 
-namespace NewAvalon.Catalog.Domain.Exceptions.Products
+namespace NewAvalon.Domain.Exceptions.Products
 {
     public sealed class ProductNotFoundException : NotFoundException
     {

@@ -3,6 +3,7 @@ using NewAvalon.Catalog.Domain.Entities;
 using NewAvalon.Catalog.Domain.EntityIdentifiers;
 using NewAvalon.Catalog.Domain.Repositories;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -17,6 +18,10 @@ namespace NewAvalon.Catalog.Persistence.Repositories
         public async Task<Product> GetByIdAsync(ProductId productId, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<Product>()
                 .FirstOrDefaultAsync(product => product.Id == productId, cancellationToken);
+
+        public async Task<Product[]> GetByIdsAsync(ProductId[] productIds, CancellationToken cancellationToken = default) =>
+            await _dbContext.Set<Product>()
+                .Where(x => productIds.Contains(x.Id)).ToArrayAsync(cancellationToken);
 
         public async Task<bool> ExistsAsync(ProductId productId, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<Product>().AnyAsync(product => product.Id == productId, cancellationToken);

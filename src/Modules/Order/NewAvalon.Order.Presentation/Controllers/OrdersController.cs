@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NewAvalon.Abstractions.Contracts;
@@ -6,6 +7,7 @@ using NewAvalon.Authorization;
 using NewAvalon.Authorization.Attributes;
 using NewAvalon.Authorization.Extensions;
 using NewAvalon.Boundary.Pagination;
+using NewAvalon.Order.Boundary.Orders.Commands.CreateOrders;
 using NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders;
 using NewAvalon.Order.Boundary.Orders.Queries.GetShippingOrders;
 using NewAvalon.Order.Presentation.Abstractions;

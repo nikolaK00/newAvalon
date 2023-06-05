@@ -10,6 +10,8 @@ namespace NewAvalon.Catalog.Domain.Repositories
     {
         Task<Product> GetByIdAsync(ProductId productId, CancellationToken cancellationToken = default);
 
+        Task<Product[]> GetByIdsAsync(ProductId[] productIds, CancellationToken cancellationToken = default);
+
         Task<bool> ExistsAsync(ProductId productId, CancellationToken cancellationToken = default);
 
         Task<Product> GetByImageIdAsync(Guid imageId, CancellationToken cancellationToken = default);

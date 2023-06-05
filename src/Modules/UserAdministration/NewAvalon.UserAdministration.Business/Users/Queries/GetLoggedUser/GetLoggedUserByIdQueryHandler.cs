@@ -28,9 +28,12 @@ namespace NewAvalon.UserAdministration.Business.Users.Queries.GetLoggedUser
 
             return new UserWithPermissionsResponse(
                 user.Id.Value,
+                user.UserName,
                 user.FirstName,
                 user.LastName,
                 user.Email,
+                user.Address,
+                user.ProfileImage != null ? new ProfileImageResponse(user.ProfileImage.Id, user.ProfileImage.Url) : null,
                 user.Roles.Select(role => new RoleResponse(role.Id.Value, role.Description))
                     .ToList(),
                 user.Roles.SelectMany(role =>

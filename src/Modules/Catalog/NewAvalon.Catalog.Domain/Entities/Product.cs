@@ -70,6 +70,11 @@ namespace NewAvalon.Catalog.Domain.Entities
             Capacity = capacity;
             Description = description;
         }
+
+        public void ProductAdded(decimal quantity)
+        {
+            Capacity -= quantity;
+        }
     }
 }
 

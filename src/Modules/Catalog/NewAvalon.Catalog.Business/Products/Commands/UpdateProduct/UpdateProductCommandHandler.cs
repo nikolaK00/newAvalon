@@ -2,8 +2,8 @@
 using NewAvalon.Abstractions.Messaging;
 using NewAvalon.Catalog.Boundary.Products.Commands.UpdateProduct;
 using NewAvalon.Catalog.Domain.EntityIdentifiers;
-using NewAvalon.Catalog.Domain.Exceptions.Products;
 using NewAvalon.Catalog.Domain.Repositories;
+using NewAvalon.Domain.Exceptions.Products;
 using System.Threading;
 using System.Threading.Tasks;
 

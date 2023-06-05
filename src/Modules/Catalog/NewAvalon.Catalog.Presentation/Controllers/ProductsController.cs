@@ -109,17 +109,20 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <summary>
         /// Update product with specified identifier.
         /// </summary>
+        /// <param name="productId">The product identifier</param>
         /// <param name="request">Update product request</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list of products.</returns>
         [HttpPut]
+        [HttpPut("{productId:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProduct(Guid productId, [FromBody] UpdateProductRequest request, CancellationToken cancellationToken)
         {
             var command = request.Adapt<UpdateProductCommand>() with
             {
+                ProductId = productId,
                 CreatorId = Guid.Parse(HttpContext.User.GetUserIdentityId())
             };
 
@@ -134,7 +137,7 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <param name="productId">The product identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The user with the specified identifier.</returns>
-        [HttpDelete("{productId:guid}", Name = nameof(GetProduct))]
+        [HttpDelete("{productId:guid}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

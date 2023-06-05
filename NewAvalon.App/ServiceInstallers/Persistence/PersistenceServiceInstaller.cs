@@ -9,6 +9,7 @@ using NewAvalon.Catalog.Persistence.Options;
 using NewAvalon.Notification.Domain.Repositories;
 using NewAvalon.Notification.Persistence;
 using NewAvalon.Notification.Persistence.Options;
+using NewAvalon.Order.Domain.Repositories;
 using NewAvalon.Order.Persistence;
 using NewAvalon.Order.Persistence.Options;
 using NewAvalon.Persistence.Extensions;
@@ -137,7 +138,7 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                     .AddInterceptors(provider);
             });
 
-            services.AddScoped<ICatalogUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CatalogDbContext>());
+            services.AddScoped<IOrderUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<OrderDbContext>());
         }
 
         private static void AddNotificationDbContext(IServiceCollection services)

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Orders\Commands\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Common\NewAvalon.Abstractions\NewAvalon.Abstractions.csproj" />
     <ProjectReference Include="..\..\..\Common\NewAvalon.Boundary\NewAvalon.Boundary.csproj" />
   </ItemGroup>

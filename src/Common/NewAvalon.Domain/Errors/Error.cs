@@ -43,6 +43,8 @@
 
         public static Error ProductNotFound => new(2000, "Product not found");
 
+        public static Error ProductInvalidQuantity => new(2001, "Product invalid quantity");
+
         #endregion
         #region Storage
 
