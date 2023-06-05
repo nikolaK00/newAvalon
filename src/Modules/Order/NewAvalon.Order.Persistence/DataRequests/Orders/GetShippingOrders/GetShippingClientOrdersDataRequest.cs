@@ -42,7 +42,8 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetShippingOrders
                     product.Price,
                     product.GetFullPrice())).ToList(),
                 Domain.Entities.Order.GetDeliveryPrice(),
-                order.GetFullPrice()));
+                order.GetFullPrice(),
+                order.DeliveryOnUtc));
 
             var count = await query.CountAsync(cancellationToken);
 

@@ -12,7 +12,8 @@ namespace NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders
         int Status,
         List<ProductDetailsResponse> ProductDetailsResponses,
         decimal DeliveryPrice,
-        decimal FullPrice);
+        decimal FullPrice,
+        DateTime DeliveryOnUtc);
 
     public sealed record ProductDetailsResponse(Guid Id, Guid OrderId, Guid CatalogProductId, decimal Quantity, decimal Price, decimal FullPrice);
 

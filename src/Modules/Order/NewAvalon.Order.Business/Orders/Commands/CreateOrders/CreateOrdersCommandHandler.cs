@@ -1,4 +1,5 @@
 ﻿using MassTransit;
+using NewAvalon.Abstractions.Clock;
 using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.Messaging;
 using NewAvalon.Domain.Exceptions.Products;
@@ -11,6 +12,7 @@ using NewAvalon.Order.Domain.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -21,15 +23,18 @@ namespace NewAvalon.Order.Business.Orders.Commands.CreateOrders
         private readonly IOrderRepository _orderRepository;
         private readonly IOrderUnitOfWork _unitOfWork;
         private readonly IRequestClient<IGetCatalogProductListRequest> _catalogProductListRequest;
+        private readonly ISystemTime _systemTime;
 
         public CreateOrdersCommandHandler(
             IOrderRepository orderRepository,
             IOrderUnitOfWork unitOfWork,
-            IRequestClient<IGetCatalogProductListRequest> catalogProductListRequest)
+            IRequestClient<IGetCatalogProductListRequest> catalogProductListRequest,
+            ISystemTime systemTime)
         {
             _orderRepository = orderRepository;
             _unitOfWork = unitOfWork;
             _catalogProductListRequest = catalogProductListRequest;
+            _systemTime = systemTime;
         }
 
         public async Task<List<EntityCreatedResponse>> Handle(CreateOrdersCommand request, CancellationToken cancellationToken)
@@ -66,12 +71,15 @@ namespace NewAvalon.Order.Business.Orders.Commands.CreateOrders
 
             foreach (var productDealerPair in productsPerDealer)
             {
+                var deliveryOnUtc = _systemTime.UtcNow.AddHours(1 + RandomNumberGenerator.GetInt32(1, 4));
+
                 var order = new Domain.Entities.Order(new OrderId(
                     Guid.NewGuid()),
                     request.OwnerId,
                     productDealerPair.Key,
                     request.Comment,
-                    request.DeliveryAddress);
+                    request.DeliveryAddress,
+                    deliveryOnUtc);
 
                 response.Add(new EntityCreatedResponse(order.Id.Value));
 

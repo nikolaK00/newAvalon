@@ -32,6 +32,8 @@ namespace NewAvalon.Order.Persistence.Configurations
             builder.Property(order => order.OwnerId).IsRequired();
 
             builder.Property(order => order.DealerId).IsRequired();
+
+            builder.Property(order => order.DeliveryOnUtc).IsRequired();
         }
     }
 }
