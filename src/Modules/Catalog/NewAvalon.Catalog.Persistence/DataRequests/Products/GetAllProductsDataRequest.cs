@@ -15,7 +15,7 @@ namespace NewAvalon.Catalog.Persistence.DataRequests.Products
 
         public GetAllProductsDataRequest(CatalogDbContext dbContext) => _dbContext = dbContext;
 
-        public async Task<PagedList<ProductDetailsResponse>> GetAsync((bool OnlyActive, int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
+        public async Task<PagedList<CatalogProductDetailsResponse>> GetAsync((bool OnlyActive, int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
         {
             var products = await _dbContext.Set<Product>()
                 .Where(product => !request.OnlyActive || product.IsActive)
@@ -25,7 +25,7 @@ namespace NewAvalon.Catalog.Persistence.DataRequests.Products
                 .ToListAsync(cancellationToken);
 
             var response = products
-                .Select(product => new ProductDetailsResponse(
+                .Select(product => new CatalogProductDetailsResponse(
                     product.Id.Value,
                     product.Name,
                     product.Price,
@@ -34,7 +34,7 @@ namespace NewAvalon.Catalog.Persistence.DataRequests.Products
 
             var count = await _dbContext.Set<Product>().CountAsync(cancellationToken: cancellationToken);
 
-            return new PagedList<ProductDetailsResponse>(response, count, request.Page, request.ItemsPerPage);
+            return new PagedList<CatalogProductDetailsResponse>(response, count, request.Page, request.ItemsPerPage);
         }
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 namespace NewAvalon.Catalog.Business.Products.Queries.GetProductsByCreator
 {
-    public interface IGetAllProductsByCreatorIdDataRequest : IDataRequest<(Guid CreatorId, int Page, int ItemsPerPage), PagedList<ProductDetailsResponse>>
+    public interface IGetAllProductsByCreatorIdDataRequest : IDataRequest<(Guid CreatorId, int Page, int ItemsPerPage), PagedList<CatalogProductDetailsResponse>>
     {
     }
 }

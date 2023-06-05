@@ -86,7 +86,7 @@ namespace NewAvalon.Order.Business.Orders.Commands.CreateOrders
                         throw new ProductInvalidQuantityException(requestedProduct.Id);
                     }
 
-                    order.AddProduct(catalogProduct.Id, requestedProduct.Quantity);
+                    order.AddProduct(catalogProduct.Id, catalogProduct.Price, requestedProduct.Quantity);
                 }
             }
 

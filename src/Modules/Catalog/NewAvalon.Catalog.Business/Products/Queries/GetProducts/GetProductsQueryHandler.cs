@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewAvalon.Catalog.Business.Products.Queries.GetProducts
 {
-    internal sealed class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, PagedList<ProductDetailsResponse>>
+    internal sealed class GetProductsQueryHandler : IQueryHandler<GetProductsQuery, PagedList<CatalogProductDetailsResponse>>
     {
         private readonly IGetAllProductsDataRequest _getAllProductsDataRequest;
 
@@ -16,7 +16,7 @@ namespace NewAvalon.Catalog.Business.Products.Queries.GetProducts
             _getAllProductsDataRequest = getAllProductsDataRequest;
         }
 
-        public async Task<PagedList<ProductDetailsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken) =>
+        public async Task<PagedList<CatalogProductDetailsResponse>> Handle(GetProductsQuery request, CancellationToken cancellationToken) =>
             await _getAllProductsDataRequest.GetAsync((request.OnlyActive, request.Page, request.ItemsPerPage), cancellationToken);
     }
 }

@@ -22,13 +22,15 @@ namespace NewAvalon.Order.Persistence.Configurations
 
             builder.Property(product => product.Id).HasConversion(productId => productId.Value, value => new ProductId(value));
 
-            builder.Property(order => order.CreatedOnUtc).IsRequired();
+            builder.Property(product => product.CreatedOnUtc).IsRequired();
 
-            builder.Property(order => order.ModifiedOnUtc);
+            builder.Property(product => product.ModifiedOnUtc);
 
-            builder.Property(order => order.CatalogProductId).IsRequired();
+            builder.Property(product => product.CatalogProductId).IsRequired();
 
-            builder.Property(order => order.Quantity).IsRequired();
+            builder.Property(product => product.Quantity).IsRequired();
+
+            builder.Property(product => product.Price).IsRequired();
         }
 
         private static void ConfigureRelationships(EntityTypeBuilder<Product> builder)

@@ -22,7 +22,22 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetAllOrders
                 .Take(request.ItemsPerPage)
                 .ToListAsync(cancellationToken);
 
-            var response = orders.Select(order => new OrderDetailsResponse(order.Id.Value));
+            var response = orders.Select(order => new OrderDetailsResponse(
+                order.Id.Value,
+                order.OwnerId,
+                order.DealerId,
+                order.Comment,
+                order.DeliveryAddress,
+                (int)order.Status,
+                order.Products.Select(product => new ProductDetailsResponse(
+                    product.Id.Value,
+                    product.OrderId.Value,
+                    product.CatalogProductId,
+                    product.Quantity,
+                    product.Price,
+                    product.GetFullPrice())).ToList(),
+                Domain.Entities.Order.GetDeliveryPrice(),
+                order.GetFullPrice()));
 
             var count = await _dbContext.Set<Domain.Entities.Order>().CountAsync(cancellationToken: cancellationToken);
 

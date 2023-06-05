@@ -59,14 +59,14 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <returns>The user with the specified identifier.</returns>
         [HttpGet("{productId:guid}", Name = nameof(GetProduct))]
         [Authorize]
-        [ProducesResponseType(typeof(ProductDetailsResponse), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(CatalogProductDetailsResponse), StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProduct(Guid productId, CancellationToken cancellationToken)
         {
             var query = new GetProductByIdQuery(productId);
 
-            ProductDetailsResponse response = await Sender.Send(query, cancellationToken);
+            CatalogProductDetailsResponse response = await Sender.Send(query, cancellationToken);
 
             return Ok(response);
         }
@@ -81,14 +81,14 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <returns>The list of products.</returns>
         [HttpGet("creator")]
         [Authorize]
-        [ProducesResponseType(typeof(PagedList<ProductDetailsResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedList<CatalogProductDetailsResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProductsByCreator(Guid creatorId, int page, int itemsPerPage, CancellationToken cancellationToken)
         {
             var query = new GetProductsByCreatorQuery(creatorId, page, itemsPerPage);
 
-            PagedList<ProductDetailsResponse> response = await Sender.Send(query, cancellationToken);
+            PagedList<CatalogProductDetailsResponse> response = await Sender.Send(query, cancellationToken);
 
             return Ok(response);
         }
@@ -102,14 +102,14 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// <returns>The list of products.</returns>
         [HttpGet]
         [Authorize]
-        [ProducesResponseType(typeof(PagedList<ProductDetailsResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(PagedList<CatalogProductDetailsResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProducts(bool onlyActive, int page, int itemsPerPage, CancellationToken cancellationToken)
         {
             var query = new GetProductsQuery(onlyActive, page, itemsPerPage);
 
-            PagedList<ProductDetailsResponse> response = await Sender.Send(query, cancellationToken);
+            PagedList<CatalogProductDetailsResponse> response = await Sender.Send(query, cancellationToken);
 
             return Ok(response);
         }

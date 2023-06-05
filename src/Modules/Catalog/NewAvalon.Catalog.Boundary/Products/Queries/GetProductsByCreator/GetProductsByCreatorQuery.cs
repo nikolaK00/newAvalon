@@ -5,5 +5,5 @@ using System;
 
 namespace NewAvalon.Catalog.Boundary.Products.Queries.GetProductsByCreator
 {
-    public sealed record GetProductsByCreatorQuery(Guid CreatorId, int Page, int ItemsPerPage) : IQuery<PagedList<ProductDetailsResponse>>;
+    public sealed record GetProductsByCreatorQuery(Guid CreatorId, int Page, int ItemsPerPage) : IQuery<PagedList<CatalogProductDetailsResponse>>;
 }

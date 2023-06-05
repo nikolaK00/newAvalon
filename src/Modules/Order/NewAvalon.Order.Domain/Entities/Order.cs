@@ -10,6 +10,8 @@ namespace NewAvalon.Order.Domain.Entities
 {
     public sealed class Order : AggregateRoot<OrderId>, IAuditableEntity
     {
+        private const decimal DeliveryPrice = 20;
+
         private readonly List<Product> _products = new();
 
         public Order(OrderId id, Guid ownerId, Guid dealerId, string comment, string deliveryAddress) : base(id)
@@ -47,17 +49,28 @@ namespace NewAvalon.Order.Domain.Entities
 
         public IReadOnlyCollection<Product> Products => _products.ToList();
 
-        public Product AddProduct(Guid catalogProductId, decimal quantity)
+        public Product AddProduct(Guid catalogProductId, decimal price, decimal quantity)
         {
             var productId = new ProductId(Guid.NewGuid());
 
-            var product = new Product(productId, Id, catalogProductId, quantity);
+            var product = new Product(productId, Id, catalogProductId, quantity, price);
 
             _products.Add(product);
 
             RaiseDomainEvent(new ProductAddedDomainEvent(productId));
 
             return product;
+        }
+
+        public static decimal GetDeliveryPrice() => DeliveryPrice;
+
+        public decimal GetFullPrice()
+        {
+            decimal fullPrice = DeliveryPrice;
+
+            _products.ForEach(product => fullPrice += product.GetFullPrice());
+
+            return fullPrice;
         }
     }
 }

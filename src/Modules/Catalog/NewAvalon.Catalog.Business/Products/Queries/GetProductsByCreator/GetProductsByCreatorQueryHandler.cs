@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewAvalon.Catalog.Business.Products.Queries.GetProductsByCreator
 {
-    internal sealed class GetProductsByCreatorQueryHandler : IQueryHandler<GetProductsByCreatorQuery, PagedList<ProductDetailsResponse>>
+    internal sealed class GetProductsByCreatorQueryHandler : IQueryHandler<GetProductsByCreatorQuery, PagedList<CatalogProductDetailsResponse>>
     {
         private readonly IGetAllProductsByCreatorIdDataRequest _getAllProductsByCreatorIdDataRequest;
 
@@ -16,7 +16,7 @@ namespace NewAvalon.Catalog.Business.Products.Queries.GetProductsByCreator
             _getAllProductsByCreatorIdDataRequest = getAllProductsByCreatorIdDataRequest;
         }
 
-        public async Task<PagedList<ProductDetailsResponse>> Handle(GetProductsByCreatorQuery request, CancellationToken cancellationToken) =>
+        public async Task<PagedList<CatalogProductDetailsResponse>> Handle(GetProductsByCreatorQuery request, CancellationToken cancellationToken) =>
             await _getAllProductsByCreatorIdDataRequest.GetAsync((request.CreatorId, request.Page, request.ItemsPerPage), cancellationToken);
     }
 }
