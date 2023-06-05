@@ -1,9 +1,6 @@
-﻿using System;
-
-namespace NewAvalon.Catalog.Boundary.Products.Commands.UpdateProduct
+﻿namespace NewAvalon.Catalog.Boundary.Products.Commands.UpdateProduct
 {
     public sealed record UpdateProductRequest(
-        Guid CreatorId,
         string Name,
         decimal Price,
         decimal Capacity,
