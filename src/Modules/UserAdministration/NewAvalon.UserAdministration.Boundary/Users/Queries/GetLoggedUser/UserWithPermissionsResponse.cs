@@ -11,6 +11,7 @@ namespace NewAvalon.UserAdministration.Boundary.Users.Queries.GetLoggedUser
         string LastName,
         string Email,
         string Address,
+        int? Status,
         ProfileImageResponse ProfileImage,
         List<RoleResponse> Roles,
         List<PermissionResponse> Permissions);

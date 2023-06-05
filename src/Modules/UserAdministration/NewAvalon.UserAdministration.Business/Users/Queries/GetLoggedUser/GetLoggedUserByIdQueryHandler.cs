@@ -14,17 +14,25 @@ namespace NewAvalon.UserAdministration.Business.Users.Queries.GetLoggedUser
     internal sealed class GetLoggedUserByIdQueryHandler : IQueryHandler<GetLoggedUserByIdQuery, UserWithPermissionsResponse>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IDealerRepository _dealerRepository;
 
-        public GetLoggedUserByIdQueryHandler(IUserRepository userRepository) => _userRepository = userRepository;
-
+        public GetLoggedUserByIdQueryHandler(IUserRepository userRepository, IDealerRepository dealerRepository)
+        {
+            _userRepository = userRepository;
+            _dealerRepository = dealerRepository;
+        }
         public async Task<UserWithPermissionsResponse> Handle(GetLoggedUserByIdQuery request, CancellationToken cancellationToken)
         {
-            User user = await _userRepository.GetByIdAsync(new UserId(request.UserId), cancellationToken);
+            var userId = new UserId(request.UserId);
+
+            User user = await _userRepository.GetByIdAsync(userId, cancellationToken);
 
             if (user is null)
             {
                 throw new UserNotFoundException(request.UserId);
             }
+
+            Dealer dealer = await _dealerRepository.GetByIdAsync(userId, cancellationToken);
 
             return new UserWithPermissionsResponse(
                 user.Id.Value,
@@ -33,6 +41,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Queries.GetLoggedUser
                 user.LastName,
                 user.Email,
                 user.Address,
+                dealer is not null ? (int)dealer.Status : null,
                 user.ProfileImage != null ? new ProfileImageResponse(user.ProfileImage.Id, user.ProfileImage.Url) : null,
                 user.Roles.Select(role => new RoleResponse(role.Id.Value, role.Description))
                     .ToList(),
