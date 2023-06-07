@@ -5,8 +5,8 @@ namespace NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders
 {
     public sealed record OrderDetailsResponse(
         Guid Id,
-        Guid OwnerId,
-        Guid DealerId,
+        OrderUserDetailsResponse OwnerId,
+        OrderUserDetailsResponse DealerId,
         string Name,
         string Comment,
         string DeliveryAddress,
@@ -17,5 +17,7 @@ namespace NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders
         DateTime DeliveryOnUtc);
 
     public sealed record ProductDetailsResponse(Guid Id, Guid OrderId, Guid CatalogProductId, decimal Quantity, decimal Price, decimal FullPrice);
+
+    public sealed record OrderUserDetailsResponse(Guid Id, string FirstName, string LastName, string Username);
 
 }
