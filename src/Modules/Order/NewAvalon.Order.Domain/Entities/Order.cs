@@ -14,7 +14,12 @@ namespace NewAvalon.Order.Domain.Entities
 
         private readonly List<Product> _products = new();
 
-        public Order(OrderId id, Guid ownerId, Guid dealerId, string comment, string deliveryAddress,
+        public Order(
+            OrderId id,
+            Guid ownerId,
+            Guid dealerId,
+            string comment,
+            string deliveryAddress,
             DateTime deliveryOnUtc) : base(id)
         {
             OwnerId = ownerId;
@@ -51,6 +56,8 @@ namespace NewAvalon.Order.Domain.Entities
 
         public DateTime DeliveryOnUtc { get; private set; }
 
+        public long SerialNumber { get; private set; }
+
         public IReadOnlyCollection<Product> Products => _products.ToList();
 
         public Product AddProduct(Guid catalogProductId, decimal price, decimal quantity)
@@ -85,5 +92,7 @@ namespace NewAvalon.Order.Domain.Entities
 
             RaiseDomainEvent(new OrderCancelledDomainEvent(Id.Value));
         }
+
+        public string GetName() => $"order-{SerialNumber}";
     }
 }

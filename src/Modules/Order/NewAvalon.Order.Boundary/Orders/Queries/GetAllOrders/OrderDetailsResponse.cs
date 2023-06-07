@@ -7,6 +7,7 @@ namespace NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders
         Guid Id,
         Guid OwnerId,
         Guid DealerId,
+        string Name,
         string Comment,
         string DeliveryAddress,
         int Status,

@@ -6,7 +6,7 @@ namespace NewAvalon.UserAdministration.Boundary.Users.Queries.GetLoggedUser
 {
     public sealed record UserWithPermissionsResponse(
         Guid Id,
-        string UserName,
+        string Username,
         string FirstName,
         string LastName,
         string Email,

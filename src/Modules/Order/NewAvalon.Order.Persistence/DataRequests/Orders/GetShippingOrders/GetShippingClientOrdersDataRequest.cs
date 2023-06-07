@@ -31,6 +31,7 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetShippingOrders
                 order.Id.Value,
                 order.OwnerId,
                 order.DealerId,
+                order.GetName(),
                 order.Comment,
                 order.DeliveryAddress,
                 (int)order.Status,
