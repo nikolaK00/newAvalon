@@ -36,6 +36,15 @@ namespace NewAvalon.UserAdministration.Persistence.Configurations
             builder.Property(user => user.CreatedOnUtc).IsRequired();
 
             builder.Property(user => user.ModifiedOnUtc);
+
+            builder.OwnsOne(user => user.ProfileImage, profileImageBuilder =>
+            {
+                profileImageBuilder.Property(profileImage => profileImage.Id).HasColumnName("ProfileImageId");
+
+                profileImageBuilder.Property(profileImage => profileImage.Url).IsRequired().HasColumnName("ProfileImageUrl");
+            });
+
+            builder.Navigation(user => user.ProfileImage).IsRequired();
         }
 
         private static void ConfigureRelationships(EntityTypeBuilder<User> builder) =>

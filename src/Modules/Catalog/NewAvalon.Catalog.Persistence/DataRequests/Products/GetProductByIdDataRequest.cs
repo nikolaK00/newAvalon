@@ -18,7 +18,15 @@ namespace NewAvalon.Catalog.Persistence.DataRequests.Products
         public async Task<CatalogProductDetailsResponse> GetAsync(ProductId request, CancellationToken cancellationToken = default) =>
             await _dbContext.Set<Product>()
                 .Where(product => product.Id == request)
-                .Select(product => new CatalogProductDetailsResponse(product.Id.Value, product.Name, product.Price, product.Capacity, product.Description))
+                .Select(product => new CatalogProductDetailsResponse(
+                    product.Id.Value,
+                    product.Name,
+                    product.Price,
+                    product.Capacity,
+                    product.Description,
+                    new ProductImageResponse(
+                        product.ProductImage.Id,
+                        product.ProductImage.Url)))
                 .FirstOrDefaultAsync(cancellationToken);
     }
 }

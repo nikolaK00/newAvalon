@@ -30,6 +30,7 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetAllOrders
         public async Task<PagedList<OrderDetailsResponse>> GetAsync((Guid OwnerId, int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
         {
             var query = _dbContext.Set<Domain.Entities.Order>()
+                .Include(order => order.Products)
                 .Where(order => order.Status == OrderStatus.Finished && order.OwnerId == request.OwnerId);
 
             var orders = await query

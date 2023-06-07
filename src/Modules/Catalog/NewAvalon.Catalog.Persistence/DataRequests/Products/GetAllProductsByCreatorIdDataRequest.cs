@@ -31,7 +31,8 @@ namespace NewAvalon.Catalog.Persistence.DataRequests.Products
                     product.Name,
                     product.Price,
                     product.Capacity,
-                    product.Description));
+                    product.Description,
+                    new ProductImageResponse(product.ProductImage.Id, product.ProductImage.Url)));
 
             var count = await _dbContext.Set<Product>().CountAsync(cancellationToken: cancellationToken);
 

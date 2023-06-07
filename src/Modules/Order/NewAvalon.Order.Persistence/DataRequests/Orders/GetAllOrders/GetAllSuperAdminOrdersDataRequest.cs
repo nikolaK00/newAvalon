@@ -28,6 +28,7 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetAllOrders
         public async Task<PagedList<OrderDetailsResponse>> GetAsync((int Page, int ItemsPerPage) request, CancellationToken cancellationToken = default)
         {
             var orders = await _dbContext.Set<Domain.Entities.Order>()
+                .Include(order => order.Products)
                 .OrderBy(order => order.CreatedOnUtc)
                 .Skip((request.Page - 1) * request.ItemsPerPage)
                 .Take(request.ItemsPerPage)

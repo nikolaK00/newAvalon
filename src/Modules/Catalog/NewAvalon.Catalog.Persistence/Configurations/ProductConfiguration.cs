@@ -32,6 +32,15 @@ namespace NewAvalon.Catalog.Persistence.Configurations
             builder.Property(product => product.CreatorId).IsRequired();
 
             builder.Property(product => product.IsActive).IsRequired().HasDefaultValue(true);
+
+            builder.OwnsOne(product => product.ProductImage, productImageBuilder =>
+            {
+                productImageBuilder.Property(productImage => productImage.Id).HasColumnName("ProductImageId");
+
+                productImageBuilder.Property(productImage => productImage.Url).IsRequired().HasColumnName("ProductImageUrl");
+            });
+
+            builder.Navigation(user => user.ProductImage).IsRequired();
         }
     }
 }
