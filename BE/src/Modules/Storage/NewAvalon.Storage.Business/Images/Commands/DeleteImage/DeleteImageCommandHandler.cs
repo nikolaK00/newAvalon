@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NewAvalon.Abstractions.Messaging;
+using NewAvalon.Domain.Exceptions.Images;
 using NewAvalon.Storage.Boundary.Images.Commands.DeleteImage;
 using NewAvalon.Storage.Business.Abstractions;
 using NewAvalon.Storage.Business.Contracts.Images;

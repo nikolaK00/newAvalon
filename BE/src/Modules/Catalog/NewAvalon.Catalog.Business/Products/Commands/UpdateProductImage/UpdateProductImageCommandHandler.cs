@@ -5,6 +5,7 @@ using NewAvalon.Catalog.Domain.Entities;
 using NewAvalon.Catalog.Domain.EntityIdentifiers;
 using NewAvalon.Catalog.Domain.Repositories;
 using NewAvalon.Catalog.Domain.ValueObjects;
+using NewAvalon.Domain.Exceptions.Images;
 using NewAvalon.Domain.Exceptions.Products;
 using NewAvalon.Messaging.Contracts.Images;
 using NewAvalon.UserAdministration.Business.Abstractions;

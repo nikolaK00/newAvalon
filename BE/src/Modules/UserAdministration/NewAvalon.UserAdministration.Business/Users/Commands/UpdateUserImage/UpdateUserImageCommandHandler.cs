@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using NewAvalon.Abstractions.Messaging;
+using NewAvalon.Domain.Exceptions.Images;
 using NewAvalon.Messaging.Contracts.Images;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUserImage;
 using NewAvalon.UserAdministration.Business.Abstractions;
