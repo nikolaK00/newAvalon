@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace NewAvalon.App.ServiceInstallers.Documentation
+namespace NewAvalon.Notification.App.ServiceInstallers.Documentation
 {
     internal class SwaggerOptionsSetup : IConfigureOptions<SwaggerGenOptions>
     {
@@ -14,9 +14,7 @@ namespace NewAvalon.App.ServiceInstallers.Documentation
 
         private readonly Assembly[] _presentationAssemblies =
         {
-            typeof(UserAdministration.Presentation.AssemblyReference).Assembly,
-            typeof(Catalog.Presentation.AssemblyReference).Assembly,
-            typeof(Order.Presentation.AssemblyReference).Assembly,
+            typeof(Notification.Presentation.AssemblyReference).Assembly,
         };
 
         public void Configure(SwaggerGenOptions options)

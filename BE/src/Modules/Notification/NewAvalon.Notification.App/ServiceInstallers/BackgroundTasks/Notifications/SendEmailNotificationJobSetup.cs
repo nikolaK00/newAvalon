@@ -3,7 +3,7 @@ using NewAvalon.Notification.Business.Options;
 using NewAvalon.Notification.Infrastructure.BackgroundTasks;
 using Quartz;
 
-namespace NewAvalon.App.ServiceInstallers.BackgroundTasks.Notifications
+namespace NewAvalon.Notification.App.ServiceInstallers.BackgroundTasks.Notifications
 {
     public sealed class SendEmailNotificationJobSetup : IPostConfigureOptions<QuartzOptions>
     {

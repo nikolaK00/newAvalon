@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using NewAvalon.App.Abstractions;
+using NewAvalon.Notification.App.Abstractions;
 
-namespace NewAvalon.App.ServiceInstallers.Configuration
+namespace NewAvalon.Notification.App.ServiceInstallers.Configuration
 {
     public class ConfigurationServiceInstaller : IServiceInstaller
     {

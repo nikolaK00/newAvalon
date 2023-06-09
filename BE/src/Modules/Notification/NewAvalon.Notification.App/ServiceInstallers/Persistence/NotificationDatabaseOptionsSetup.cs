@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using NewAvalon.Notification.Persistence.Options;
 
-namespace NewAvalon.App.ServiceInstallers.Persistence
+namespace NewAvalon.Notification.App.ServiceInstallers.Persistence
 {
     public class NotificationDatabaseOptionsSetup : IConfigureOptions<NotificationDatabaseOptions>
     {

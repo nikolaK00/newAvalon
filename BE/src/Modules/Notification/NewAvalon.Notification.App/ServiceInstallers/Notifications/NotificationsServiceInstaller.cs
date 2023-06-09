@@ -1,11 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using NewAvalon.App.Abstractions;
+using NewAvalon.Notification.App.Abstractions;
 using NewAvalon.Notification.Business.Options;
-using SendGrid;
 using SendGrid.Extensions.DependencyInjection;
 
-namespace NewAvalon.App.ServiceInstallers.Notifications
+namespace NewAvalon.Notification.App.ServiceInstallers.Notifications
 {
     public class NotificationsServiceInstaller : IServiceInstaller
     {
@@ -25,7 +24,7 @@ namespace NewAvalon.App.ServiceInstallers.Notifications
             {
                 IOptions<EmailNotificationsJobOptions> configuration =
                     serviceProvider.GetRequiredService<IOptions<EmailNotificationsJobOptions>>();
-                
+
                 options.ApiKey = configuration.Value.ApiKey;
             });
         }

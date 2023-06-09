@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using NewAvalon.Notification.Business.Options;
 
-namespace NewAvalon.App.ServiceInstallers.Notifications
+namespace NewAvalon.Notification.App.ServiceInstallers.Notifications
 {
     public class SendEmailNotificationJobOptionsSetup : IConfigureOptions<EmailNotificationsJobOptions>
     {

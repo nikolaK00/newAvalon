@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using NewAvalon.App.Abstractions;
-using NewAvalon.App.Middlewares;
+using NewAvalon.Notification.App.Abstractions;
+using NewAvalon.Notification.App.Middlewares;
 
-namespace NewAvalon.App.ServiceInstallers.Mvc
+namespace NewAvalon.Notification.App.ServiceInstallers.Mvc
 {
     public class MvcServiceInstaller : IServiceInstaller
     {
@@ -21,10 +21,7 @@ namespace NewAvalon.App.ServiceInstallers.Mvc
             services.AddRouting()
                 .AddControllers()
                 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
-                .AddApplicationPart(typeof(Catalog.Presentation.AssemblyReference).Assembly)
-                .AddApplicationPart(typeof(UserAdministration.Presentation.AssemblyReference).Assembly)
-                .AddApplicationPart(typeof(Order.Presentation.AssemblyReference).Assembly)
-                .AddApplicationPart(typeof(NewAvalon.Storage.Presentation.AssemblyReference).Assembly);
+                .AddApplicationPart(typeof(Notification.Presentation.AssemblyReference).Assembly);
 
             services.AddHttpContextAccessor();
 

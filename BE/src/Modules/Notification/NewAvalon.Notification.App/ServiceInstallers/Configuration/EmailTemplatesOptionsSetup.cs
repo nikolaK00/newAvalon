@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Options;
 using NewAvalon.Notification.Business.Options;
 
-namespace NewAvalon.App.ServiceInstallers.Configuration
+namespace NewAvalon.Notification.App.ServiceInstallers.Configuration
 {
     public class EmailTemplatesOptionsSetup : IConfigureOptions<EmailTemplatesOptions>
     {

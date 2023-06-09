@@ -40,12 +40,7 @@
     <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Domain\NewAvalon.Catalog.Domain.csproj" />
     <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Persistence\NewAvalon.Catalog.Persistence.csproj" />
     <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj" />
-    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Boundary\NewAvalon.Notification.Boundary.csproj" />
-    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Business\NewAvalon.Notification.Business.csproj" />
-    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Domain\NewAvalon.Notification.Domain.csproj" />
-    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Infrastructure\NewAvalon.Notification.Infrastructure.csproj" />
-    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Persistence\NewAvalon.Notification.Persistence.csproj" />
-    <ProjectReference Include="..\src\Modules\Notification\NewAvalon.Notification.Presentation\NewAvalon.Notification.Presentation.csproj" />
+    <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Authorization\NewAvalon.Order.Authorization.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Boundary\NewAvalon.Order.Boundary.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Business\NewAvalon.Order.Business.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Domain\NewAvalon.Order.Domain.csproj" />

@@ -6,9 +6,6 @@ using NewAvalon.App.Abstractions;
 using NewAvalon.Catalog.Domain.Repositories;
 using NewAvalon.Catalog.Persistence;
 using NewAvalon.Catalog.Persistence.Options;
-using NewAvalon.Notification.Domain.Repositories;
-using NewAvalon.Notification.Persistence;
-using NewAvalon.Notification.Persistence.Options;
 using NewAvalon.Order.Domain.Repositories;
 using NewAvalon.Order.Persistence;
 using NewAvalon.Order.Persistence.Options;
@@ -43,7 +40,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
             services.ConfigureOptions<UserAdministrationDatabaseOptionsSetup>();
             services.ConfigureOptions<CatalogDatabaseOptionsSetup>();
             services.ConfigureOptions<OrderDatabaseOptionsSetup>();
-            services.ConfigureOptions<NotificationDatabaseOptionsSetup>();
             services.ConfigureOptions<StorageDatabaseOptionsSetup>();
         }
 
@@ -55,8 +51,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
             AddOrderDbContext(services);
 
-            AddNotificationDbContext(services);
-
             AddStorageDbContext(services);
 
             AddRepositories(
@@ -66,7 +60,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                     typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
-                    typeof(Notification.Persistence.AssemblyReference).Assembly,
                     typeof(NewAvalon.Storage.Persistence.AssemblyReference).Assembly,
                 });
 
@@ -77,7 +70,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                     typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
-                    typeof(Notification.Persistence.AssemblyReference).Assembly,
                     typeof(NewAvalon.Storage.Persistence.AssemblyReference).Assembly,
                 });
 
@@ -139,22 +131,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
             });
 
             services.AddScoped<IOrderUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<OrderDbContext>());
-        }
-
-        private static void AddNotificationDbContext(IServiceCollection services)
-        {
-            services.AddDbContextPool<NotificationDbContext>((provider, builder) =>
-            {
-                IOptions<NotificationDatabaseOptions> dbSettingsOptions =
-                    provider.GetRequiredService<IOptions<NotificationDatabaseOptions>>();
-
-                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
-                        optionsBuilder => optionsBuilder.MigrationsAssembly(
-                            typeof(Notification.Persistence.AssemblyReference).Assembly.FullName))
-                    .AddInterceptors(provider);
-            });
-
-            services.AddScoped<INotificationUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<NotificationDbContext>());
         }
 
         private static void AddStorageDbContext(IServiceCollection services)

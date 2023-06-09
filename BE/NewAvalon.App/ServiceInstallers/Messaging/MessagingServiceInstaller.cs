@@ -12,7 +12,6 @@ using NewAvalon.Messaging.Contracts.Images;
 using NewAvalon.Messaging.Contracts.Permissions;
 using NewAvalon.Messaging.Contracts.Products;
 using NewAvalon.Messaging.Contracts.Users;
-using NewAvalon.Notification.Business.Notifications.Consumers;
 using NewAvalon.Order.Business.Orders.Consumers;
 using NewAvalon.Storage.Business.Files.Consumers;
 using NewAvalon.Storage.Business.Images.Consumers;
@@ -69,8 +68,6 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
             busConfigurator.AddConsumer<UserDetailsRequestConsumer>().Endpoint(e => e.Name = "user-details-request-consumer");
 
             busConfigurator.AddConsumer<GetPermissionsRequestConsumer>().Endpoint(e => e.Name = "user-administration-get-permissions-request");
-
-            busConfigurator.AddConsumer<NotificationCreatedEventConsumer>().Endpoint(e => e.Name = "notification-created-event-consumer");
 
             busConfigurator.AddConsumer<UserDetailsListRequestConsumer>().Endpoint(e => e.Name = "user-details-list-request-consumer");
 
