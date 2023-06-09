@@ -3,6 +3,7 @@ import { RouteObject } from "react-router-dom";
 import Dashboard from "../components/dashboard";
 import OrderList from "../components/order/orderList";
 import Product from "../components/product";
+import Cart from "../components/product/cart";
 import NewProduct from "../components/product/NewProduct";
 import ProductList from "../components/product/productList";
 import UserProfile from "../components/user/profile/UserProfile";
@@ -13,6 +14,7 @@ import NotFoundPage from "../pages/notFound/NotFoundPage";
 
 import {
   ALL_ORDERS_ROUTE,
+  CART_ROUTE,
   DEALERS_ROUTE,
   HOME_ROUTE,
   MY_ORDERS_ROUTE,
@@ -67,9 +69,15 @@ const protectedRoutes = (role: Role | null): RouteObject[] => {
           }),
         },
         {
-          ...((isUserSalesman || isUserAdmin) && {
+          ...((isUserSalesman || isUserCustomer) && {
             path: `${PRODUCTS_ROUTE}/:id`,
             element: <Product />,
+          }),
+        },
+        {
+          ...(isUserCustomer && {
+            path: CART_ROUTE,
+            element: <Cart />,
           }),
         },
         // ORDER

@@ -7,6 +7,7 @@ export const REGISTER_ROUTE = "/register";
 // PRODUCT
 export const NEW_PRODUCT_ROUTE = "/new-product";
 export const PRODUCTS_ROUTE = "/products";
+export const CART_ROUTE = "/cart";
 
 // ORDER
 export const NEW_ORDERS_ROUTE = "/new-orders";

@@ -33,14 +33,13 @@ export const useImageUpload = ({
         try {
           const imageAddResult = await addImage(formData).unwrap();
           if (imageAddResult?.id) {
-            const imageUploadResult = await uploadImage({
+            await uploadImage({
               imageId: imageAddResult?.id,
               ...(productId && { productId }),
             }).unwrap();
-            if (imageUploadResult) {
-              toast.success("Image uploaded successfully");
-              setImageSrc(URL.createObjectURL(file));
-            }
+
+            toast.success("Image uploaded successfully");
+            setImageSrc(URL.createObjectURL(file));
           }
         } catch (error) {
           toast.error("There was an error when trying to upload image");
@@ -50,5 +49,5 @@ export const useImageUpload = ({
     [productId]
   );
 
-  return { handleImageChange, imageSrc };
+  return { handleImageChange, imageSrc, setImageSrc };
 };

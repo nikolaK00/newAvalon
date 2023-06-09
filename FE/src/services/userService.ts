@@ -1,5 +1,3 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-
 import {
   Role,
   User,
@@ -7,15 +5,13 @@ import {
   UserFormFields,
 } from "../components/user/types";
 
-import config from "./config";
+import { api } from "./service";
 
 interface UserDto extends Omit<User, "roles"> {
   roles: { id: Role }[];
 }
 
-export const userApi = createApi({
-  ...config,
-  reducerPath: "userApi",
+export const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getUser: builder.query<UserDto, void>({
@@ -55,6 +51,7 @@ export const userApi = createApi({
       }),
     }),
   }),
+  overrideExisting: false,
 });
 
 export const {

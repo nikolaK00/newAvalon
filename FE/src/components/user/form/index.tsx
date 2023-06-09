@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import * as yup from "yup";
 
@@ -53,7 +53,7 @@ const UserForm: FC<UserFormProps> = ({
   const [uploadImage, { isLoading: isImageUploading }] =
     useUploadProfileImageMutation();
 
-  const { handleImageChange, imageSrc } = useImageUpload({
+  const { handleImageChange, imageSrc, setImageSrc } = useImageUpload({
     addImage,
     uploadImage,
   });
@@ -84,6 +84,12 @@ const UserForm: FC<UserFormProps> = ({
   });
 
   const { handleSubmit } = methods;
+
+  useEffect(() => {
+    if (user?.profileImage?.url) {
+      setImageSrc(user?.profileImage?.url);
+    }
+  }, [user?.profileImage?.url]);
 
   return (
     <>

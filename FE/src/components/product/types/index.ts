@@ -4,7 +4,7 @@ import { Entity } from "../../../shared/types";
 export interface Product extends Entity {
   name: string;
   price: number;
-  amount: number;
+  capacity: number;
   description: string;
   image: string;
 }

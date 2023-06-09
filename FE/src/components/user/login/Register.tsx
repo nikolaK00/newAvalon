@@ -7,7 +7,7 @@ import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 
 import { HOME_ROUTE, LOGIN_ROUTE } from "../../../routes";
-import { dealerApi, dealerTagType } from "../../../services/dealerSevice";
+import { api, dealerTagType } from "../../../services/service";
 import { useRegisterMutation } from "../../../services/userService";
 import UserForm from "../form";
 import { UserFormFields } from "../types";
@@ -24,7 +24,7 @@ export default function Register() {
       ...dataToSend,
       dateOfBirth: new Date(dateOfBirth),
     });
-    dispatch(dealerApi.util.invalidateTags([dealerTagType]));
+    dispatch(api.util.invalidateTags([dealerTagType]));
   };
 
   useEffect(() => {

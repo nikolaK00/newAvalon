@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -11,6 +12,9 @@ import { useUploadProductImageMutation } from "../../../services/productService"
 import Input from "../../../shared/form/Input";
 import SubmitButton from "../../../shared/form/SubmitButton";
 import { useImageUpload } from "../../../shared/hooks/useImageUpload";
+import { RootState } from "../../../store";
+import { Role } from "../../user/types";
+import OrderProductModal from "../modal/OrderProductModal";
 import { Product, ProductFormFields } from "../types";
 
 import {
@@ -37,7 +41,12 @@ const ProductForm: FC<ProductFormProps> = ({
   isSubmitting,
   product,
 }) => {
+  const user = useSelector((state: RootState) => state.user);
+
+  const canUserEdit = user?.roles === Role.salesman;
+
   const [addImage, { isLoading: isImageAdding }] = useAddImageMutation();
+
   const [uploadImage, { isLoading: isImageUploading }] =
     useUploadProductImageMutation();
 
@@ -66,59 +75,73 @@ const ProductForm: FC<ProductFormProps> = ({
     >
       {formTitle && <Typography variant="h6">{formTitle}</Typography>}
 
-      <FormProvider {...methods}>
-        <Stack
-          component="form"
-          sx={{
-            width: "50ch",
-          }}
-          spacing={2}
-          noValidate
-          autoComplete="off"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Input field={name} label={"Name"} />
-          <Input field={price} label={"Price"} type="number" />
-          <Input field={amount} label={"Amount"} type="number" />
-          <Input
-            field={description}
-            label={"Description"}
-            multiline
-            maxRows={4}
-          />
+      <Stack spacing={2}>
+        <fieldset disabled={isSubmitting || !canUserEdit}>
+          <FormProvider {...methods}>
+            <Stack
+              component="form"
+              sx={{
+                width: "50ch",
+              }}
+              spacing={2}
+              noValidate
+              autoComplete="off"
+              onSubmit={handleSubmit(onSubmit)}
+            >
+              <Input field={name} label={"Name"} />
+              <Input field={price} label={"Price"} type="number" />
+              <Input field={amount} label={"Amount"} type="number" />
+              <Input
+                field={description}
+                label={"Description"}
+                multiline
+                maxRows={4}
+              />
 
-          <Avatar
-            src={imageSrc}
-            variant={"square"}
-            alt="Product image"
-            sx={{
-              width: 350,
-              height: 250,
-              position: "relative",
-              left: "50%",
-              transform: "translate(-50%, 0)",
-            }}
-          >
-            {isImageUploading || isImageAdding ? (
-              <CircularProgress />
-            ) : (
-              <FolderIcon fontSize={"large"} />
-            )}
-          </Avatar>
+              {product && (
+                <>
+                  <Avatar
+                    src={imageSrc}
+                    variant={"square"}
+                    alt="Product image"
+                    sx={{
+                      width: 350,
+                      height: 250,
+                      position: "relative",
+                      left: "50%",
+                      transform: "translate(-50%, 0)",
+                    }}
+                  >
+                    {isImageUploading || isImageAdding ? (
+                      <CircularProgress />
+                    ) : (
+                      <FolderIcon fontSize={"large"} />
+                    )}
+                  </Avatar>
 
-          <Input
-            field={image}
-            type={"file"}
-            accept={"image/*"}
-            label={"Image"}
-            onChange={handleImageChange}
-          />
+                  {canUserEdit && (
+                    <Input
+                      field={image}
+                      type={"file"}
+                      accept={"image/*"}
+                      label={"Image"}
+                      onChange={handleImageChange}
+                    />
+                  )}
+                </>
+              )}
 
-          <SubmitButton isLoading={isSubmitting}>
-            {submitButtonLabel}
-          </SubmitButton>
-        </Stack>
-      </FormProvider>
+              {canUserEdit && (
+                <SubmitButton isLoading={isSubmitting}>
+                  {submitButtonLabel}
+                </SubmitButton>
+              )}
+            </Stack>
+          </FormProvider>
+        </fieldset>
+
+        <OrderProductModal product={product} />
+      </Stack>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import { Entity } from "../../../shared/types";
+import { Entity, Image } from "../../../shared/types";
 
 export enum Role {
   salesman = 1,
@@ -24,7 +24,7 @@ export interface User extends Entity, UserCredentials {
   dateOfBirth: Date;
   address: string;
   roles: Role;
-  profileImage: string;
+  profileImage: Image;
   status: UserStatus;
 }
 

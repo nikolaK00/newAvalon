@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -13,12 +14,17 @@ import {
   useUpdateProductMutation,
 } from "../../services/productService";
 import { useToastMessage } from "../../shared/hooks/useToastMessage";
+import { RootState } from "../../store";
+import { Role } from "../user/types";
 
 import ProductForm from "./form";
 import { ProductFormFields } from "./types";
 
 const Product = () => {
   const { id } = useParams();
+
+  const user = useSelector((state: RootState) => state.user);
+  const canUserEdit = user?.roles === Role.salesman;
 
   const { data, error, isLoading } = useGetProductByIdQuery(id);
 
@@ -39,7 +45,7 @@ const Product = () => {
   useToastMessage({
     isSuccess,
     error: updateError,
-    successMessage: "Item successfully updated",
+    successMessage: "Product successfully updated",
     errorMessage: "There was an error when trying to update product",
     successNavigateRoute: PRODUCTS_ROUTE,
   });
@@ -47,7 +53,7 @@ const Product = () => {
   useToastMessage({
     isSuccess: isSuccessfullyDeleted,
     error: deleteError,
-    successMessage: "Item successfully deleted",
+    successMessage: "Product successfully deleted",
     errorMessage: "There was an error when trying to delete product",
     successNavigateRoute: PRODUCTS_ROUTE,
   });
@@ -86,8 +92,9 @@ const Product = () => {
           }}
         >
           <Typography variant="h6">Product</Typography>
-          {DeleteButton}
+          {canUserEdit && DeleteButton}
         </Box>
+
         <ProductForm
           onSubmit={onSubmit}
           submitButtonLabel={"Edit"}

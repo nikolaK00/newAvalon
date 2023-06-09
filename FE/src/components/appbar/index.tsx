@@ -2,20 +2,33 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {
+  Badge,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-import { HOME_ROUTE, LOGIN_ROUTE } from "../../routes";
+import { CART_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from "../../routes";
 import { RootState } from "../../store";
 import { logout } from "../../store/user/userSlice";
 import { navItemsProtected, navItemsUnprotected } from "../dashboard/navItems";
+import { Role } from "../user/types";
 
 export default function Appbar() {
   const dispatch = useDispatch();
   const { roles, isLoggedIn } = useSelector((state: RootState) => state.user);
+  const { products: productsInCart } = useSelector(
+    (state: RootState) => state.cart
+  );
+
+  const numberOfProductsInCart = productsInCart?.length;
 
   const userMenu = isLoggedIn ? navItemsProtected(roles) : navItemsUnprotected;
 
@@ -59,7 +72,19 @@ export default function Appbar() {
           </List>
 
           {isLoggedIn && (
-            <List>
+            <List sx={{ display: "flex" }}>
+              {roles === Role.customer && (
+                <ListItem>
+                  <NavLink to={CART_ROUTE}>
+                    <Badge
+                      badgeContent={numberOfProductsInCart}
+                      color="secondary"
+                    >
+                      <ShoppingCartIcon />
+                    </Badge>
+                  </NavLink>
+                </ListItem>
+              )}
               <ListItem disablePadding sx={{ width: "auto" }}>
                 <NavLink
                   to={LOGIN_ROUTE}

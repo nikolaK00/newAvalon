@@ -4,7 +4,7 @@ import { PRODUCTS_ROUTE } from "../../routes";
 import { useAddProductMutation } from "../../services/productService";
 import { useToastMessage } from "../../shared/hooks/useToastMessage";
 
-import Index from "./form";
+import ProductForm from "./form";
 import { ProductFormFields } from "./types";
 
 const NewProduct = () => {
@@ -14,7 +14,7 @@ const NewProduct = () => {
   useToastMessage({
     isSuccess,
     error,
-    successMessage: "Item added successfully",
+    successMessage: "Product added successfully",
     errorMessage: "There was an error when trying to add new product",
     successNavigateRoute: PRODUCTS_ROUTE,
   });
@@ -30,10 +30,10 @@ const NewProduct = () => {
         flexDirection: "column",
       }}
     >
-      <Index
+      <ProductForm
         onSubmit={onSubmit}
         submitButtonLabel={"Add"}
-        formTitle={"New Item"}
+        formTitle={"New Product"}
         isSubmitting={isSubmitting}
       />
     </Box>

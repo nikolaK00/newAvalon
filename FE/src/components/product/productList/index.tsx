@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 import AddIcon from "@mui/icons-material/Add";
@@ -9,10 +10,14 @@ import { NEW_PRODUCT_ROUTE, PRODUCTS_ROUTE } from "../../../routes";
 import { useGetProductsQuery } from "../../../services/productService";
 import Table from "../../../shared/table";
 import { useTablePagination } from "../../../shared/table/hooks";
+import { RootState } from "../../../store";
+import { Role } from "../../user/types";
 
 import { productColumns } from "./columns";
 
 const ProductList = () => {
+  const user = useSelector((state: RootState) => state.user);
+
   const { page, itemsPerPage, handleChangePage, handleChangeItemsPerPage } =
     useTablePagination();
 
@@ -40,14 +45,16 @@ const ProductList = () => {
         <Table columns={productColumns} data={products} {...tableProps} />
       </ErrorPage>
 
-      <Box sx={{ position: "absolute", bottom: 20, right: 20 }}>
-        <NavLink to={NEW_PRODUCT_ROUTE}>
-          <Fab color="primary" aria-label="add product" variant={"extended"}>
-            <AddIcon sx={{ mr: 1 }} />
-            Add Item
-          </Fab>
-        </NavLink>
-      </Box>
+      {user?.roles === Role.salesman && (
+        <Box sx={{ position: "absolute", bottom: 20, right: 20 }}>
+          <NavLink to={NEW_PRODUCT_ROUTE}>
+            <Fab color="primary" aria-label="add product" variant={"extended"}>
+              <AddIcon sx={{ mr: 1 }} />
+              Add Product
+            </Fab>
+          </NavLink>
+        </Box>
+      )}
     </>
   );
 };

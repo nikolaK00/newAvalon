@@ -1,20 +1,13 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-
 import {
   Product,
   ProductFormFields,
   ProductQueryParams,
 } from "../components/product/types";
 
-import config from "./config";
+import { api, productTagType } from "./service";
 import { ListResponse } from "./types";
 
-const productTagType = "Product";
-
-export const productApi = createApi({
-  ...config,
-  reducerPath: "productApi",
-  tagTypes: [productTagType],
+export const productApi = api.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getProducts: builder.query<

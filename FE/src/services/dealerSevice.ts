@@ -1,17 +1,9 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-
 import { User } from "../components/user/types";
 
-import config from "./config";
+import { api, dealerTagType, pendingDealerTagType } from "./service";
 import { DealerQueryParams, ListResponse } from "./types";
 
-export const dealerTagType = "Dealer";
-export const pendingDealerTagType = "PendingDealer";
-
-export const dealerApi = createApi({
-  ...config,
-  reducerPath: "dealerApi",
-  tagTypes: [dealerTagType, pendingDealerTagType],
+export const dealerService = api.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getDealers: builder.query<
@@ -67,4 +59,4 @@ export const {
   useGetDealersQuery,
   useApproveRequestMutation,
   useDisapproveRequestMutation,
-} = dealerApi;
+} = dealerService;

@@ -1,20 +1,17 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
+import {
+  Order,
+  OrderFormFields,
+  OrderResponse,
+} from "../components/order/types";
 
-import { Order, OrderFormFields } from "../components/order/types";
-
-import config from "./config";
+import { api, orderTagType, productTagType } from "./service";
 import { ListQueryParams, ListResponse } from "./types";
 
-const orderTagType = "Order";
-
-export const orderApi = createApi({
-  ...config,
-  reducerPath: "orderApi",
-  tagTypes: [orderTagType],
+export const orderService = api.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getOrders: builder.query<
-      { data: Order[]; totalCount: number },
+      { data: OrderResponse[]; totalCount: number },
       ListQueryParams
     >({
       query: (params: ListQueryParams) => ({
@@ -22,7 +19,7 @@ export const orderApi = createApi({
         method: "GET",
         params,
       }),
-      transformResponse: (returnValue: ListResponse<Order>) => ({
+      transformResponse: (returnValue: ListResponse<OrderResponse>) => ({
         data: returnValue.items,
         totalCount: returnValue.totalCount,
       }),
@@ -48,7 +45,7 @@ export const orderApi = createApi({
         method: "POST",
         body: order,
       }),
-      invalidatesTags: [orderTagType],
+      invalidatesTags: [orderTagType, productTagType],
     }),
     updateOrder: builder.mutation<
       Order,
@@ -59,9 +56,12 @@ export const orderApi = createApi({
         method: "PUT",
         body: order,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Order", id: arg.id }],
+      invalidatesTags: (result, error, arg) => [
+        { type: "Order", id: arg.id },
+        productTagType,
+      ],
     }),
   }),
 });
 
-export const { useGetOrdersQuery } = orderApi;
+export const { useGetOrdersQuery, useAddOrderMutation } = orderService;

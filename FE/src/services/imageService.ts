@@ -1,19 +1,12 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-
 import { Entity } from "../shared/types";
 
-import config from "./config";
-
-const imageTagType = "Image";
+import { api, imageTagType } from "./service";
 
 interface Image extends Entity {
   url: string;
 }
 
-export const imageApi = createApi({
-  ...config,
-  reducerPath: "imageApi",
-  tagTypes: [imageTagType],
+export const imageService = api.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getImageById: builder.query<FormData, string | undefined>({
@@ -32,4 +25,4 @@ export const imageApi = createApi({
   }),
 });
 
-export const { useAddImageMutation } = imageApi;
+export const { useAddImageMutation } = imageService;
