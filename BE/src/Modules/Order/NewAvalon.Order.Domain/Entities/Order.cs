@@ -60,11 +60,11 @@ namespace NewAvalon.Order.Domain.Entities
 
         public IReadOnlyCollection<Product> Products => _products.ToList();
 
-        public Product AddProduct(Guid catalogProductId, decimal price, decimal quantity)
+        public Product AddProduct(Guid catalogProductId, decimal price, decimal quantity, string name)
         {
             var productId = new ProductId(Guid.NewGuid());
 
-            var product = new Product(productId, Id, catalogProductId, quantity, price);
+            var product = new Product(productId, Id, catalogProductId, quantity, price, name);
 
             _products.Add(product);
 

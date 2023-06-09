@@ -16,7 +16,14 @@ namespace NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders
         decimal FullPrice,
         DateTime DeliveryOnUtc);
 
-    public sealed record ProductDetailsResponse(Guid Id, Guid OrderId, Guid CatalogProductId, decimal Quantity, decimal Price, decimal FullPrice);
+    public sealed record ProductDetailsResponse(
+        Guid Id,
+        Guid OrderId,
+        Guid CatalogProductId,
+        decimal Quantity,
+        decimal Price,
+        decimal FullPrice,
+        string Name);
 
     public sealed record OrderUserDetailsResponse(Guid Id, string FirstName, string LastName, string Username);
 

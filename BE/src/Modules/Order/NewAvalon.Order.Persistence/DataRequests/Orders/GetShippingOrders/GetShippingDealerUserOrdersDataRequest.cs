@@ -80,7 +80,8 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetShippingOrders
                         product.CatalogProductId,
                         product.Quantity,
                         product.Price,
-                        product.GetFullPrice())).ToList(),
+                        product.GetFullPrice(),
+                        product.Name)).ToList(),
                     Domain.Entities.Order.GetDeliveryPrice(),
                     order.GetFullPrice(),
                     order.DeliveryOnUtc);

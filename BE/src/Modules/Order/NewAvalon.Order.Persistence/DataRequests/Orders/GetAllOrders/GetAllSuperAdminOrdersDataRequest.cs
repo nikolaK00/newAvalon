@@ -75,7 +75,8 @@ namespace NewAvalon.Order.Persistence.DataRequests.Orders.GetAllOrders
                         product.CatalogProductId,
                         product.Quantity,
                         product.Price,
-                        product.GetFullPrice())).ToList(),
+                        product.GetFullPrice(),
+                        product.Name)).ToList(),
                     Domain.Entities.Order.GetDeliveryPrice(),
                     order.GetFullPrice(),
                     order.DeliveryOnUtc);

@@ -11,12 +11,14 @@ namespace NewAvalon.Order.Domain.Entities
             OrderId orderId,
             Guid catalogProductId,
             decimal quantity,
-            decimal price) : base(id)
+            decimal price,
+            string name) : base(id)
         {
             OrderId = orderId;
             CatalogProductId = catalogProductId;
             Quantity = quantity;
             Price = price;
+            Name = name;
         }
 
         private Product(ProductId id) : base(id)
@@ -38,6 +40,8 @@ namespace NewAvalon.Order.Domain.Entities
         public DateTime CreatedOnUtc { get; private set; }
 
         public DateTime? ModifiedOnUtc { get; private set; }
+
+        public string Name { get; private set; }
 
         public decimal GetFullPrice() => Quantity * Price;
     }
