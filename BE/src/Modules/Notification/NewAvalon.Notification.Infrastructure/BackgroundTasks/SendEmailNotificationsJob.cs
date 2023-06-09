@@ -98,11 +98,11 @@ namespace NewAvalon.Notification.Infrastructure.BackgroundTasks
         {
             var sendGridMessage = new SendGridMessage
             {
-                From = new EmailAddress("knez.nikola00@outlook.com", "NewAvalon"),
+                From = new EmailAddress(_options.Sender, "NewAvalon"),
                 TemplateId = GetTemplateName(type),
             };
 
-            sendGridMessage.AddTo(new EmailAddress("knez.nikola00@gmail.com", "NikolaKnezevic"));
+            sendGridMessage.AddTo(new EmailAddress(userDetails.Email, userDetails.Username));
 
             return sendGridMessage;
         }

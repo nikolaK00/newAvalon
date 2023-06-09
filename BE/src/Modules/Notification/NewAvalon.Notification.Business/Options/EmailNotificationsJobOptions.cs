@@ -7,5 +7,7 @@
         public string ApiKey { get; set; }
 
         public int IntervalInSeconds { get; set; }
+
+        public string Sender { get; set; }
     }
 }
