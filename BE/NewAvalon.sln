@@ -47,8 +47,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6BABAF4A-C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.Catalog.Business", "src\Modules\Catalog\NewAvalon.Catalog.Business\NewAvalon.Catalog.Business.csproj", "{520B78E8-6EDE-457C-BE1B-891378CC325A}"
 EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4B3152BB-7337-45E1-9D1C-126A6A1791C3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewAvalon.UserAdministration.Persistence", "src\Modules\UserAdministration\NewAvalon.UserAdministration.Persistence\NewAvalon.UserAdministration.Persistence.csproj", "{9B83C649-6731-4F31-8C4D-0264EF9AB53D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notification", "Notification", "{FED3D5AE-FE92-424A-8D88-8C1A366C70D3}"
@@ -204,12 +202,6 @@ Global
 		{520B78E8-6EDE-457C-BE1B-891378CC325A}.NoVariablesDefault|Any CPU.Build.0 = Release|Any CPU
 		{520B78E8-6EDE-457C-BE1B-891378CC325A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{520B78E8-6EDE-457C-BE1B-891378CC325A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B3152BB-7337-45E1-9D1C-126A6A1791C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B3152BB-7337-45E1-9D1C-126A6A1791C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B3152BB-7337-45E1-9D1C-126A6A1791C3}.NoVariablesDefault|Any CPU.ActiveCfg = NoVariablesDefault
-		{4B3152BB-7337-45E1-9D1C-126A6A1791C3}.NoVariablesDefault|Any CPU.Build.0 = NoVariablesDefault
-		{4B3152BB-7337-45E1-9D1C-126A6A1791C3}.Release|Any CPU.ActiveCfg = NoVariablesDefault
-		{4B3152BB-7337-45E1-9D1C-126A6A1791C3}.Release|Any CPU.Build.0 = NoVariablesDefault
 		{9B83C649-6731-4F31-8C4D-0264EF9AB53D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9B83C649-6731-4F31-8C4D-0264EF9AB53D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B83C649-6731-4F31-8C4D-0264EF9AB53D}.NoVariablesDefault|Any CPU.ActiveCfg = Debug|Any CPU
