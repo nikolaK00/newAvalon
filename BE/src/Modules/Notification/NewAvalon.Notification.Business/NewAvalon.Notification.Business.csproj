@@ -17,4 +17,8 @@
     <ProjectReference Include="..\NewAvalon.Notification.Domain\NewAvalon.Notification.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Notifications\Commands\" />
+  </ItemGroup>
+
 </Project>

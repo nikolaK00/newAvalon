@@ -7,6 +7,7 @@ using NewAvalon.Authorization;
 using NewAvalon.Authorization.Attributes;
 using NewAvalon.Authorization.Extensions;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser;
+using NewAvalon.UserAdministration.Boundary.Users.Commands.LoginGoogleUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.LoginUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUserImage;
@@ -61,6 +62,25 @@ namespace NewAvalon.UserAdministration.Presentation.Controllers
         public async Task<IActionResult> LoginUser([FromBody] LoginUserRequest request, CancellationToken cancellationToken)
         {
             LoginUserCommand command = request.Adapt<LoginUserCommand>();
+
+            string response = await Sender.Send(command, cancellationToken);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Login user based on the specified request.
+        /// </summary>
+        /// <param name="request">The login user request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The token of the newly logged user.</returns>
+        [HttpPut("signin-google")]
+        [ProducesResponseType(typeof(string), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> LoginGoogleUser([FromBody] LoginGoogleUserRequest request, CancellationToken cancellationToken)
+        {
+            LoginGoogleUserCommand command = request.Adapt<LoginGoogleUserCommand>();
 
             string response = await Sender.Send(command, cancellationToken);
 

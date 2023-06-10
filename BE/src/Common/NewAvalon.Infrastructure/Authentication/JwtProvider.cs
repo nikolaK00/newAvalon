@@ -4,9 +4,9 @@ using NewAvalon.Abstractions.Clock;
 using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.ServiceLifetimes;
 using NewAvalon.Abstractions.Services;
-using NewAvalon.Authorization.Services;
 using NewAvalon.Infrastructure.Options;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
@@ -16,13 +16,11 @@ namespace NewAvalon.Infrastructure.Authentication
     {
         private readonly ISystemTime _systemTime;
         private readonly JwtOptions _jwtOptions;
-        private readonly IPermissionService _permissionService;
 
-        public JwtProvider(ISystemTime systemTime, IOptions<JwtOptions> jwtOptions, IPermissionService permissionService)
+        public JwtProvider(ISystemTime systemTime, IOptions<JwtOptions> jwtOptions)
         {
             _systemTime = systemTime;
             _jwtOptions = jwtOptions.Value;
-            _permissionService = permissionService;
         }
 
         public string Generate(GenerateTokenRequest user)
@@ -50,6 +48,19 @@ namespace NewAvalon.Infrastructure.Authentication
             string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
 
             return tokenValue;
+        }
+
+        public (string Email, string FirstName, string LastName) GetUserDetailsFromGoogleJwt(string googleToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = handler.ReadJwtToken(googleToken);
+
+            var email = jwtSecurityToken.Claims.First(claim => claim.Type == "email").Value;
+            var name = jwtSecurityToken.Claims.First(claim => claim.Type == "name").Value;
+
+            var nameSplit = name.Split(" ");
+
+            return (email, nameSplit[0], nameSplit[nameSplit.Length - 1]);
         }
     }
 }
