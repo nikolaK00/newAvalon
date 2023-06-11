@@ -67,7 +67,7 @@ namespace NewAvalon.UserAdministration.Persistence
                 (permissions.First(p => p.Id.Value == (int)Permissions.ProductDelete), Role.DealerUser),
                 (permissions.First(p => p.Id.Value == (int)Permissions.DealerRead), Role.SuperAdmin),
                 (permissions.First(p => p.Id.Value == (int)Permissions.DealerUpdate), Role.SuperAdmin),
-                (permissions.First(p => p.Id.Value == (int)Permissions.OrderDelete), Role.DealerUser));
+                (permissions.First(p => p.Id.Value == (int)Permissions.OrderDelete), Role.Client));
         }
     }
 }
