@@ -7,11 +7,13 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
+import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 
 import { HOME_ROUTE, REGISTER_ROUTE } from "../../../routes";
 import {
   useLazyGetUserQuery,
   useLoginMutation,
+  useLoginWithGoogleMutation,
 } from "../../../services/userService";
 import Input from "../../../shared/form/Input";
 import SubmitButton from "../../../shared/form/SubmitButton";
@@ -36,8 +38,18 @@ export default function Login() {
 
   const [getUser] = useLazyGetUserQuery();
 
-  const [login, { isLoading: isSubmitting, error, isSuccess, data: token }] =
+  const [login, { isLoading, error, isSuccess, data: token }] =
     useLoginMutation();
+
+  const [
+    loginWithGoogle,
+    {
+      isLoading: isSubmitting,
+      error: signInWithGoogleError,
+      isSuccess: googleSignInSuccess,
+      data: tokenWithGoogleLogin,
+    },
+  ] = useLoginWithGoogleMutation();
 
   const methods = useForm<UserCredentials>({
     resolver: yupResolver(schema),
@@ -50,6 +62,10 @@ export default function Login() {
     login(methods.getValues());
   };
 
+  const handleSignInWithGoogle = ({ credential }: CredentialResponse) => {
+    loginWithGoogle(credential!);
+  };
+
   useEffect(() => {
     if (error) {
       toast.error("There was an error when trying to login");
@@ -57,14 +73,15 @@ export default function Login() {
   }, [error]);
 
   useEffect(() => {
-    if (isSuccess && token) {
-      localStorage.setItem("token", token);
+    const tokenToSetInLocalStorage = token || tokenWithGoogleLogin;
+    if (isSuccess && tokenToSetInLocalStorage) {
+      localStorage.setItem("token", tokenToSetInLocalStorage);
       // Result is handled in extraReducers in userSlice and will be added to the store automatically
       getUser();
       toast.success("User logged in successfully");
       navigate(HOME_ROUTE);
     }
-  }, [isSuccess, token]);
+  }, [isSuccess, token, tokenWithGoogleLogin]);
 
   return (
     <Box
@@ -76,6 +93,8 @@ export default function Login() {
         minHeight: "100vh",
       }}
     >
+      <GoogleLogin onSuccess={handleSignInWithGoogle} onError={console.log} />
+
       <FormProvider {...methods}>
         <Stack
           component="form"
@@ -90,7 +109,9 @@ export default function Login() {
           <Input field={email} label={"Email"} />
           <Input field={password} label={"Password"} type="password" />
 
-          <SubmitButton isLoading={isSubmitting}>Login</SubmitButton>
+          <SubmitButton isLoading={isLoading || isSubmitting}>
+            Login
+          </SubmitButton>
         </Stack>
       </FormProvider>
 

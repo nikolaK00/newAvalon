@@ -1,12 +1,12 @@
 import { ListQueryParams } from "../../../services/types";
-import { Entity } from "../../../shared/types";
+import { Entity, Image } from "../../../shared/types";
 
 export interface Product extends Entity {
   name: string;
   price: number;
   capacity: number;
   description: string;
-  image: string;
+  productImage: Image;
 }
 
 export interface ProductQueryParams extends ListQueryParams {

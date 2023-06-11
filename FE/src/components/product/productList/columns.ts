@@ -11,7 +11,7 @@ export const productColumns = [
     format: (row: Product) => `$${row.price},00`,
   },
   {
-    id: "capacity",
-    label: "Capacity",
+    id: "description",
+    label: "Description",
   },
 ];

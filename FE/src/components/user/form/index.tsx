@@ -91,88 +91,98 @@ const UserForm: FC<UserFormProps> = ({
     }
   }, [user?.profileImage?.url]);
 
+  const isSalesman = user?.roles === Role.salesman;
+  const canUserEdit =
+    !isSalesman || (isSalesman && user?.status === UserStatus.APPROVED);
+
   return (
     <>
       {formTitle && <Typography variant="h6">{formTitle}</Typography>}
 
-      {user?.roles === Role.salesman && (
+      {isSalesman && (
         <Typography variant="body2">({UserStatus[user.status]})</Typography>
       )}
 
-      <FormProvider {...methods}>
-        <Stack
-          component="form"
-          sx={{
-            width: "50ch",
-          }}
-          spacing={2}
-          noValidate
-          autoComplete="off"
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Input field={username} label={"Username"} />
-          <Input field={email} label={"Email"} />
-          <Input field={password} label={"Password"} type="password" />
-          <Input
-            field={repeatedPassword}
-            label={"Repeated Password"}
-            type="password"
-          />
-          <Input field={name} label={"Name"} />
-          <Input field={lastName} label={"Last Name"} />
-          <DateInput field={dob} label={"Date of Birth"} />
-          <Input field={address} label={"Address"} />
-          <SelectInput
-            field={roles}
-            label={"Role"}
-            options={[
-              ...roleOptions,
-              ...(user?.roles === Role.admin
-                ? [
-                    {
-                      label: "Admin",
-                      value: Role.admin,
-                    },
-                  ]
-                : []),
-            ]}
-            disabled={!!user}
-          />
+      <fieldset disabled={isSubmitting || !canUserEdit}>
+        <FormProvider {...methods}>
+          <Stack
+            component="form"
+            sx={{
+              width: "50ch",
+            }}
+            spacing={2}
+            noValidate
+            autoComplete="off"
+            onSubmit={handleSubmit(onSubmit)}
+          >
+            <Input field={username} label={"Username"} />
+            <Input field={email} label={"Email"} />
+            <Input field={password} label={"Password"} type="password" />
+            <Input
+              field={repeatedPassword}
+              label={"Repeated Password"}
+              type="password"
+            />
+            <Input field={name} label={"Name"} />
+            <Input field={lastName} label={"Last Name"} />
+            <DateInput field={dob} label={"Date of Birth"} />
+            <Input field={address} label={"Address"} />
+            <SelectInput
+              field={roles}
+              label={"Role"}
+              options={[
+                ...roleOptions,
+                ...(user?.roles === Role.admin
+                  ? [
+                      {
+                        label: "Admin",
+                        value: Role.admin,
+                      },
+                    ]
+                  : []),
+              ]}
+              disabled={!!user}
+            />
 
-          {user && (
-            <>
-              <Avatar
-                src={imageSrc}
-                alt="User image"
-                sx={{
-                  width: 150,
-                  height: 150,
-                  position: "relative",
-                  left: "50%",
-                  transform: "translate(-50%, 0)",
-                }}
-              >
-                {isImageUploading || isImageAdding ? (
-                  <CircularProgress />
-                ) : (
-                  <PersonIcon fontSize={"large"} />
+            {user && (
+              <>
+                <Avatar
+                  src={imageSrc}
+                  alt="User image"
+                  sx={{
+                    width: 150,
+                    height: 150,
+                    position: "relative",
+                    left: "50%",
+                    transform: "translate(-50%, 0)",
+                  }}
+                >
+                  {isImageUploading || isImageAdding ? (
+                    <CircularProgress />
+                  ) : (
+                    <PersonIcon fontSize={"large"} />
+                  )}
+                </Avatar>
+                {canUserEdit && (
+                  <Input
+                    field={image}
+                    type={"file"}
+                    accept={"image/*"}
+                    label={"Image"}
+                    onChange={handleImageChange}
+                  />
                 )}
-              </Avatar>
-              <Input
-                field={image}
-                type={"file"}
-                accept={"image/*"}
-                label={"Image"}
-                onChange={handleImageChange}
-              />
-            </>
-          )}
+              </>
+            )}
 
-          <SubmitButton isLoading={isSubmitting}>
-            {submitButtonLabel}
-          </SubmitButton>
-        </Stack>
-      </FormProvider>
+            {canUserEdit && (
+              <SubmitButton isLoading={isSubmitting}>
+                {submitButtonLabel}
+              </SubmitButton>
+            )}
+          </Stack>
+        </FormProvider>
+      </fieldset>
     </>
   );
 };

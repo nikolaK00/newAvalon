@@ -76,6 +76,7 @@ export const productApi = api.injectEndpoints({
         method: "PUT",
         body: { imageId, productId },
       }),
+      invalidatesTags: (result, error, arg) => [{ type: "Product", arg }],
     }),
   }),
 });

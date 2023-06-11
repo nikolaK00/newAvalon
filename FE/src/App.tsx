@@ -21,7 +21,7 @@ function App() {
   const token = localStorage.getItem("token");
 
   const routes = useRoutes(
-    isLoggedIn ? protectedRoutes(user?.roles) : unprotectedRoutes
+    isLoggedIn ? protectedRoutes(user?.roles, user) : unprotectedRoutes
   );
 
   useEffect(() => {

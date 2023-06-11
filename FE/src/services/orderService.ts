@@ -4,18 +4,22 @@ import {
   OrderResponse,
 } from "../components/order/types";
 
-import { api, orderTagType, productTagType } from "./service";
+import { api, orderTagType } from "./service";
 import { ListQueryParams, ListResponse } from "./types";
+
+interface OrderListQueryParams extends ListQueryParams {
+  newOrders?: boolean;
+}
 
 export const orderService = api.injectEndpoints({
   endpoints: (builder) => ({
     // QUERIES
     getOrders: builder.query<
       { data: OrderResponse[]; totalCount: number },
-      ListQueryParams
+      OrderListQueryParams
     >({
-      query: (params: ListQueryParams) => ({
-        url: `/api/order/orders`,
+      query: ({ newOrders, ...params }: OrderListQueryParams) => ({
+        url: newOrders ? `/api/order/orders/shipping` : `/api/order/orders`,
         method: "GET",
         params,
       }),
@@ -39,13 +43,13 @@ export const orderService = api.injectEndpoints({
       providesTags: (result, error, id) => [{ type: "Order", id }],
     }),
     // MUTATIONS
-    addOrder: builder.mutation<Order, OrderFormFields>({
+    addOrder: builder.mutation<{ entityId: string }[], OrderFormFields>({
       query: (order: OrderFormFields) => ({
         url: `/api/order/orders`,
         method: "POST",
         body: order,
       }),
-      invalidatesTags: [orderTagType, productTagType],
+      invalidatesTags: [orderTagType],
     }),
     updateOrder: builder.mutation<
       Order,
@@ -56,12 +60,21 @@ export const orderService = api.injectEndpoints({
         method: "PUT",
         body: order,
       }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Order", id: arg.id },
-        productTagType,
-      ],
+      invalidatesTags: (result, error, arg) => [{ type: "Order", id: arg.id }],
+    }),
+    cancelOrder: builder.mutation<Order, string>({
+      query: (id) => ({
+        url: `/api/order/orders/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Order", id: arg }],
     }),
   }),
 });
 
-export const { useGetOrdersQuery, useAddOrderMutation } = orderService;
+export const {
+  useGetOrdersQuery,
+  useAddOrderMutation,
+  useLazyGetOrderByIdQuery,
+  useCancelOrderMutation,
+} = orderService;

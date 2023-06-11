@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { Role } from "../../components/user/types";
+import { Role, UserStatus } from "../../components/user/types";
 import { userApi } from "../../services/userService";
 
 export type UserState = {
@@ -15,6 +15,7 @@ export type UserState = {
   roles: Role | null;
   image: string | null;
   isLoggedIn: boolean;
+  status: UserStatus | null;
 };
 
 const initialState: UserState = {
@@ -29,6 +30,7 @@ const initialState: UserState = {
   roles: null,
   image: null,
   isLoggedIn: false,
+  status: null,
 };
 
 export const userSlice = createSlice({
@@ -41,7 +43,7 @@ export const userSlice = createSlice({
     builder.addMatcher(
       userApi.endpoints.getUser.matchFulfilled,
       (state, { payload }) => {
-        const { id, email, firstName, lastName, roles } = payload;
+        const { id, email, firstName, lastName, roles, status } = payload;
 
         state.isLoggedIn = true;
         state.id = id;
@@ -49,6 +51,7 @@ export const userSlice = createSlice({
         state.firstName = firstName;
         state.lastName = lastName;
         state.roles = roles[0].id as Role;
+        state.status = status;
       }
     );
   },

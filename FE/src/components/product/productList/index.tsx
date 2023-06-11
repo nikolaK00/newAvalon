@@ -11,12 +11,15 @@ import { useGetProductsQuery } from "../../../services/productService";
 import Table from "../../../shared/table";
 import { useTablePagination } from "../../../shared/table/hooks";
 import { RootState } from "../../../store";
-import { Role } from "../../user/types";
+import { Role, UserStatus } from "../../user/types";
 
 import { productColumns } from "./columns";
 
 const ProductList = () => {
   const user = useSelector((state: RootState) => state.user);
+
+  const isSalesman = user?.roles === Role.salesman;
+  const canUserAddProduct = isSalesman && user?.status === UserStatus.APPROVED;
 
   const { page, itemsPerPage, handleChangePage, handleChangeItemsPerPage } =
     useTablePagination();
@@ -45,7 +48,7 @@ const ProductList = () => {
         <Table columns={productColumns} data={products} {...tableProps} />
       </ErrorPage>
 
-      {user?.roles === Role.salesman && (
+      {canUserAddProduct && (
         <Box sx={{ position: "absolute", bottom: 20, right: 20 }}>
           <NavLink to={NEW_PRODUCT_ROUTE}>
             <Fab color="primary" aria-label="add product" variant={"extended"}>

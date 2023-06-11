@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,7 +6,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, List, Stack, Typography } from "@mui/material";
 
 import { PRODUCTS_ROUTE } from "../../../routes";
-import { useAddOrderMutation } from "../../../services/orderService";
+import {
+  useAddOrderMutation,
+  useLazyGetOrderByIdQuery,
+} from "../../../services/orderService";
 import Input from "../../../shared/form/Input";
 import SubmitButton from "../../../shared/form/SubmitButton";
 import { useToastMessage } from "../../../shared/hooks/useToastMessage";
@@ -28,7 +31,9 @@ const Cart = () => {
     (state: RootState) => state.cart
   );
 
-  const [addOrder, { isLoading, isSuccess, error }] = useAddOrderMutation();
+  const [addOrder, { isLoading, isSuccess, error, data }] =
+    useAddOrderMutation();
+  const [getOrder] = useLazyGetOrderByIdQuery();
 
   useToastMessage({
     isSuccess,
@@ -55,6 +60,13 @@ const Cart = () => {
     dispatch(resetCart());
   };
 
+  useEffect(() => {
+    if (isSuccess && data) {
+      const newCreatedOrderId = data[0].entityId;
+      getOrder(newCreatedOrderId);
+    }
+  }, [isSuccess, data]);
+
   return (
     <Box
       sx={{
@@ -70,6 +82,7 @@ const Cart = () => {
         <>
           {productsInCart?.map((product) => (
             <List
+              key={product.id}
               sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             >
               <CartProduct key={product.id} product={product} />

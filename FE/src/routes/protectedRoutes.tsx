@@ -7,10 +7,11 @@ import Cart from "../components/product/cart";
 import NewProduct from "../components/product/NewProduct";
 import ProductList from "../components/product/productList";
 import UserProfile from "../components/user/profile/UserProfile";
-import { Role } from "../components/user/types";
+import { Role, UserStatus } from "../components/user/types";
 import UserList from "../components/user/userList";
 import HomePage from "../pages/home/HomePage";
 import NotFoundPage from "../pages/notFound/NotFoundPage";
+import { UserState } from "../store/user/userSlice";
 
 import {
   ALL_ORDERS_ROUTE,
@@ -27,12 +28,18 @@ import {
   ROOT_ROUTE,
 } from "./index";
 
-const protectedRoutes = (role: Role | null): RouteObject[] => {
+const protectedRoutes = (
+  role: Role | null,
+  user: UserState | null
+): RouteObject[] => {
   const isUserAdmin = role === Role.admin;
   const isUserSalesman = role === Role.salesman;
   const isUserCustomer = role === Role.customer;
 
   const isUserLoggedIn = isUserAdmin || isUserSalesman || isUserCustomer;
+
+  const canUserAddProduct =
+    isUserSalesman && user?.status === UserStatus.APPROVED;
 
   return [
     {
@@ -57,7 +64,7 @@ const protectedRoutes = (role: Role | null): RouteObject[] => {
         },
         // PRODUCT
         {
-          ...(isUserSalesman && {
+          ...(canUserAddProduct && {
             path: NEW_PRODUCT_ROUTE,
             element: <NewProduct />,
           }),
@@ -90,7 +97,7 @@ const protectedRoutes = (role: Role | null): RouteObject[] => {
         {
           ...(isUserSalesman && {
             path: NEW_ORDERS_ROUTE,
-            element: <OrderList />,
+            element: <OrderList newOrders />,
           }),
         },
         {

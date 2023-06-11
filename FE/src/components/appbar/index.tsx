@@ -14,6 +14,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { googleLogout } from "@react-oauth/google";
 
 import { CART_ROUTE, HOME_ROUTE, LOGIN_ROUTE } from "../../routes";
 import { RootState } from "../../store";
@@ -33,6 +34,7 @@ export default function Appbar() {
   const userMenu = isLoggedIn ? navItemsProtected(roles) : navItemsUnprotected;
 
   const handleLogout = () => {
+    googleLogout();
     localStorage.clear();
     dispatch(logout());
   };

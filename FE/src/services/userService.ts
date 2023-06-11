@@ -5,7 +5,7 @@ import {
   UserFormFields,
 } from "../components/user/types";
 
-import { api } from "./service";
+import { api, userTagType } from "./service";
 
 interface UserDto extends Omit<User, "roles"> {
   roles: { id: Role }[];
@@ -16,6 +16,7 @@ export const userApi = api.injectEndpoints({
     // QUERIES
     getUser: builder.query<UserDto, void>({
       query: () => `/api/administration/users/me`,
+      providesTags: [userTagType],
     }),
     // MUTATIONS
     register: builder.mutation<User, Omit<UserFormFields, "repeatedPassword">>({
@@ -30,6 +31,14 @@ export const userApi = api.injectEndpoints({
         url: `/api/administration/users/login`,
         method: "PUT",
         body: userCredentials,
+        responseHandler: "text",
+      }),
+    }),
+    loginWithGoogle: builder.mutation<string, string>({
+      query: (token: string) => ({
+        url: `/api/administration/users/signin-google`,
+        method: "PUT",
+        body: { role: Role.customer, token },
         responseHandler: "text",
       }),
     }),
@@ -49,6 +58,7 @@ export const userApi = api.injectEndpoints({
         method: "PUT",
         body: params,
       }),
+      invalidatesTags: [userTagType],
     }),
   }),
   overrideExisting: false,
@@ -58,6 +68,7 @@ export const {
   useGetUserQuery,
   useLazyGetUserQuery,
   useLoginMutation,
+  useLoginWithGoogleMutation,
   useRegisterMutation,
   useUpdateUserMutation,
   useUploadProfileImageMutation,

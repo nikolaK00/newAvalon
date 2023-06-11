@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
@@ -50,7 +50,7 @@ const ProductForm: FC<ProductFormProps> = ({
   const [uploadImage, { isLoading: isImageUploading }] =
     useUploadProductImageMutation();
 
-  const { handleImageChange, imageSrc } = useImageUpload({
+  const { handleImageChange, imageSrc, setImageSrc } = useImageUpload({
     addImage,
     uploadImage,
     productId: product?.id,
@@ -63,6 +63,12 @@ const ProductForm: FC<ProductFormProps> = ({
   });
 
   const { handleSubmit } = methods;
+
+  useEffect(() => {
+    if (product?.productImage?.url) {
+      setImageSrc(product?.productImage?.url);
+    }
+  }, [product?.productImage?.url]);
 
   return (
     <Box
