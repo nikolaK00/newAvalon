@@ -76,7 +76,6 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         /// </summary>
         /// <param name="page">The page.</param>
         /// <param name="itemsPerPage">The items per page.</param>
-        /// <param name="creatorId">The creator identifier.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The list of products.</returns>
         [HttpGet("creator")]
@@ -84,8 +83,10 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         [ProducesResponseType(typeof(PagedList<CatalogProductDetailsResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetProductsByCreator(Guid creatorId, int page, int itemsPerPage, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetProductsByCreator(int page, int itemsPerPage, CancellationToken cancellationToken)
         {
+            var creatorId = Guid.Parse(HttpContext.User.GetUserIdentityId())
+
             var query = new GetProductsByCreatorQuery(creatorId, page, itemsPerPage);
 
             PagedList<CatalogProductDetailsResponse> response = await Sender.Send(query, cancellationToken);
