@@ -71,18 +71,18 @@ namespace NewAvalon.Catalog.Presentation.Controllers
             return Ok(response);
         }
 
-        u        /// <summary>
-                 /// Gets all product.
-                 /// </summary>
-                 /// <param name="page">The page.</param>
-                 /// <param name="itemsPerPage">The items per page.</param>
-                 /// <param name="cancellationToken">The cancellation token.</param>
-                 /// <returns>The list of products.</returns>
-                [HttpGet("creator")]
-                [Authorize]
-                [ProducesResponseType(typeof(PagedList<CatalogProductDetailsResponse>), StatusCodes.Status200OK)]
-                [ProducesResponseType(StatusCodes.Status403Forbidden)]
-                [ProducesResponseType(StatusCodes.Status404NotFound)]
+        /// <summary>
+        /// Gets all product.
+        /// </summary>
+        /// <param name="page">The page.</param>
+        /// <param name="itemsPerPage">The items per page.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The list of products.</returns>
+        [HttpGet("creator")]
+        [Authorize]
+        [ProducesResponseType(typeof(PagedList<CatalogProductDetailsResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProductsByCreator(int page, int itemsPerPage, CancellationToken cancellationToken)
         {
             var creatorId = Guid.Parse(HttpContext.User.GetUserIdentityId());
