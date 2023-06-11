@@ -1,12 +1,11 @@
-﻿using MediatR;
-using NewAvalon.Abstractions.Clock;
+﻿using NewAvalon.Abstractions.Clock;
 using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.Messaging;
 using NewAvalon.Abstractions.Services;
-using NewAvalon.UserAdministration.Boundary.Users.Commands.CreateUser;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.LoginGoogleUser;
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.Repositories;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,19 +15,28 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.LoginGoogleUser
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtProvider _jwtProvider;
-        private readonly ISender _sender;
         private readonly ISystemTime _systemTime;
+        private readonly IDealerRepository _dealerRepository;
+        private readonly IClientRepository _clientRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly IUserAdministrationUnitOfWork _unitOfWork;
 
         public LoginGoogleUserCommandHandler(
             IUserRepository userRepository,
             IJwtProvider jwtProvider,
-            ISender sender,
-            ISystemTime systemTime)
+            ISystemTime systemTime,
+            IDealerRepository dealerRepository,
+            IClientRepository clientRepository,
+            IRoleRepository roleRepository,
+            IUserAdministrationUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
             _jwtProvider = jwtProvider;
-            _sender = sender;
             _systemTime = systemTime;
+            _dealerRepository = dealerRepository;
+            _clientRepository = clientRepository;
+            _roleRepository = roleRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<string> Handle(LoginGoogleUserCommand request, CancellationToken cancellationToken)
@@ -43,19 +51,38 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.LoginGoogleUser
 
             }
 
-            var createUserCommand = new CreateUserCommand(
-                googleUserDetails.Email,
-                googleUserDetails.Email,
-                null,
+            var newUser = new User(
+                new Domain.EntityIdentifiers.UserId(Guid.NewGuid()),
                 googleUserDetails.FirstName,
                 googleUserDetails.LastName,
+                googleUserDetails.Email,
+                googleUserDetails.Email,
                 _systemTime.UtcNow,
-                null,
-                request.Roles);
+                null);
 
-            var response = await _sender.Send(createUserCommand, cancellationToken);
+            _userRepository.Insert(newUser);
 
-            return _jwtProvider.Generate(new GenerateTokenRequest(googleUserDetails.Email, response.EntityId));
+            if (request.Roles == Role.Client.Id.Value)
+            {
+                newUser.AddRole(_roleRepository.GetByRole(Role.Client));
+
+                newUser.AddRole(Role.Client);
+                var client = new Client(newUser.Id);
+                _clientRepository.Insert(client);
+            }
+            else if (request.Roles == Role.DealerUser.Id.Value)
+            {
+                newUser.AddRole(_roleRepository.GetByRole(Role.DealerUser));
+                var dealer = new Dealer(newUser.Id);
+                _dealerRepository.Insert(dealer);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return _jwtProvider.Generate(new GenerateTokenRequest(googleUserDetails.Email, newUser.Id.Value));
         }
     }
 }
