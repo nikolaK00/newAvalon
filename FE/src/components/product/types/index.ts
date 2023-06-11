@@ -11,6 +11,7 @@ export interface Product extends Entity {
 
 export interface ProductQueryParams extends ListQueryParams {
   onlyActive: boolean;
+  isDealer?: boolean;
 }
 
 export interface ProductFormFields extends Omit<Product, "id"> {}

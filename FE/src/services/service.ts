@@ -7,6 +7,8 @@ export const pendingDealerTagType = "PendingDealer";
 export const imageTagType = "Image";
 export const orderTagType = "Order";
 export const productTagType = "Product";
+export const dealerProductTagType = "DealerProduct";
+
 export const userTagType = "User";
 
 export const api = createApi({
@@ -18,6 +20,7 @@ export const api = createApi({
     imageTagType,
     orderTagType,
     productTagType,
+    dealerProductTagType,
     userTagType,
   ],
   endpoints: () => ({}),

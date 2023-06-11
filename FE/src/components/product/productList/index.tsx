@@ -28,6 +28,7 @@ const ProductList = () => {
     page: page,
     itemsPerPage,
     onlyActive: true,
+    isDealer: isSalesman,
   });
 
   const { data: products, totalCount } = data || {};

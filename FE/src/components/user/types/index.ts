@@ -8,7 +8,7 @@ export enum Role {
 
 export interface UserCredentials {
   email: string;
-  password: string;
+  password?: string;
 }
 
 export enum UserStatus {

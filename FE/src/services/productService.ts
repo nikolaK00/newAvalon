@@ -4,7 +4,7 @@ import {
   ProductQueryParams,
 } from "../components/product/types";
 
-import { api, productTagType } from "./service";
+import { api, dealerProductTagType, productTagType } from "./service";
 import { ListResponse } from "./types";
 
 export const productApi = api.injectEndpoints({
@@ -15,7 +15,9 @@ export const productApi = api.injectEndpoints({
       ProductQueryParams
     >({
       query: (params: ProductQueryParams) => ({
-        url: `/api/catalog/product`,
+        url: params.isDealer
+          ? `/api/catalog/product/creator`
+          : `/api/catalog/product`,
         method: "GET",
         params,
       }),
@@ -23,16 +25,18 @@ export const productApi = api.injectEndpoints({
         data: returnValue.items,
         totalCount: returnValue.totalCount,
       }),
-      providesTags: (result) =>
+      providesTags: (result, error, arg) =>
         result
           ? [
               ...result.data.map(({ id }) => ({
-                type: "Product" as const,
+                type: arg.isDealer
+                  ? ("DealerProduct" as const)
+                  : ("Product" as const),
                 id,
               })),
-              productTagType,
+              arg.isDealer ? dealerProductTagType : productTagType,
             ]
-          : [productTagType],
+          : [arg.isDealer ? dealerProductTagType : productTagType],
     }),
     getProductById: builder.query<Product, string | undefined>({
       query: (id) => `/api/catalog/product/${id}`,

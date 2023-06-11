@@ -21,6 +21,7 @@ function App() {
   const user = useSelector((state: RootState) => state.user);
 
   const isLoggedIn = user?.isLoggedIn;
+
   const token = localStorage.getItem("token");
   const cartState = localStorage.getItem("cart");
 

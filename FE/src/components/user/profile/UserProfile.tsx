@@ -9,6 +9,7 @@ import {
   useUpdateUserMutation,
 } from "../../../services/userService";
 import UserForm from "../form";
+import { password } from "../form/fields";
 import { Role, UserFormFields } from "../types";
 
 const UserProfile = () => {
@@ -16,8 +17,14 @@ const UserProfile = () => {
 
   const [updateProfile, { isLoading: isSubmitting }] = useUpdateUserMutation();
 
-  const onSubmit = (data: Omit<UserFormFields, "repeatedPassword">) =>
-    updateProfile(data);
+  const onSubmit = (data: Omit<UserFormFields, "repeatedPassword">) => {
+    const dataToSend = { ...data };
+
+    if (dataToSend.password === "") {
+      delete dataToSend[password];
+    }
+    updateProfile(dataToSend);
+  };
 
   return (
     <Box

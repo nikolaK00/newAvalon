@@ -10,7 +10,13 @@ export const orderColumns = (areNewOrders: boolean) => [
   {
     id: "product",
     label: "Product",
-    format: (row: OrderResponse) => <>{row.productDetailsResponses[0].name}</>,
+    format: (row: OrderResponse) => (
+      <>
+        {row.productDetailsResponses?.map((product) => (
+          <p>{product.name}</p>
+        ))}
+      </>
+    ),
   },
   {
     id: "dealer",

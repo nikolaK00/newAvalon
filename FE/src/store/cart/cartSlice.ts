@@ -48,7 +48,10 @@ export const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(newProductsState));
       state.products = newProductsState;
     },
-    resetCart: () => initialState,
+    resetCart: () => {
+      localStorage.removeItem("cart");
+      return initialState;
+    },
   },
 });
 

@@ -1,14 +1,7 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 
-import {
-  Box,
-  Button,
-  Divider,
-  ListItem,
-  ListItemText,
-  Typography,
-} from "@mui/material";
+import { Box, Button, ListItem, ListItemText, Typography } from "@mui/material";
 
 import { removeFromCart, StoreProduct } from "../../../store/cart/cartSlice";
 

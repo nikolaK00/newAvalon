@@ -51,6 +51,7 @@ export const userApi = api.injectEndpoints({
         method: "PUT",
         body: user,
       }),
+      invalidatesTags: [userTagType],
     }),
     uploadProfileImage: builder.mutation<string, { imageId: string }>({
       query: (params) => ({
