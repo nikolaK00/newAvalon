@@ -85,7 +85,7 @@ namespace NewAvalon.Catalog.Presentation.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetProductsByCreator(int page, int itemsPerPage, CancellationToken cancellationToken)
         {
-            var creatorId = Guid.Parse(HttpContext.User.GetUserIdentityId())
+            var creatorId = Guid.Parse(HttpContext.User.GetUserIdentityId());
 
             var query = new GetProductsByCreatorQuery(creatorId, page, itemsPerPage);
 
