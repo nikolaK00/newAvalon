@@ -10,6 +10,7 @@ using NewAvalon.Boundary.Pagination;
 using NewAvalon.Order.Boundary.Orders.Commands.CreateOrders;
 using NewAvalon.Order.Boundary.Orders.Commands.DeleteOrder;
 using NewAvalon.Order.Boundary.Orders.Queries.GetAllOrders;
+using NewAvalon.Order.Boundary.Orders.Queries.GetOrder;
 using NewAvalon.Order.Boundary.Orders.Queries.GetShippingOrders;
 using NewAvalon.Order.Presentation.Abstractions;
 using System;
@@ -78,6 +79,29 @@ namespace NewAvalon.Order.Presentation.Controllers
                 itemsPerPage);
 
             PagedList<OrderDetailsResponse> response = await Sender.Send(query, cancellationToken);
+
+            return Ok(response);
+        }
+
+        /// <summary>
+        /// Get order by specified identifier.
+        /// </summary>
+        /// <param name="orderId">The order identifier.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns>The user with the specified identifier.</returns>
+        [HttpGet("{orderId:guid}")]
+        [Authorize]
+        [HasPermission(Permissions.OrderRead)]
+        [ProducesResponseType(typeof(PagedList<OrderDetailsResponse>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetOrderById(Guid orderId, CancellationToken cancellationToken)
+        {
+            var userId = Guid.Parse(HttpContext.User.GetUserIdentityId());
+
+            var query = new GetOrderByIdQuery(orderId, userId);
+
+            OrderDetailsResponse response = await Sender.Send(query, cancellationToken);
 
             return Ok(response);
         }

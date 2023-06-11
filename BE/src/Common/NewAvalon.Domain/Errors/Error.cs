@@ -39,6 +39,7 @@
         public static Error IncorrectPassword => new(1003, "Incorrect password");
 
         #endregion
+
         #region Products
 
         public static Error ProductNotFound => new(2000, "Product not found");
@@ -48,6 +49,7 @@
         public static Error ProductCannotBeDeleted => new(2002, "Product cannot be deleted");
 
         #endregion
+
         #region Storage
 
         public static Error ImageNotFound => new(3000, "Image not found");
@@ -55,6 +57,12 @@
         public static Error FileNotFound => new(3001, "File not found");
 
         public static Error FileAlreadyAttached => new(3002, "File already attached");
+
+        #endregion
+
+        #region Order
+
+        public static Error OrderNotFound => new(4000, "Order not found");
 
         #endregion
     }
