@@ -37,7 +37,7 @@ namespace NewAvalon.Order.Business.Orders.Queries.GetOrder
                 throw new OrderNotFoundException(request.OrderId);
             }
 
-            if (order.OwnerId != request.UserId || order.DealerId != request.UserId)
+            if (order.OwnerId != request.UserId && order.DealerId != request.UserId)
             {
                 throw new OrderNotFoundException(request.OrderId);
             }
