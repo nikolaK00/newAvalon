@@ -66,9 +66,13 @@ namespace NewAvalon.UserAdministration.Domain.Entities
             FirstName = firstName;
             LastName = lastName;
             UserName = userName;
-            Password = password;
             DateOfBirth = dateOfBirth;
             Address = address;
+
+            if (!string.IsNullOrWhiteSpace(password))
+            {
+                Password = password;
+            }
         }
 
         public void ChangeProfileImage(ProfileImage profileImage)

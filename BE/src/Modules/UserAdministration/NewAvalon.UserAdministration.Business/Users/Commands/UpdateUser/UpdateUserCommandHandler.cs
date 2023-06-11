@@ -33,9 +33,15 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.UpdateUser
                 throw new UserNotFoundException(request.Id);
             }
 
-            var password = GeneratePassword(user.Id.Value, request.Password);
-
-            user.Update(request.FirstName, request.LastName, request.Username, password, request.DateOfBirth, request.Address);
+            user.Update(
+                request.FirstName,
+                request.LastName,
+                request.Username,
+                request.Password is null
+                    ? null
+                    : GeneratePassword(user.Id.Value, request.Password),
+                request.DateOfBirth,
+                request.Address);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
