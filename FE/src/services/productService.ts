@@ -49,7 +49,7 @@ export const productApi = api.injectEndpoints({
         method: "POST",
         body: product,
       }),
-      invalidatesTags: [productTagType],
+      invalidatesTags: [productTagType, dealerProductTagType],
     }),
     updateProduct: builder.mutation<
       Product,
@@ -69,7 +69,7 @@ export const productApi = api.injectEndpoints({
         url: `/api/catalog/product/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Product", id: arg }],
+      invalidatesTags: [productTagType, dealerProductTagType]
     }),
     uploadProductImage: builder.mutation<
       string,
