@@ -33,6 +33,7 @@ const navItemsSales = [
 const navItemsCustomer = [
   { ...profileNavItem },
   { text: "Products", path: PRODUCTS_ROUTE },
+  { text: "Shipping Orders", path: NEW_ORDERS_ROUTE },
   { text: "Previous Orders", path: PREVIOUS_ORDERS_ROUTE },
 ];
 

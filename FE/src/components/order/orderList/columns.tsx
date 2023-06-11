@@ -1,6 +1,8 @@
+import dayjs from "dayjs";
+
 import { OrderResponse, OrderStatus } from "../types";
 
-export const orderColumns = [
+export const orderColumns = (areNewOrders: boolean) => [
   {
     id: "name",
     label: "Name",
@@ -8,6 +10,7 @@ export const orderColumns = [
   {
     id: "product",
     label: "Product",
+    format: (row: OrderResponse) => <>{row.productDetailsResponses[0].name}</>,
   },
   {
     id: "dealer",
@@ -16,6 +19,13 @@ export const orderColumns = [
       <>
         {row.dealerId.firstName} {row.dealerId.lastName}
       </>
+    ),
+  },
+  {
+    id: "delivery",
+    label: areNewOrders ? "Delivery on" : "Delivered on",
+    format: (row: OrderResponse) => (
+      <>{dayjs(row.deliveryOnUtc).format("DD/MM/YYYY HH:mm")}</>
     ),
   },
   {

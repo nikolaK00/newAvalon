@@ -95,7 +95,7 @@ const protectedRoutes = (
           }),
         },
         {
-          ...(isUserSalesman && {
+          ...((isUserSalesman || isUserCustomer) && {
             path: NEW_ORDERS_ROUTE,
             element: <OrderList newOrders />,
           }),

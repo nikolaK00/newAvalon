@@ -67,21 +67,23 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if (error) {
+    if (error || signInWithGoogleError) {
       toast.error("There was an error when trying to login");
     }
-  }, [error]);
+  }, [error, signInWithGoogleError]);
 
   useEffect(() => {
+    const loginSuccess = isSuccess || googleSignInSuccess;
     const tokenToSetInLocalStorage = token || tokenWithGoogleLogin;
-    if (isSuccess && tokenToSetInLocalStorage) {
+
+    if (loginSuccess && tokenToSetInLocalStorage) {
       localStorage.setItem("token", tokenToSetInLocalStorage);
       // Result is handled in extraReducers in userSlice and will be added to the store automatically
       getUser();
       toast.success("User logged in successfully");
       navigate(HOME_ROUTE);
     }
-  }, [isSuccess, token, tokenWithGoogleLogin]);
+  }, [isSuccess, googleSignInSuccess, token, tokenWithGoogleLogin]);
 
   return (
     <Box
