@@ -1,6 +1,9 @@
 import React, { useEffect } from "react";
+import dayjs from "dayjs";
 import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Box, List, Stack, Typography } from "@mui/material";
@@ -25,6 +28,7 @@ import { OrderFormFields } from "../../order/types";
 import CartProduct from "./CartProduct";
 
 const Cart = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { products: productsInCart } = useSelector(
@@ -33,14 +37,13 @@ const Cart = () => {
 
   const [addOrder, { isLoading, isSuccess, error, data }] =
     useAddOrderMutation();
-  const [getOrder] = useLazyGetOrderByIdQuery();
+  const [getOrder, { data: newOrderData }] = useLazyGetOrderByIdQuery();
 
   useToastMessage({
     isSuccess,
     error,
     successMessage: "Order placed successfully",
     errorMessage: "There was an error when placing the order",
-    successNavigateRoute: PRODUCTS_ROUTE,
   });
 
   const methods = useForm<OrderFormFields>({
@@ -55,17 +58,31 @@ const Cart = () => {
       id: product.id,
       quantity: product.quantity,
     }));
-    // placing order and resetting cart
+    // placing order
     addOrder({ ...getValues(), products: orderParams });
-    dispatch(resetCart());
   };
 
   useEffect(() => {
     if (isSuccess && data) {
       const newCreatedOrderId = data[0].entityId;
       getOrder(newCreatedOrderId);
+      dispatch(resetCart());
     }
   }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (newOrderData && isSuccess) {
+      // order delivery notification
+      toast.success(
+        `Order will be shipped on ${dayjs(newOrderData.deliveryOnUtc).format(
+          "DD/MM/YYYY HH:mm"
+        )}`,
+        { autoClose: 10000 }
+      );
+      // navigate to products after getting the new order from BE
+      navigate(PRODUCTS_ROUTE);
+    }
+  }, [newOrderData, isSuccess]);
 
   return (
     <Box
@@ -83,7 +100,7 @@ const Cart = () => {
           {productsInCart?.map((product) => (
             <List
               key={product.id}
-              sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+              sx={{ width: "100%", maxWidth: 500, bgcolor: "background.paper" }}
             >
               <CartProduct key={product.id} product={product} />
             </List>

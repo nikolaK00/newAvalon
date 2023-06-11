@@ -34,19 +34,17 @@ const OrderProductModal: FC<OrderProductModalProps> = ({ product }) => {
   const user = useSelector((state: RootState) => state.user);
   const canUserOrder = user?.roles === Role.customer;
 
-  let quantityValidation = yup
+  const quantityValidation = yup
     .number()
     .transform((value) => (isNaN(value) ? undefined : value))
     .nullable()
-    .min(1, "Quantity can not be less than 1");
-
-  if (product?.capacity) {
-    quantityValidation = quantityValidation.max(product?.capacity);
-  }
+    .min(1, "Quantity can not be less than 1")
+    .max(product?.capacity ?? 0)
+    .required();
 
   const schema = yup
     .object({
-      [quantity]: quantityValidation.required(),
+      [quantity]: quantityValidation,
     })
     .required();
 
@@ -72,7 +70,11 @@ const OrderProductModal: FC<OrderProductModalProps> = ({ product }) => {
   return (
     <Stack>
       {canUserOrder && (
-        <Button variant={"contained"} onClick={() => setOpen(true)}>
+        <Button
+          disabled={!((product?.capacity ?? 0) > 0)}
+          variant={"contained"}
+          onClick={() => setOpen(true)}
+        >
           Add to Cart
         </Button>
       )}

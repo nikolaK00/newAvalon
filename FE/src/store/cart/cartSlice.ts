@@ -18,36 +18,41 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    initializeCart: (state, action) => {
+      state.products = action.payload;
+    },
     addToCart: (state, action) => {
       const addedProductId = action.payload.id;
       const productAlreadyInCart = state.products.find(
         (product) => product.id === addedProductId
       );
       if (productAlreadyInCart) {
-        state.products = state.products.map((product) => {
+        const newProductsState = state.products.map((product) => {
           if (product.id === addedProductId) {
             const newQuantity = product.quantity + action.payload.quantity;
-            console.log(newQuantity);
             return { ...product, quantity: newQuantity };
           } else return product;
         });
+        localStorage.setItem("cart", JSON.stringify(newProductsState));
+        state.products = newProductsState;
       } else {
-        state.products = [...state.products, action.payload];
+        const newProductsState = [...state.products, action.payload];
+        localStorage.setItem("cart", JSON.stringify(newProductsState));
+        state.products = newProductsState;
       }
     },
     removeFromCart: (state, action) => {
-      const productToDelete = state.products.find(
-        (product) => product.id === action.payload
+      const newProductsState = state.products.filter(
+        (product) => product.id !== action.payload
       );
-      if (productToDelete) {
-        const productIndex = state.products.indexOf(productToDelete);
-        state.products = state.products.splice(productIndex, 1);
-      }
+      localStorage.setItem("cart", JSON.stringify(newProductsState));
+      state.products = newProductsState;
     },
     resetCart: () => initialState,
   },
 });
 
-export const { addToCart, removeFromCart, resetCart } = cartSlice.actions;
+export const { initializeCart, addToCart, removeFromCart, resetCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

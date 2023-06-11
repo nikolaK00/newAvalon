@@ -1,14 +1,16 @@
 import { FC } from "react";
+import { useDispatch } from "react-redux";
 
 import {
   Box,
+  Button,
   Divider,
   ListItem,
   ListItemText,
   Typography,
 } from "@mui/material";
 
-import { StoreProduct } from "../../../store/cart/cartSlice";
+import { removeFromCart, StoreProduct } from "../../../store/cart/cartSlice";
 
 interface CartProductProps {
   product: StoreProduct;
@@ -16,6 +18,12 @@ interface CartProductProps {
 
 const CartProduct: FC<CartProductProps> = ({ product }) => {
   const { name, quantity, price } = product;
+
+  const dispatch = useDispatch();
+
+  const handleRemoveProductFromCart = () => {
+    dispatch(removeFromCart(product.id));
+  };
 
   return (
     <Box
@@ -25,7 +33,7 @@ const CartProduct: FC<CartProductProps> = ({ product }) => {
         alignItems: "center",
       }}
     >
-      <ListItem alignItems="flex-start">
+      <ListItem alignItems="center">
         <ListItemText
           primary={name}
           secondary={
@@ -42,8 +50,15 @@ const CartProduct: FC<CartProductProps> = ({ product }) => {
             </>
           }
         />
+
+        <Button
+          variant={"contained"}
+          color={"error"}
+          onClick={handleRemoveProductFromCart}
+        >
+          Remove
+        </Button>
       </ListItem>
-      <Divider variant="inset" component="li" />
     </Box>
   );
 };

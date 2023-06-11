@@ -4,7 +4,7 @@ import {
   OrderResponse,
 } from "../components/order/types";
 
-import { api, orderTagType } from "./service";
+import { api, orderTagType, productTagType } from "./service";
 import { ListQueryParams, ListResponse } from "./types";
 
 interface OrderListQueryParams extends ListQueryParams {
@@ -49,7 +49,7 @@ export const orderService = api.injectEndpoints({
         method: "POST",
         body: order,
       }),
-      invalidatesTags: [orderTagType],
+      invalidatesTags: [orderTagType, productTagType],
     }),
     updateOrder: builder.mutation<
       Order,
