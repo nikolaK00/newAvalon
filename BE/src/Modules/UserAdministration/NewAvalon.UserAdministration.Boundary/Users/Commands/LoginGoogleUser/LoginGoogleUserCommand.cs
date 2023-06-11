@@ -2,5 +2,5 @@
 
 namespace NewAvalon.UserAdministration.Boundary.Users.Commands.LoginGoogleUser
 {
-    public record LoginGoogleUserCommand(int Roles, string GoogleToken) : ICommand<string>;
+    public record LoginGoogleUserCommand(int Role, string Token) : ICommand<string>;
 }

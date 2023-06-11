@@ -41,7 +41,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.LoginGoogleUser
 
         public async Task<string> Handle(LoginGoogleUserCommand request, CancellationToken cancellationToken)
         {
-            var googleUserDetails = _jwtProvider.GetUserDetailsFromGoogleJwt(request.GoogleToken);
+            var googleUserDetails = _jwtProvider.GetUserDetailsFromGoogleJwt(request.Token);
 
             User user = await _userRepository.GetByEmailAsync(googleUserDetails.Email, cancellationToken);
 
@@ -62,7 +62,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.LoginGoogleUser
 
             _userRepository.Insert(newUser);
 
-            if (request.Roles == Role.Client.Id.Value)
+            if (request.Role == Role.Client.Id.Value)
             {
                 newUser.AddRole(_roleRepository.GetByRole(Role.Client));
 
@@ -70,7 +70,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.LoginGoogleUser
                 var client = new Client(newUser.Id);
                 _clientRepository.Insert(client);
             }
-            else if (request.Roles == Role.DealerUser.Id.Value)
+            else if (request.Role == Role.DealerUser.Id.Value)
             {
                 newUser.AddRole(_roleRepository.GetByRole(Role.DealerUser));
                 var dealer = new Dealer(newUser.Id);
