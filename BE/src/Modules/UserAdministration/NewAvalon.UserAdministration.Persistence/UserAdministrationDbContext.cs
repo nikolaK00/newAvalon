@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Epoche;
+using Microsoft.EntityFrameworkCore;
 using NewAvalon.Authorization;
 using NewAvalon.Infrastructure.Extensions;
 using NewAvalon.Persistence.Relational;
@@ -9,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -78,12 +80,22 @@ namespace NewAvalon.UserAdministration.Persistence
                 DateTime.MinValue,
                 "Admin address");
 
+
+            admin.UpdatePassword(GeneratePassword(admin.Id.Value, "123"));
+
             SeedData<User, UserId>(modelBuilder, new List<User>
             {
                 admin
             });
 
             SeedJoinData(modelBuilder, (admin, Role.SuperAdmin));
+        }
+
+        private string GeneratePassword(Guid userId, string password)
+        {
+            var keccak = Keccak256.ComputeHash(Encoding.UTF8.GetBytes(userId + password));
+
+            return Encoding.UTF8.GetString(keccak);
         }
     }
 }
