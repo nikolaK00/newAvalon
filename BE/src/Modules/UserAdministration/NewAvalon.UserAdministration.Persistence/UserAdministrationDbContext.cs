@@ -68,6 +68,22 @@ namespace NewAvalon.UserAdministration.Persistence
                 (permissions.First(p => p.Id.Value == (int)Permissions.DealerRead), Role.SuperAdmin),
                 (permissions.First(p => p.Id.Value == (int)Permissions.DealerUpdate), Role.SuperAdmin),
                 (permissions.First(p => p.Id.Value == (int)Permissions.OrderDelete), Role.Client));
+
+            var admin = new User(
+                new UserId(Guid.NewGuid()),
+                "Admin",
+                "Admin",
+                "Admin",
+                "admin@admin.com",
+                DateTime.MinValue,
+                "Admin address");
+
+            SeedData<User, UserId>(modelBuilder, new List<User>
+            {
+                admin
+            });
+
+            SeedJoinData(modelBuilder, (admin, Role.SuperAdmin));
         }
     }
 }
