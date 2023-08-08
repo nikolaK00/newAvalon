@@ -13,8 +13,6 @@ using NewAvalon.Messaging.Contracts.Permissions;
 using NewAvalon.Messaging.Contracts.Products;
 using NewAvalon.Messaging.Contracts.Users;
 using NewAvalon.Order.Business.Orders.Consumers;
-using NewAvalon.Storage.Business.Files.Consumers;
-using NewAvalon.Storage.Business.Images.Consumers;
 
 namespace NewAvalon.App.ServiceInstallers.Messaging
 {
@@ -61,24 +59,6 @@ namespace NewAvalon.App.ServiceInstallers.Messaging
 
         private static void AddConsumers(IRegistrationConfigurator busConfigurator)
         {
-            busConfigurator.AddConsumer<FileDeletedEventConsumer>().Endpoint(e => e.Name = "file-deleted-consumer");
-
-            busConfigurator.AddConsumer<FIleListDeletedEventConsumer>().Endpoint(e => e.Name = "file-list-deleted-consumer");
-
-            busConfigurator.AddConsumer<ImageRequestConsumer>().Endpoint(e => e.Name = "image-request-consumer");
-
-            busConfigurator.AddConsumer<FileListRequestConsumer>().Endpoint(e => e.Name = "file-list-request-consumer");
-
-            busConfigurator.AddConsumer<StoreUploadedFileRequestConsumer>().Endpoint(e => e.Name = "store-uploaded-file-request-consumer");
-
-            busConfigurator.AddConsumer<UploadFileRequestConsumer>().Endpoint(e => e.Name = "upload-file-request-consumer");
-
-            busConfigurator.AddConsumer<UserProfileImageChangedEventConsumer>().Endpoint(e => e.Name = "storage-user-profile-image-changed");
-
-            busConfigurator.AddConsumer<ProductImageChangedEventConsumer>().Endpoint(e => e.Name = "storage-product-image-changed");
-
-            busConfigurator.AddConsumer<ProductImageChangedEventConsumer>().Endpoint(e => e.Name = "storage-product-image-changed");
-
             busConfigurator.AddConsumer<ProductImageDeletedEventConsumer>().Endpoint(e => e.Name = "product-image-deleted-event-consumer");
 
             busConfigurator.AddConsumer<ProductAddedEventConsumer>().Endpoint(e => e.Name = "product-added-event-consumer");

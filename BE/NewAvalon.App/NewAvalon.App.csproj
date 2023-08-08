@@ -46,11 +46,6 @@
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Domain\NewAvalon.Order.Domain.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Persistence\NewAvalon.Order.Persistence.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Presentation\NewAvalon.Order.Presentation.csproj" />
-    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Business\NewAvalon.Storage.Business.csproj" />
-    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Domain\NewAvalon.Storage.Domain.csproj" />
-    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Infrastructure\NewAvalon.Storage.Infrastructure.csproj" />
-    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Persistence\NewAvalon.Storage.Persistence.csproj" />
-    <ProjectReference Include="..\src\Modules\Storage\NewAvalon.Storage.Presentation\NewAvalon.Storage.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>

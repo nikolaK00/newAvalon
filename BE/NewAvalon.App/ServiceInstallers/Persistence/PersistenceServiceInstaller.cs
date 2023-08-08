@@ -12,9 +12,6 @@ using NewAvalon.Order.Persistence.Options;
 using NewAvalon.Persistence.Extensions;
 using NewAvalon.Persistence.Factories;
 using NewAvalon.Persistence.Relational.Interceptors;
-using NewAvalon.Storage.Domain.Repositories;
-using NewAvalon.Storage.Persistence;
-using NewAvalon.Storage.Persistence.Options;
 using Scrutor;
 using System.Reflection;
 
@@ -36,7 +33,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
         {
             services.ConfigureOptions<CatalogDatabaseOptionsSetup>();
             services.ConfigureOptions<OrderDatabaseOptionsSetup>();
-            services.ConfigureOptions<StorageDatabaseOptionsSetup>();
         }
 
         private static void InstallCore(IServiceCollection services)
@@ -45,15 +41,12 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
             AddOrderDbContext(services);
 
-            AddStorageDbContext(services);
-
             AddRepositories(
                 services,
                 new[]
                 {
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
-                    typeof(NewAvalon.Storage.Persistence.AssemblyReference).Assembly,
                 });
 
             AddDataRequests(
@@ -62,7 +55,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 {
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
-                    typeof(NewAvalon.Storage.Persistence.AssemblyReference).Assembly,
                 });
 
             AddInterceptors(services);
@@ -107,22 +99,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
             });
 
             services.AddScoped<IOrderUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<OrderDbContext>());
-        }
-
-        private static void AddStorageDbContext(IServiceCollection services)
-        {
-            services.AddDbContextPool<StorageDbContext>((provider, builder) =>
-            {
-                IOptions<StorageDatabaseOptions> dbSettingsOptions =
-                    provider.GetRequiredService<IOptions<StorageDatabaseOptions>>();
-
-                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
-                        optionsBuilder => optionsBuilder.MigrationsAssembly(
-                            typeof(NewAvalon.Storage.Persistence.AssemblyReference).Assembly.FullName))
-                    .AddInterceptors(provider);
-            });
-
-            services.AddScoped<IStorageUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<StorageDbContext>());
         }
 
         private static void AddRepositories(IServiceCollection services, Assembly[] assemblies) =>
