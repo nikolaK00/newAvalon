@@ -15,9 +15,6 @@ using NewAvalon.Persistence.Relational.Interceptors;
 using NewAvalon.Storage.Domain.Repositories;
 using NewAvalon.Storage.Persistence;
 using NewAvalon.Storage.Persistence.Options;
-using NewAvalon.UserAdministration.Domain.Repositories;
-using NewAvalon.UserAdministration.Persistence;
-using NewAvalon.UserAdministration.Persistence.Options;
 using Scrutor;
 using System.Reflection;
 
@@ -37,7 +34,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
         private static void InstallOptions(IServiceCollection services)
         {
-            services.ConfigureOptions<UserAdministrationDatabaseOptionsSetup>();
             services.ConfigureOptions<CatalogDatabaseOptionsSetup>();
             services.ConfigureOptions<OrderDatabaseOptionsSetup>();
             services.ConfigureOptions<StorageDatabaseOptionsSetup>();
@@ -45,8 +41,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
         private static void InstallCore(IServiceCollection services)
         {
-            AddUserAdministrationDbContext(services);
-
             AddCatalogDbContext(services);
 
             AddOrderDbContext(services);
@@ -57,7 +51,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 services,
                 new[]
                 {
-                    typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
                     typeof(NewAvalon.Storage.Persistence.AssemblyReference).Assembly,
@@ -67,7 +60,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 services,
                 new[]
                 {
-                    typeof(UserAdministration.Persistence.AssemblyReference).Assembly,
                     typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
                     typeof(NewAvalon.Storage.Persistence.AssemblyReference).Assembly,
@@ -83,22 +75,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
             services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
 
             services.AddSingleton<ConvertDomainEventsToMessagesInterceptor>();
-        }
-
-        private static void AddUserAdministrationDbContext(IServiceCollection services)
-        {
-            services.AddDbContextPool<UserAdministrationDbContext>((provider, builder) =>
-            {
-                IOptions<UserAdministrationDatabaseOptions> dbSettingsOptions =
-                    provider.GetRequiredService<IOptions<UserAdministrationDatabaseOptions>>();
-
-                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
-                        optionsBuilder => optionsBuilder.MigrationsAssembly(
-                            typeof(UserAdministration.Persistence.AssemblyReference).Assembly.FullName))
-                        .AddInterceptors(provider);
-            });
-
-            services.AddScoped<IUserAdministrationUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<UserAdministrationDbContext>());
         }
 
         private static void AddCatalogDbContext(IServiceCollection services)

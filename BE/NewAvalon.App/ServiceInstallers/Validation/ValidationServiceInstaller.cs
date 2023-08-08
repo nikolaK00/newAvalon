@@ -9,7 +9,6 @@ namespace NewAvalon.App.ServiceInstallers.Validation
     {
         private readonly Assembly[] _boundaryAssemblies =
         {
-            typeof(UserAdministration.Boundary.AssemblyReference).Assembly,
             typeof(Catalog.Boundary.AssemblyReference).Assembly,
             typeof(Order.Boundary.AssemblyReference).Assembly,
         };

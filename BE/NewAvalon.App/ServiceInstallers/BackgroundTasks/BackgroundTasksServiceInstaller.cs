@@ -2,7 +2,6 @@
 using NewAvalon.App.Abstractions;
 using NewAvalon.App.ServiceInstallers.BackgroundTasks.Catalog;
 using NewAvalon.App.ServiceInstallers.BackgroundTasks.Order;
-using NewAvalon.App.ServiceInstallers.BackgroundTasks.UserAdministration;
 using Quartz;
 
 namespace NewAvalon.App.ServiceInstallers.BackgroundTasks
@@ -19,10 +18,6 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks
         private static void InstallOptions(IServiceCollection services)
         {
             services.ConfigureOptions<QuartzHostedServiceOptionsSetup>();
-
-            services.ConfigureOptions<UserAdministrationPublishDomainEventsJobOptionsSetup>();
-
-            services.ConfigureOptions<UserAdministrationPublishDomainEventsJobSetup>();
 
             services.ConfigureOptions<OrderPublishDomainEventsJobOptionsSetup>();
 

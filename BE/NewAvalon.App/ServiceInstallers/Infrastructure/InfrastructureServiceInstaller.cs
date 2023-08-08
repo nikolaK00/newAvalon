@@ -13,10 +13,6 @@ namespace NewAvalon.App.ServiceInstallers.Infrastructure
             services.AddScopedServicesAsMatchingInterfaces(typeof(NewAvalon.Infrastructure.AssemblyReference).Assembly);
 
             services.AddScopedServicesAsMatchingInterfaces(typeof(Catalog.Persistence.AssemblyReference).Assembly);
-
-            services.AddScopedServicesAsMatchingInterfaces(typeof(UserAdministration.Infrastructure.AssemblyReference).Assembly);
-
-            services.AddTransientServicesAsMatchingInterfaces(typeof(UserAdministration.Infrastructure.AssemblyReference).Assembly);
         }
     }
 }

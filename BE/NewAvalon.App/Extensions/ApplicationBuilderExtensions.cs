@@ -5,7 +5,6 @@ using NewAvalon.App.Middlewares;
 using NewAvalon.Catalog.Persistence;
 using NewAvalon.Order.Persistence;
 using NewAvalon.Storage.Persistence;
-using NewAvalon.UserAdministration.Persistence;
 
 namespace NewAvalon.App.Extensions
 {
@@ -18,18 +17,9 @@ namespace NewAvalon.App.Extensions
         {
             using IServiceScope scope = builder.ApplicationServices.CreateScope();
 
-            ApplyUserAdministrationMigrations(scope);
             ApplyCatalogMigrations(scope);
             ApplyOrderMigrations(scope);
             ApplyStorageMigrations(scope);
-        }
-
-        private static void ApplyUserAdministrationMigrations(IServiceScope scope)
-        {
-            using UserAdministrationDbContext userAdministrationDbContext =
-                scope.ServiceProvider.GetRequiredService<UserAdministrationDbContext>();
-
-            userAdministrationDbContext.Database.Migrate();
         }
 
         private static void ApplyCatalogMigrations(IServiceScope scope)

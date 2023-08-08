@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NewAvalon.App.Abstractions;
 using Scrutor;
+using System;
 using System.Reflection;
 
 namespace NewAvalon.App.ServiceInstallers.Domain
@@ -10,13 +11,7 @@ namespace NewAvalon.App.ServiceInstallers.Domain
         private const string FactoryPostfix = "Factory";
 
         public void InstallServices(IServiceCollection services) =>
-            AddFactories(services, new[]
-            {
-                typeof(UserAdministration.Domain.AssemblyReference).Assembly,
-                typeof(Catalog.Domain.AssemblyReference).Assembly,
-                    typeof(Order.Domain.AssemblyReference).Assembly,
-                    typeof(NewAvalon.Storage.Domain.AssemblyReference).Assembly
-            });
+            AddFactories(services, Array.Empty<Assembly>());
 
         private static void AddFactories(IServiceCollection services, Assembly[] assemblies) =>
             services.Scan(scan =>

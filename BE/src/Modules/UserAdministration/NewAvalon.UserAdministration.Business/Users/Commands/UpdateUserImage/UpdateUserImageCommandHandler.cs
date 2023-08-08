@@ -1,9 +1,9 @@
 ﻿using MediatR;
+using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.Messaging;
+using NewAvalon.Abstractions.Services;
 using NewAvalon.Domain.Exceptions.Images;
-using NewAvalon.Messaging.Contracts.Images;
 using NewAvalon.UserAdministration.Boundary.Users.Commands.UpdateUserImage;
-using NewAvalon.UserAdministration.Business.Abstractions;
 using NewAvalon.UserAdministration.Domain.Entities;
 using NewAvalon.UserAdministration.Domain.EntityIdentifiers;
 using NewAvalon.UserAdministration.Domain.Exceptions.Users;
@@ -32,7 +32,7 @@ namespace NewAvalon.UserAdministration.Business.Users.Commands.UpdateUserImage
 
         public async Task<Unit> Handle(UpdateUserImageCommand request, CancellationToken cancellationToken)
         {
-            IImageResponse imageResponse = null;
+            ImageResponse imageResponse = null;
             if (request.ImageId.HasValue && !(imageResponse = await _imageService.GetByIdAsync(request.ImageId.Value, cancellationToken)).Exists)
             {
                 throw new ImageNotFoundException(request.ImageId.Value);

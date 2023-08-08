@@ -1,7 +1,7 @@
 ﻿using NewAvalon.Messaging.Contracts.Images;
 using System;
 
-namespace NewAvalon.UserAdministration.Infrastructure.Contracts.Images
+namespace NewAvalon.Infrastructure.Contracts
 {
     internal sealed class ImageRequest : IImageRequest
     {

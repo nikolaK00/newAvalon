@@ -14,7 +14,6 @@ namespace NewAvalon.App.ServiceInstallers.Documentation
 
         private readonly Assembly[] _presentationAssemblies =
         {
-            typeof(UserAdministration.Presentation.AssemblyReference).Assembly,
             typeof(Catalog.Presentation.AssemblyReference).Assembly,
             typeof(Order.Presentation.AssemblyReference).Assembly,
         };

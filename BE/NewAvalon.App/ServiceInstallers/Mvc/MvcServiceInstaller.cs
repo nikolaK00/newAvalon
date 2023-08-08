@@ -22,7 +22,6 @@ namespace NewAvalon.App.ServiceInstallers.Mvc
                 .AddControllers()
                 .AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly)
                 .AddApplicationPart(typeof(Catalog.Presentation.AssemblyReference).Assembly)
-                .AddApplicationPart(typeof(UserAdministration.Presentation.AssemblyReference).Assembly)
                 .AddApplicationPart(typeof(Order.Presentation.AssemblyReference).Assembly)
                 .AddApplicationPart(typeof(NewAvalon.Storage.Presentation.AssemblyReference).Assembly);
 

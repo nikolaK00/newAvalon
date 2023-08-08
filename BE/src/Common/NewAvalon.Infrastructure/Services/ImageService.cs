@@ -1,13 +1,15 @@
-﻿using MassTransit;
+﻿using Mapster;
+using MassTransit;
+using NewAvalon.Abstractions.Contracts;
 using NewAvalon.Abstractions.ServiceLifetimes;
+using NewAvalon.Abstractions.Services;
+using NewAvalon.Infrastructure.Contracts;
 using NewAvalon.Messaging.Contracts.Images;
-using NewAvalon.UserAdministration.Business.Abstractions;
-using NewAvalon.UserAdministration.Infrastructure.Contracts.Images;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NewAvalon.UserAdministration.Infrastructure.Services
+namespace NewAvalon.Infrastructure.Services
 {
     internal sealed class ImageService : IImageService, ITransient
     {
@@ -15,16 +17,16 @@ namespace NewAvalon.UserAdministration.Infrastructure.Services
 
         public ImageService(IRequestClient<IImageRequest> imageRequestClient) => _imageRequestClient = imageRequestClient;
 
-        public async Task<IImageResponse> GetByIdAsync(Guid imageId, CancellationToken cancellationToken)
+        public async Task<ImageResponse> GetByIdAsync(Guid imageId, CancellationToken cancellationToken)
         {
             var request = new ImageRequest
             {
                 ImageId = imageId
             };
 
-            Response<IImageResponse> response = await _imageRequestClient.GetResponse<IImageResponse>(request, cancellationToken);
+            var response = (await _imageRequestClient.GetResponse<IImageResponse>(request, cancellationToken)).Message;
 
-            return response.Message;
+            return response.Adapt<ImageResponse>();
         }
     }
 }
