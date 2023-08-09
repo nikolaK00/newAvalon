@@ -22,6 +22,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\NewAvalon.Infrastructure\NewAvalon.Infrastructure.csproj" />
+    <ProjectReference Include="..\NewAvalon.Catalog.Boundary\NewAvalon.Catalog.Boundary.csproj" />
+    <ProjectReference Include="..\NewAvalon.Catalog.Business\NewAvalon.Catalog.Business.csproj" />
+    <ProjectReference Include="..\NewAvalon.Catalog.Domain\NewAvalon.Catalog.Domain.csproj" />
+    <ProjectReference Include="..\NewAvalon.Catalog.Persistence\NewAvalon.Catalog.Persistence.csproj" />
+    <ProjectReference Include="..\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
