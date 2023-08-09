@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using NewAvalon.App.Middlewares;
-using NewAvalon.Catalog.Persistence;
 using NewAvalon.Order.Persistence;
 
 namespace NewAvalon.App.Extensions
@@ -16,16 +15,7 @@ namespace NewAvalon.App.Extensions
         {
             using IServiceScope scope = builder.ApplicationServices.CreateScope();
 
-            ApplyCatalogMigrations(scope);
             ApplyOrderMigrations(scope);
-        }
-
-        private static void ApplyCatalogMigrations(IServiceScope scope)
-        {
-            using CatalogDbContext catalogDbContext =
-                scope.ServiceProvider.GetRequiredService<CatalogDbContext>();
-
-            catalogDbContext.Database.Migrate();
         }
 
         private static void ApplyOrderMigrations(IServiceScope scope)

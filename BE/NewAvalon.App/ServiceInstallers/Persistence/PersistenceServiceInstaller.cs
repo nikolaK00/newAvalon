@@ -3,9 +3,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NewAvalon.Abstractions.Data;
 using NewAvalon.App.Abstractions;
-using NewAvalon.Catalog.Domain.Repositories;
-using NewAvalon.Catalog.Persistence;
-using NewAvalon.Catalog.Persistence.Options;
 using NewAvalon.Order.Domain.Repositories;
 using NewAvalon.Order.Persistence;
 using NewAvalon.Order.Persistence.Options;
@@ -31,21 +28,17 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
 
         private static void InstallOptions(IServiceCollection services)
         {
-            services.ConfigureOptions<CatalogDatabaseOptionsSetup>();
             services.ConfigureOptions<OrderDatabaseOptionsSetup>();
         }
 
         private static void InstallCore(IServiceCollection services)
         {
-            AddCatalogDbContext(services);
-
             AddOrderDbContext(services);
 
             AddRepositories(
                 services,
                 new[]
                 {
-                    typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
                 });
 
@@ -53,7 +46,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
                 services,
                 new[]
                 {
-                    typeof(Catalog.Persistence.AssemblyReference).Assembly,
                     typeof(Order.Persistence.AssemblyReference).Assembly,
                 });
 
@@ -67,22 +59,6 @@ namespace NewAvalon.App.ServiceInstallers.Persistence
             services.AddSingleton<UpdateAuditableEntitiesInterceptor>();
 
             services.AddSingleton<ConvertDomainEventsToMessagesInterceptor>();
-        }
-
-        private static void AddCatalogDbContext(IServiceCollection services)
-        {
-            services.AddDbContextPool<CatalogDbContext>((provider, builder) =>
-            {
-                IOptions<CatalogDatabaseOptions> dbSettingsOptions =
-                    provider.GetRequiredService<IOptions<CatalogDatabaseOptions>>();
-
-                builder.UseNpgsql(dbSettingsOptions.Value.GetConnectionString(),
-                        optionsBuilder => optionsBuilder.MigrationsAssembly(
-                            typeof(Catalog.Persistence.AssemblyReference).Assembly.FullName))
-                    .AddInterceptors(provider);
-            });
-
-            services.AddScoped<ICatalogUnitOfWork>(serviceProvider => serviceProvider.GetRequiredService<CatalogDbContext>());
         }
 
         private static void AddOrderDbContext(IServiceCollection services)

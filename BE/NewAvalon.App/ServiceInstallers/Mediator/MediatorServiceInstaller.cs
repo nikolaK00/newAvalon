@@ -10,7 +10,6 @@ namespace NewAvalon.App.ServiceInstallers.Mediator
     {
         private readonly Assembly[] _businessAssemblies =
         {
-            typeof(Catalog.Business.AssemblyReference).Assembly,
             typeof(Order.Business.AssemblyReference).Assembly,
         };
 

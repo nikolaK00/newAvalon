@@ -36,10 +36,6 @@
     <ProjectReference Include="..\src\Common\NewAvalon.Boundary\NewAvalon.Boundary.csproj" />
     <ProjectReference Include="..\src\Common\NewAvalon.Infrastructure\NewAvalon.Infrastructure.csproj" />
     <ProjectReference Include="..\src\Common\NewAvalon.Persistence\NewAvalon.Persistence.csproj" />
-    <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Business\NewAvalon.Catalog.Business.csproj" />
-    <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Domain\NewAvalon.Catalog.Domain.csproj" />
-    <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Persistence\NewAvalon.Catalog.Persistence.csproj" />
-    <ProjectReference Include="..\src\Modules\Catalog\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Authorization\NewAvalon.Order.Authorization.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Boundary\NewAvalon.Order.Boundary.csproj" />
     <ProjectReference Include="..\src\Modules\Order\NewAvalon.Order.Business\NewAvalon.Order.Business.csproj" />

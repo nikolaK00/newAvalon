@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using NewAvalon.App.Abstractions;
-using NewAvalon.App.ServiceInstallers.BackgroundTasks.Catalog;
 using NewAvalon.App.ServiceInstallers.BackgroundTasks.Order;
 using Quartz;
 
@@ -22,10 +21,6 @@ namespace NewAvalon.App.ServiceInstallers.BackgroundTasks
             services.ConfigureOptions<OrderPublishDomainEventsJobOptionsSetup>();
 
             services.ConfigureOptions<OrderPublishDomainEventsJobSetup>();
-
-            services.ConfigureOptions<CatalogPublishDomainEventsJobOptionsSetup>();
-
-            services.ConfigureOptions<CatalogPublishDomainEventsJobSetup>();
 
             services.ConfigureOptions<OrderDeliveryJobSetup>();
         }

@@ -22,8 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\NewAvalon.Infrastructure\NewAvalon.Infrastructure.csproj" />
-    <ProjectReference Include="..\NewAvalon.Catalog.Persistence\NewAvalon.Catalog.Persistence.csproj" />
-    <ProjectReference Include="..\NewAvalon.Catalog.Presentation\NewAvalon.Catalog.Presentation.csproj" />
   </ItemGroup>
 
 </Project>
