@@ -125,6 +125,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.UserAdministratio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Storage.App", "src\Modules\Storage\NewAvalon.Storage.App\NewAvalon.Storage.App.csproj", "{35FD7DE3-89C4-4D8C-886F-EAF01720AB1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewAvalon.Catalog.App", "src\Modules\Catalog\NewAvalon.Catalog.App\NewAvalon.Catalog.App.csproj", "{1FE29787-96B4-44D6-A438-439CF4BB5FE6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -384,6 +386,12 @@ Global
 		{35FD7DE3-89C4-4D8C-886F-EAF01720AB1E}.NoVariablesDefault|Any CPU.Build.0 = Debug|Any CPU
 		{35FD7DE3-89C4-4D8C-886F-EAF01720AB1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35FD7DE3-89C4-4D8C-886F-EAF01720AB1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE29787-96B4-44D6-A438-439CF4BB5FE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE29787-96B4-44D6-A438-439CF4BB5FE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE29787-96B4-44D6-A438-439CF4BB5FE6}.NoVariablesDefault|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE29787-96B4-44D6-A438-439CF4BB5FE6}.NoVariablesDefault|Any CPU.Build.0 = Debug|Any CPU
+		{1FE29787-96B4-44D6-A438-439CF4BB5FE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE29787-96B4-44D6-A438-439CF4BB5FE6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -448,6 +456,7 @@ Global
 		{F5CF1D14-3B62-4084-A730-E6B08F5CB83E} = {8A787A16-4976-433F-8031-F91655317DB1}
 		{5092888F-11BA-4CF7-A996-C95DB8C9AD98} = {41EC491D-F129-47EA-907D-47C16A6E9C5E}
 		{35FD7DE3-89C4-4D8C-886F-EAF01720AB1E} = {5A5C32AA-3D1B-4FC5-8633-D594272431BA}
+		{1FE29787-96B4-44D6-A438-439CF4BB5FE6} = {7954A20F-3D96-4A08-9834-6D88F71F735F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F59C7E1-C02A-4819-8620-2C8CFA6BE941}
