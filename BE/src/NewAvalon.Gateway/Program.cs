@@ -39,8 +39,8 @@ namespace NewAvalon.Gateway
             builder.AddJsonFile($"appsettings.{environment.EnvironmentName.ToLowerInvariant()}.json", true, true);
             builder.AddJsonFile("logger.settings.json", false, true);
             builder.AddJsonFile($"logger.settings.{environment.EnvironmentName.ToLowerInvariant()}.json", true, true);
-            builder.AddJsonFile("ocelot.settings.json", false, true);
-            builder.AddJsonFile($"ocelot.settings.{environment.EnvironmentName.ToLowerInvariant()}.json", true, true);
+            builder.AddJsonFile("ocelot.json", false, true);
+            builder.AddJsonFile($"ocelot.{environment.EnvironmentName.ToLowerInvariant()}.json", true, true);
 
             if (!environment.IsProduction())
             {

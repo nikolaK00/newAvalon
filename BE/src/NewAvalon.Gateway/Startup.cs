@@ -1,51 +1,55 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NewAvalon.Gateway.Extensions;
+using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using System.IO;
 
 namespace NewAvalon.Gateway
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services) => services.InstallServicesFromAssembly(GetType().Assembly);
+        public IConfiguration _configuration { get; }
+
+        public Startup(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.InstallServicesFromAssembly(GetType().Assembly);
+
+            services.AddOcelot(_configuration);
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // TODO return this line inside if block "env.IsDevelopment()" when we have proper environment set
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+            app.UseCors(builder => builder.SetIsOriginAllowed(_ => true).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
             if (env.IsDevelopment() || env.IsEnvironment("Debug"))
             {
-                // app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
                 app.UseDeveloperExceptionPage();
             }
 
             app.UseResponseCompression();
 
-            app.Map("/swagger/v1/swagger.json", b => b.Run(async x =>
-            {
-                string json = await File.ReadAllTextAsync("swagger.json");
-
-                await x.Response.WriteAsync(json);
-            }));
-
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Gateway"));
-
             app.UseHealthChecks("/health");
 
-            app.UseOcelot().Wait();
-
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+
+            app.UseOcelot().Wait();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using NewAvalon.Infrastructure.Messaging.Options;
+using NewAvalon.Messaging.Contracts.Images;
 using NewAvalon.Messaging.Contracts.Permissions;
 using NewAvalon.Messaging.Contracts.Users;
 using NewAvalon.Notification.App.Abstractions;
@@ -62,6 +63,8 @@ namespace NewAvalon.Notification.App.ServiceInstallers.Messaging
             busConfigurator.AddRequestClient<IUserDetailsRequest>();
 
             busConfigurator.AddRequestClient<IUserDetailsListRequest>();
+
+            busConfigurator.AddRequestClient<IImageRequest>();
         }
     }
 }
