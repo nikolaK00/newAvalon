@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewAvalon.UserAdministration.Infrastructure\NewAvalon.UserAdministration.Infrastructure.csproj" />
     <ProjectReference Include="..\NewAvalon.UserAdministration.Persistence\NewAvalon.UserAdministration.Persistence.csproj" />
     <ProjectReference Include="..\NewAvalon.UserAdministration.Presentation\NewAvalon.UserAdministration.Presentation.csproj" />
   </ItemGroup>
