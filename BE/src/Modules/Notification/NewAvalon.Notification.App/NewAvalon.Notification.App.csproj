@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<UserSecretsId>d872761c-e400-4bca-a8a7-f731fab956f5</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+	</PropertyGroup>
+
+	<ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.1" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.2.1" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="7.2.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.2.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Quartz.Extensions.DependencyInjection" Version="3.6.2" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.6.2" />
+    <PackageReference Include="Scrutor" Version="3.3.0" />
+    <PackageReference Include="SendGrid.Extensions.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Infrastructure\NewAvalon.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Common\NewAvalon.Presentation\NewAvalon.Presentation.csproj" />
+    <ProjectReference Include="..\NewAvalon.Notification.Business\NewAvalon.Notification.Business.csproj" />
+    <ProjectReference Include="..\NewAvalon.Notification.Infrastructure\NewAvalon.Notification.Infrastructure.csproj" />
+    <ProjectReference Include="..\NewAvalon.Notification.Persistence\NewAvalon.Notification.Persistence.csproj" />
+    <ProjectReference Include="..\NewAvalon.Notification.Presentation\NewAvalon.Notification.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>
