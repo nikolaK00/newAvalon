@@ -43,53 +43,8 @@ namespace NewAvalon.Notification.Business.Notifications.Consumers
                     notificationCreated.Details);
 
             _notificationRepository.Insert(notification);
-            // Should create Job
-            /*            var userDetailsRequest = new UserDetailsRequest()
-                        {
-                            Id = notification.UserId.Value
-                        };
-
-                        var userDetailsResponse = await _userDetailsRequestClient.GetResponse<IUserDetailsResponse>(
-                                userDetailsRequest,
-                                context.CancellationToken);
-
-                        try
-                        {
-                            await _sendGridClient.SendEmailAsync(CreateSendGridMessage(userDetailsResponse.Message, notification.Type));
-
-                            notification.Publish(DateTime.UtcNow);
-                        }
-                        catch (Exception ex)
-                        {
-                            notification.Fail(DateTime.UtcNow);
-                        }*/
 
             await _unitOfWork.SaveChangesAsync(context.CancellationToken);
         }
-
-        /*        private SendGridMessage CreateSendGridMessage(IUserDetailsResponse userDetails, NotificationType type)
-                {
-                    var sendGridMessage = new SendGridMessage
-                    {
-                        From = new EmailAddress(_options.Sender, "NewAvalon"),
-                        TemplateId = GetTemplateName(type),
-                    };
-
-                    sendGridMessage.AddTo(new EmailAddress(userDetails.Email, userDetails.Username));
-
-                    return sendGridMessage;
-                }
-
-                private string GetTemplateName(NotificationType type) =>
-                    type switch
-                    {
-                        NotificationType.DealerUserApproved => _emailTemplatesOptions.UserVerifiedTemplate,
-                        _ => _emailTemplatesOptions.UserVerifiedTemplate,
-                    };
-
-                private sealed class UserDetailsRequest : IUserDetailsRequest
-                {
-                    public Guid Id { get; set; }
-                }*/
     }
 }
