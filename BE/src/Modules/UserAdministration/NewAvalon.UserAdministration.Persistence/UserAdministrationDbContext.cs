@@ -9,8 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Epoche;
 
 namespace NewAvalon.UserAdministration.Persistence
 {
@@ -68,6 +70,32 @@ namespace NewAvalon.UserAdministration.Persistence
                 (permissions.First(p => p.Id.Value == (int)Permissions.DealerRead), Role.SuperAdmin),
                 (permissions.First(p => p.Id.Value == (int)Permissions.DealerUpdate), Role.SuperAdmin),
                 (permissions.First(p => p.Id.Value == (int)Permissions.OrderDelete), Role.DealerUser));
+
+            var admin = new User(
+                new UserId(Guid.NewGuid()),
+                "Admin",
+                "Admin",
+                "Admin",
+                "admin@admin.com",
+                DateTime.MinValue,
+                "Admin address");
+
+
+            admin.UpdatePassword(GeneratePassword(admin.Id.Value, "123"));
+
+            SeedData<User, UserId>(modelBuilder, new List<User>
+            {
+                admin
+            });
+
+            SeedJoinData(modelBuilder, (admin, Role.SuperAdmin));
+        }
+
+        private string GeneratePassword(Guid userId, string password)
+        {
+            var keccak = Keccak256.ComputeHash(Encoding.UTF8.GetBytes(userId + password));
+
+            return Encoding.UTF8.GetString(keccak);
         }
     }
 }
